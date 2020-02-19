@@ -45,7 +45,7 @@ public class PostgresConnectionPool {
 
     private PostgresConnectionPool() {}
 
-    private static void setApplicationName(String name) {
+    public static void setApplicationName(String name) {
         applicationName = name;
     }
 
