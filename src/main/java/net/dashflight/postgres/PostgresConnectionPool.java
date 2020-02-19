@@ -45,8 +45,12 @@ public class PostgresConnectionPool {
 
     private PostgresConnectionPool() {}
 
+    private static void setApplicationName(String name) {
+        applicationName = name;
+    }
+
     private static void init() {
-        String dbUrl = String.format("jdbc:postgresql://%s:%s/?dbname=%s&user=%s&password=%s&ApplicationName=%s",
+        String dbUrl = String.format("jdbc:postgresql://%s:%s/?dbname=%s&user=%s&password=%s",
                 host,
                 port,
                 dbname,
@@ -73,7 +77,9 @@ public class PostgresConnectionPool {
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+        config.addDataSourceProperty("ApplicationName", applicationName);
         connectionPool = new HikariDataSource(config);
+
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> connectionPool.close()));
 
