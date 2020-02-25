@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47e27f0e-1967-4be3-87d2-25e1f94092c4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/redis/BasicRedisCache.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/postgres/PostgresConnectionPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresConnectionPool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresConnectionPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresConnectionPool.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,12 +81,21 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="ignore_missing_gitignore" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="net.dashflight.redis" />
       <recent name="net.dashflight.postgres" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt" />
+      <recent name="$PROJECT_DIR$/src/main/java/net/dashflight/data" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -100,7 +109,7 @@
       <option name="presentableId" value="Default" />
       <updated>1582134328957</updated>
       <workItem from="1582134333453" duration="4182000" />
-      <workItem from="1582239571482" duration="4442000" />
+      <workItem from="1582239571482" duration="5522000" />
     </task>
     <task id="LOCAL-00001" summary="Updated dependencies">
       <created>1582135891750</created>
@@ -137,7 +146,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582299749682</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Added Redis and restructured project">
+      <created>1582666990608</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1582666990608</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -149,21 +165,34 @@
     <MESSAGE value="Updated visibility" />
     <MESSAGE value="Removed unused dependencies" />
     <MESSAGE value="Added dependency" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added dependency" />
+    <MESSAGE value="Added Redis and restructured project" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Redis and restructured project" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="543" y="142" key="CommitChangelistDialog2" timestamp="1582299749598">
+    <state x="560" y="205" key="#Project_Structure" timestamp="1582667303842">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="543" y="142" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582299749598" />
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1582299751491">
+    <state x="560" y="205" key="#Project_Structure/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582667303842" />
+    <state x="705" y="384" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1582667316547">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582299751491" />
+    <state x="705" y="384" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582667316547" />
+    <state x="543" y="142" key="CommitChangelistDialog2" timestamp="1582666990493">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="543" y="142" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582666990493" />
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1582666995696">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582666995696" />
     <state x="217" y="372" key="com.intellij.ide.util.TipDialog" timestamp="1582239678190">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state x="217" y="372" key="com.intellij.ide.util.TipDialog/-1080.-331.1080.1897/1920.832.1792.1097/0.23.1920.1057@0.23.1920.1057" timestamp="1582239678190" />
+    <state x="420" y="154" key="new project wizard" timestamp="1582667553175">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="420" y="154" key="new project wizard/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582667553175" />
     <state x="625" y="241" width="670" height="676" key="search.everywhere.popup" timestamp="1582666848579">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>

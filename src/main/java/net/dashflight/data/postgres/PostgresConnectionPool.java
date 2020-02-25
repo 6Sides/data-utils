@@ -13,6 +13,7 @@ import org.jdbi.v3.guava.GuavaPlugin;
 import org.jdbi.v3.postgres.PostgresPlugin;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 
+
 public class PostgresConnectionPool {
 
     @ConfigValue("pg_host")
