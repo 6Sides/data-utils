@@ -1,4 +1,4 @@
-package net.dashflight.postgres;
+package net.dashflight.data.postgres;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

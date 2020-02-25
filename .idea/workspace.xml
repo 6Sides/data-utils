@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47e27f0e-1967-4be3-87d2-25e1f94092c4" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/redis/BasicRedisCache.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/postgres/PostgresConnectionPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresConnectionPool.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +19,49 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="DataUtils" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="DataUtils" type="f1a62948:ProjectNode" />
+                <item name="Source Sets" type="e897c970:GradleViewContributor$SourceSetsNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="DataUtils" type="f1a62948:ProjectNode" />
+                <item name="Source Sets" type="e897c970:GradleViewContributor$SourceSetsNode" />
+                <item name="main" type="396b929e:GradleViewContributor$SourceSetNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="DataUtils" type="f1a62948:ProjectNode" />
+                <item name="Source Sets" type="e897c970:GradleViewContributor$SourceSetsNode" />
+                <item name="main" type="396b929e:GradleViewContributor$SourceSetNode" />
+                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="DataUtils" type="f1a62948:ProjectNode" />
+                <item name="Source Sets" type="e897c970:GradleViewContributor$SourceSetsNode" />
+                <item name="main" type="396b929e:GradleViewContributor$SourceSetNode" />
+                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
+                <item name="com.github.6Sides:config-file-injector:c0394dedc8" type="cfea851d:ExternalSystemViewDefaultContributor$LibraryDependencyDataExternalSystemNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -35,10 +80,12 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="ignore_missing_gitignore" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="net.dashflight.redis" />
       <recent name="net.dashflight.postgres" />
     </key>
   </component>
@@ -53,7 +100,7 @@
       <option name="presentableId" value="Default" />
       <updated>1582134328957</updated>
       <workItem from="1582134333453" duration="4182000" />
-      <workItem from="1582239571482" duration="1241000" />
+      <workItem from="1582239571482" duration="4442000" />
     </task>
     <task id="LOCAL-00001" summary="Updated dependencies">
       <created>1582135891750</created>
@@ -83,7 +130,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582299674545</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added dependency">
+      <created>1582299749682</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1582299749682</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -94,24 +148,25 @@
     <MESSAGE value="Added setter for app name" />
     <MESSAGE value="Updated visibility" />
     <MESSAGE value="Removed unused dependencies" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed unused dependencies" />
+    <MESSAGE value="Added dependency" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added dependency" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="543" y="142" key="CommitChangelistDialog2" timestamp="1582299674468">
+    <state x="543" y="142" key="CommitChangelistDialog2" timestamp="1582299749598">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="543" y="142" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582299674468" />
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1582299676086">
+    <state x="543" y="142" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582299749598" />
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1582299751491">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582299676086" />
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582299751491" />
     <state x="217" y="372" key="com.intellij.ide.util.TipDialog" timestamp="1582239678190">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state x="217" y="372" key="com.intellij.ide.util.TipDialog/-1080.-331.1080.1897/1920.832.1792.1097/0.23.1920.1057@0.23.1920.1057" timestamp="1582239678190" />
-    <state x="625" y="241" width="670" height="676" key="search.everywhere.popup" timestamp="1582134983402">
+    <state x="625" y="241" width="670" height="676" key="search.everywhere.popup" timestamp="1582666848579">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="625" y="241" width="670" height="676" key="search.everywhere.popup/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582134983402" />
+    <state x="625" y="241" width="670" height="676" key="search.everywhere.popup/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582666848579" />
   </component>
 </project>
