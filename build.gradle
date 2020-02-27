@@ -51,4 +51,9 @@ dependencies {
     // Jackson - https://github.com/FasterXML/jackson-databind
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
 
+
+    // Bcrypt
+    implementation 'at.favre.lib:bcrypt:0.8.0'
+
+
 }
