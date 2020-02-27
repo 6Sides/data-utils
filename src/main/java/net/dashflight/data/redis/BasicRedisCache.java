@@ -3,6 +3,7 @@ package net.dashflight.data.redis;
 import config.parser.ConfigValue;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.Transaction;
 
 /**
  * Handles interfacing with Redis cache. All methods in this class
@@ -109,4 +110,10 @@ public class BasicRedisCache {
         }
     }
 
+    public Transaction multi(String key, int seconds) {
+        try (Jedis client = pool.getResource()) {
+            client.select(this.database);
+            return client.multi();
+        }
+    }
 }
