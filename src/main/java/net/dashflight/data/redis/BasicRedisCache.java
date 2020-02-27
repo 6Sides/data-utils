@@ -27,7 +27,7 @@ public class BasicRedisCache {
     protected int database = 0;
 
 
-    protected BasicRedisCache() {
+    public BasicRedisCache() {
         if (pool == null) {
             pool = new JedisPool(host, port);
             Runtime.getRuntime().addShutdownHook(new Thread(() -> pool.close()));
