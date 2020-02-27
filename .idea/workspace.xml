@@ -110,7 +110,7 @@
       <workItem from="1582134333453" duration="4182000" />
       <workItem from="1582239571482" duration="8122000" />
       <workItem from="1582816225432" duration="366000" />
-      <workItem from="1582836954529" duration="6000" />
+      <workItem from="1582836954529" duration="355000" />
     </task>
     <task id="LOCAL-00001" summary="Updated dependencies">
       <created>1582135891750</created>
@@ -168,7 +168,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582816315345</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Changed redis access modifier">
+      <created>1582836969775</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1582836969775</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -183,7 +190,8 @@
     <MESSAGE value="Added Redis and restructured project" />
     <MESSAGE value="Added Redis" />
     <MESSAGE value="Added PasswordService" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added PasswordService" />
+    <MESSAGE value="Changed redis access modifier" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed redis access modifier" />
   </component>
   <component name="WindowStateProjectService">
     <state x="560" y="205" key="#Project_Structure" timestamp="1582667303842">
@@ -194,14 +202,14 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="705" y="384" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582667316547" />
-    <state x="543" y="142" key="CommitChangelistDialog2" timestamp="1582816315225">
+    <state x="543" y="142" key="CommitChangelistDialog2" timestamp="1582836969558">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="543" y="142" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582816315225" />
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1582816316898">
+    <state x="543" y="142" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582836969558" />
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1582836970999">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582816316898" />
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582836970999" />
     <state x="217" y="372" key="com.intellij.ide.util.TipDialog" timestamp="1582239678190">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>

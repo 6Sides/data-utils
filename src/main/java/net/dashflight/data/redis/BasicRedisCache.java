@@ -85,4 +85,28 @@ public class BasicRedisCache {
         }
     }
 
+    /**
+     * Adds the members to the set at key `key`
+     */
+    public long sadd(String key, String... members) {
+        try (Jedis client = pool.getResource()) {
+            client.select(this.database);
+            return client.sadd(key, members);
+        }
+    }
+
+    public boolean sismember(String key, String member) {
+        try (Jedis client = pool.getResource()) {
+            client.select(this.database);
+            return client.sismember(key, member);
+        }
+    }
+
+    public boolean setKeyExpire(String key, int seconds) {
+        try (Jedis client = pool.getResource()) {
+            client.select(this.database);
+            return client.expire(key, seconds) == 1;
+        }
+    }
+
 }
