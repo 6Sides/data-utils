@@ -110,7 +110,7 @@ public class BasicRedisCache {
         }
     }
 
-    public Transaction multi(String key, int seconds) {
+    public Transaction multi() {
         try (Jedis client = pool.getResource()) {
             client.select(this.database);
             return client.multi();
