@@ -142,7 +142,8 @@
       <workItem from="1582134333453" duration="4182000" />
       <workItem from="1582239571482" duration="8122000" />
       <workItem from="1582816225432" duration="366000" />
-      <workItem from="1582836954529" duration="16684000" />
+      <workItem from="1582836954529" duration="17226000" />
+      <workItem from="1582921814105" duration="201000" />
     </task>
     <task id="LOCAL-00001" summary="Updated dependencies">
       <created>1582135891750</created>
@@ -291,7 +292,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582918865823</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Added method to get redis pool">
+      <created>1582920034253</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1582920034253</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -318,7 +326,8 @@
     <MESSAGE value="ValueInjector now accepts any Object" />
     <MESSAGE value="Added temporary helper method" />
     <MESSAGE value="Refactored to use Configurable interface" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactored to use Configurable interface" />
+    <MESSAGE value="Added method to get redis pool" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added method to get redis pool" />
   </component>
   <component name="WindowStateProjectService">
     <state x="560" y="205" key="#Project_Structure" timestamp="1582667303842">
@@ -349,34 +358,34 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="705" y="384" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582667316547" />
-    <state x="543" y="142" key="CommitChangelistDialog2" timestamp="1582918865713">
+    <state x="543" y="142" key="CommitChangelistDialog2" timestamp="1582920034168">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="543" y="142" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582918865713" />
-    <state width="1920" height="311" key="GridCell.Tab.0.bottom" timestamp="1582918736235">
+    <state x="543" y="142" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582920034168" />
+    <state width="1920" height="311" key="GridCell.Tab.0.bottom" timestamp="1582920569750">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.bottom/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1582912659730" />
-    <state width="1920" height="311" key="GridCell.Tab.0.bottom/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582918736235" />
-    <state width="1920" height="311" key="GridCell.Tab.0.center" timestamp="1582918736230">
+    <state width="1920" height="311" key="GridCell.Tab.0.bottom/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582920569750" />
+    <state width="1920" height="311" key="GridCell.Tab.0.center" timestamp="1582920569745">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.center/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1582912659725" />
-    <state width="1920" height="311" key="GridCell.Tab.0.center/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582918736230" />
-    <state width="1920" height="311" key="GridCell.Tab.0.left" timestamp="1582918736227">
+    <state width="1920" height="311" key="GridCell.Tab.0.center/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582920569745" />
+    <state width="1920" height="311" key="GridCell.Tab.0.left" timestamp="1582920569743">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.left/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1582912659722" />
-    <state width="1920" height="311" key="GridCell.Tab.0.left/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582918736227" />
-    <state width="1920" height="311" key="GridCell.Tab.0.right" timestamp="1582918736232">
+    <state width="1920" height="311" key="GridCell.Tab.0.left/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582920569743" />
+    <state width="1920" height="311" key="GridCell.Tab.0.right" timestamp="1582920569747">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.right/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1582912659728" />
-    <state width="1920" height="311" key="GridCell.Tab.0.right/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582918736232" />
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1582918905976">
+    <state width="1920" height="311" key="GridCell.Tab.0.right/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582920569747" />
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1582920035546">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582918905976" />
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582920035546" />
     <state x="217" y="372" key="com.intellij.ide.util.TipDialog" timestamp="1582239678190">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>

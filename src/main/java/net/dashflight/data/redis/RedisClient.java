@@ -4,6 +4,7 @@ import java.util.Map;
 import net.dashflight.data.ConfigValue;
 import net.dashflight.data.Configurable;
 import net.dashflight.data.RuntimeEnvironment;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
@@ -31,7 +32,10 @@ public class RedisClient implements Configurable {
     RedisClient(RuntimeEnvironment env, Map<String, Object> properties) {
         registerWith(APP_NAME, env, properties);
 
-        pool = new JedisPool(host, port);
+        GenericObjectPoolConfig config = new GenericObjectPoolConfig();
+        config.setMaxTotal(2);
+
+        pool = new JedisPool(config, host, port);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> pool.close()));
     }
 
