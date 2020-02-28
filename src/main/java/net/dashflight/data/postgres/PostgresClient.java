@@ -2,55 +2,60 @@ package net.dashflight.data.postgres;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import config.parser.ConfigValue;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Map;
 import javax.sql.DataSource;
+import net.dashflight.data.ConfigValue;
+import net.dashflight.data.ConfigurableDataSource;
+import net.dashflight.data.RuntimeEnvironment;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.guava.GuavaPlugin;
 import org.jdbi.v3.postgres.PostgresPlugin;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 
 
-public class PostgresConnectionPool {
+public class PostgresClient extends ConfigurableDataSource {
+
+    private static final String APP_NAME = "java-postgres";
+
 
     @ConfigValue("pg_host")
-    private static String host;
+    private String host;
 
     @ConfigValue("pg_port")
-    private static int port;
+    private int port;
 
     @ConfigValue("pg_dbname")
-    private static String dbname;
+    private String dbname;
 
     @ConfigValue("pg_username")
-    private static String username;
+    private String username;
 
     @ConfigValue("pg_password")
-    private static String password;
+    private String password;
 
     @ConfigValue("application_name")
-    private static String applicationName = "DataUtils application";
+    private String applicationName = "DataUtils application";
 
     @ConfigValue("max_pool_size")
-    private static int maxPoolSize = 2;
+    private int maxPoolSize = 2;
 
 
-    private static HikariConfig config = new HikariConfig();
-    private static HikariDataSource connectionPool;
+    private HikariConfig config = new HikariConfig();
+    private HikariDataSource connectionPool;
 
-    private static Jdbi jdbi;
+    private Jdbi jdbi;
 
 
-    private PostgresConnectionPool() {}
-
-    public static void setApplicationName(String name) {
-        applicationName = name;
+    PostgresClient(RuntimeEnvironment env, Map<String, Object> properties) {
+        super(APP_NAME, env, properties);
+        init();
     }
 
-    private static void init() {
+    private void init() {
         String dbUrl = String.format("jdbc:postgresql://%s:%s/?dbname=%s&user=%s&password=%s",
                 host,
                 port,
@@ -84,25 +89,22 @@ public class PostgresConnectionPool {
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> connectionPool.close()));
 
-        jdbi = Jdbi.create(PostgresConnectionPool.getDataSource());
+
+        jdbi = Jdbi.create(connectionPool);
         jdbi.installPlugin(new SqlObjectPlugin());
         jdbi.installPlugin(new PostgresPlugin());
         jdbi.installPlugin(new GuavaPlugin());
     }
 
-    public static Connection getConnection() throws SQLException {
-        if (connectionPool == null) {
-            init();
-        }
-
+    public Connection getConnection() throws SQLException {
         return connectionPool.getConnection();
     }
 
-    public static DataSource getDataSource() {
+    public DataSource getDataSource() {
         return connectionPool;
     }
 
-    public static Jdbi getJdbi() {
+    public Jdbi getJdbi() {
         return jdbi;
     }
 
