@@ -24,7 +24,9 @@ public class PostgresFactory {
     public static PostgresClient withConfiguration(RuntimeEnvironment env, Map<String, Object> additionalProperties) {
         Integer hash = env.hashCode() + (additionalProperties != null ? additionalProperties.hashCode() : 0);
 
-        instances.putIfAbsent(hash, new PostgresClient(env, additionalProperties));
+        if (!instances.containsKey(hash)) {
+            instances.put(hash, new PostgresClient(env, additionalProperties));
+        }
 
         return instances.get(hash);
     }
