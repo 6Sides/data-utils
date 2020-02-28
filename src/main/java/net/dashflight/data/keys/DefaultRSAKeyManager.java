@@ -6,6 +6,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAKey;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
@@ -16,11 +18,23 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import net.dashflight.data.ConfigValue;
+import net.dashflight.data.ConfigurableDataSource;
+import net.dashflight.data.RuntimeEnvironment;
 
-/**
- * Manages keys passed in via environment variables
- */
-public class DefaultRSAKeyManager extends RSAKeyManager {
+
+public class DefaultRSAKeyManager extends ConfigurableDataSource {
+
+    private static final String APP_NAME = "rsa-keypair";
+
+    protected static KeyFactory keyFactory;
+
+    static {
+        try {
+            keyFactory = KeyFactory.getInstance("RSA");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+    }
 
     @ConfigValue("public_key")
     private static String pubKey;
@@ -28,12 +42,15 @@ public class DefaultRSAKeyManager extends RSAKeyManager {
     @ConfigValue("private_key")
     private static String privKey;
 
-    @Override
+
+    DefaultRSAKeyManager(RuntimeEnvironment env, Map<String, Object> properties) {
+        super(APP_NAME, env, properties);
+    }
+
     public RSAPublicKey getPublicKey() {
         return jsonToPubKey(new ByteArrayInputStream(Base64.getDecoder().decode(pubKey)));
     }
 
-    @Override
     public RSAPrivateKey getPrivateKey() {
         return jsonToPrivKey(new ByteArrayInputStream(Base64.getDecoder().decode(privKey)));
     }
