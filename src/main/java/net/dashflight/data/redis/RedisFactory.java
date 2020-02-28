@@ -24,7 +24,9 @@ public class RedisFactory {
     public static RedisClient withConfiguration(RuntimeEnvironment env, Map<String, Object> additionalProperties) {
         Integer hash = env.hashCode() + (additionalProperties != null ? additionalProperties.hashCode() : 0);
 
-        instances.putIfAbsent(hash, new RedisClient(env, additionalProperties));
+        if (!instances.containsKey(hash)) {
+            instances.put(hash, new RedisClient(env, additionalProperties));
+        }
 
         return instances.get(hash);
     }

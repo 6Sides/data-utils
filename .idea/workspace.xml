@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="47e27f0e-1967-4be3-87d2-25e1f94092c4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/redis/RedisFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/redis/RedisFactory.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,7 +143,7 @@
       <workItem from="1582239571482" duration="8122000" />
       <workItem from="1582816225432" duration="366000" />
       <workItem from="1582836954529" duration="17226000" />
-      <workItem from="1582921814105" duration="345000" />
+      <workItem from="1582921814105" duration="743000" />
     </task>
     <task id="LOCAL-00001" summary="Updated dependencies">
       <created>1582135891750</created>
@@ -306,7 +306,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582922033115</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Fixed bug with PostgresFactory">
+      <created>1582922171481</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1582922171481</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -335,7 +342,8 @@
     <MESSAGE value="Refactored to use Configurable interface" />
     <MESSAGE value="Added method to get redis pool" />
     <MESSAGE value="Set limit on redis pool connections" />
-    <option name="LAST_COMMIT_MESSAGE" value="Set limit on redis pool connections" />
+    <MESSAGE value="Fixed bug with PostgresFactory" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed bug with PostgresFactory" />
   </component>
   <component name="WindowStateProjectService">
     <state x="560" y="205" key="#Project_Structure" timestamp="1582667303842">
@@ -366,10 +374,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="705" y="384" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582667316547" />
-    <state x="543" y="142" key="CommitChangelistDialog2" timestamp="1582922032998">
+    <state x="543" y="142" key="CommitChangelistDialog2" timestamp="1582922171392">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="543" y="142" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582922032998" />
+    <state x="543" y="142" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582922171392" />
     <state width="1920" height="311" key="GridCell.Tab.0.bottom" timestamp="1582920569750">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -390,10 +398,10 @@
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.right/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1582912659728" />
     <state width="1920" height="311" key="GridCell.Tab.0.right/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582920569747" />
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1582922034814">
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1582922172636">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582922034814" />
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582922172636" />
     <state x="217" y="372" key="com.intellij.ide.util.TipDialog" timestamp="1582239678190">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
