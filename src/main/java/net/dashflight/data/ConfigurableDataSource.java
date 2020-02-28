@@ -67,4 +67,25 @@ public abstract class ConfigurableDataSource {
 
         return result;
     }
+
+    public static Properties getPropertiesForApplication(String applicationName) {
+        Properties result;
+
+        AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+                .withCredentials(new DefaultAWSCredentialsProviderChain())
+                .withRegion(Regions.US_EAST_2)
+                .build();
+
+        String key = String.format("%s/%s.properties", applicationName, RuntimeEnvironment.getCurrentEnvironment().getName());
+        S3Object configFile = s3Client.getObject(new GetObjectRequest(BUCKET, key));
+
+        try {
+            result = new JavaPropsMapper().readValue(configFile.getObjectContent(), Properties.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            result = new Properties();
+        }
+
+        return result;
+    }
 }
