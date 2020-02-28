@@ -5,9 +5,11 @@ import java.util.Properties;
 
 public class ValueInjector {
 
-    public void inject(Object source, Properties props) {
+    public static void inject(Object source, Properties props) {
+        Class<?> clazz = source.getClass().equals(Class.class) ? ((Class<?>) source) : source.getClass();
+
         try {
-            for (Field field : source.getClass().getDeclaredFields()) {
+            for (Field field : clazz.getDeclaredFields()) {
                 if (field.isAnnotationPresent(ConfigValue.class)) {
 
                     String key = field.getAnnotation(ConfigValue.class).value();

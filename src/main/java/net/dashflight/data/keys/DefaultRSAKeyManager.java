@@ -18,11 +18,11 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import net.dashflight.data.ConfigValue;
-import net.dashflight.data.ConfigurableDataSource;
+import net.dashflight.data.Configurable;
 import net.dashflight.data.RuntimeEnvironment;
 
 
-public class DefaultRSAKeyManager extends ConfigurableDataSource {
+public class DefaultRSAKeyManager implements Configurable {
 
     private static final String APP_NAME = "rsa-keypair";
 
@@ -44,7 +44,7 @@ public class DefaultRSAKeyManager extends ConfigurableDataSource {
 
 
     DefaultRSAKeyManager(RuntimeEnvironment env, Map<String, Object> properties) {
-        super(APP_NAME, env, properties);
+        registerWith(APP_NAME, env, properties);
     }
 
     public RSAPublicKey getPublicKey() {

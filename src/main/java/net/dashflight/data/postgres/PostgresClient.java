@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.Map;
 import javax.sql.DataSource;
 import net.dashflight.data.ConfigValue;
-import net.dashflight.data.ConfigurableDataSource;
+import net.dashflight.data.Configurable;
 import net.dashflight.data.RuntimeEnvironment;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.guava.GuavaPlugin;
@@ -17,7 +17,7 @@ import org.jdbi.v3.postgres.PostgresPlugin;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 
 
-public class PostgresClient extends ConfigurableDataSource {
+public class PostgresClient implements Configurable {
 
     private static final String APP_NAME = "java-postgres";
 
@@ -51,7 +51,7 @@ public class PostgresClient extends ConfigurableDataSource {
 
 
     PostgresClient(RuntimeEnvironment env, Map<String, Object> properties) {
-        super(APP_NAME, env, properties);
+        registerWith(APP_NAME, env, properties);
         init();
     }
 

@@ -2,7 +2,7 @@ package net.dashflight.data.redis;
 
 import java.util.Map;
 import net.dashflight.data.ConfigValue;
-import net.dashflight.data.ConfigurableDataSource;
+import net.dashflight.data.Configurable;
 import net.dashflight.data.RuntimeEnvironment;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -11,7 +11,7 @@ import redis.clients.jedis.JedisPool;
  * Handles interfacing with Redis cache. All methods in this class
  * interface with database 0 by default.
  */
-public class RedisClient extends ConfigurableDataSource {
+public class RedisClient implements Configurable {
 
     private static final String APP_NAME = "redis";
 
@@ -29,7 +29,7 @@ public class RedisClient extends ConfigurableDataSource {
     protected JedisPool pool;
 
     RedisClient(RuntimeEnvironment env, Map<String, Object> properties) {
-        super(APP_NAME, env, properties);
+        registerWith(APP_NAME, env, properties);
 
         pool = new JedisPool(host, port);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> pool.close()));
