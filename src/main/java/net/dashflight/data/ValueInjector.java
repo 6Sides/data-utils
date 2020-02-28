@@ -5,7 +5,7 @@ import java.util.Properties;
 
 public class ValueInjector {
 
-    public void inject(ConfigurableDataSource source, Properties props) {
+    public void inject(Object source, Properties props) {
         try {
             for (Field field : source.getClass().getDeclaredFields()) {
                 if (field.isAnnotationPresent(ConfigValue.class)) {
