@@ -21,11 +21,6 @@ public class BasicRedisCache {
      */
     protected static JedisPool pool;
 
-    /**
-     * The database to interface with in redis
-     */
-    protected int database = 0;
-
 
     public BasicRedisCache() {
         if (pool == null) {
@@ -39,7 +34,6 @@ public class BasicRedisCache {
      */
     public boolean set(String key, String value) {
         try (Jedis client = pool.getResource()) {
-            client.select(this.database);
             return client.set(key, value).equals("OK");
         }
     }
@@ -49,7 +43,6 @@ public class BasicRedisCache {
      */
     public boolean setWithExpiry(String key, int seconds, String value) {
         try (Jedis client = pool.getResource()) {
-            client.select(this.database);
             return client.setex(key, seconds, value).equals("OK");
         }
     }
@@ -59,7 +52,6 @@ public class BasicRedisCache {
      */
     public boolean has(String key) {
         try (Jedis client = pool.getResource()) {
-            client.select(this.database);
             return client.exists(key);
         }
     }
@@ -69,7 +61,6 @@ public class BasicRedisCache {
      */
     public String get(String key) {
         try (Jedis client = pool.getResource()) {
-            client.select(this.database);
             return client.get(key);
         }
     }
@@ -80,7 +71,6 @@ public class BasicRedisCache {
      */
     public boolean del(String key) {
         try (Jedis client = pool.getResource()) {
-            client.select(this.database);
             return client.del(key) > 0;
         }
     }
@@ -90,21 +80,18 @@ public class BasicRedisCache {
      */
     public long sadd(String key, String... members) {
         try (Jedis client = pool.getResource()) {
-            client.select(this.database);
             return client.sadd(key, members);
         }
     }
 
     public boolean sismember(String key, String member) {
         try (Jedis client = pool.getResource()) {
-            client.select(this.database);
             return client.sismember(key, member);
         }
     }
 
     public boolean setKeyExpire(String key, int seconds) {
         try (Jedis client = pool.getResource()) {
-            client.select(this.database);
             return client.expire(key, seconds) == 1;
         }
     }
