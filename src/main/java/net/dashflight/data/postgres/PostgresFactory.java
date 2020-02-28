@@ -5,7 +5,7 @@ import java.util.Map;
 import net.dashflight.data.RuntimeEnvironment;
 
 /**
- * Factory to create Postgres instances. There can only be one instance of the
+ * Factory to create Postgres clients. There can only be one instance of the
  * client for each unique set of parameters.
  */
 public class PostgresFactory {

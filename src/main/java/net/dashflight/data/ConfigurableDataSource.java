@@ -67,8 +67,6 @@ public abstract class ConfigurableDataSource {
             result.putAll(additionalProperties);
         }
 
-        System.out.println(result);
-
         return result;
     }
 }
