@@ -35,6 +35,10 @@ public class RedisClient implements Configurable {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> pool.close()));
     }
 
+    public JedisPool getPool() {
+        return this.pool;
+    }
+
     /**
      * Sets a key, value pair in the cache
      */

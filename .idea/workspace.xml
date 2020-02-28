@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47e27f0e-1967-4be3-87d2-25e1f94092c4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/Configurable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/S3ConfigFetcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/ConfigurableDataSource.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/ValueInjector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/ValueInjector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/DefaultRSAKeyManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/DefaultRSAKeyManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/redis/RedisClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/redis/RedisClient.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -153,7 +142,7 @@
       <workItem from="1582134333453" duration="4182000" />
       <workItem from="1582239571482" duration="8122000" />
       <workItem from="1582816225432" duration="366000" />
-      <workItem from="1582836954529" duration="15933000" />
+      <workItem from="1582836954529" duration="16684000" />
     </task>
     <task id="LOCAL-00001" summary="Updated dependencies">
       <created>1582135891750</created>
@@ -295,7 +284,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582916206391</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Refactored to use Configurable interface">
+      <created>1582918865823</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1582918865823</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -321,7 +317,8 @@
     <MESSAGE value="Refactored rsa key manager to use new config injector" />
     <MESSAGE value="ValueInjector now accepts any Object" />
     <MESSAGE value="Added temporary helper method" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added temporary helper method" />
+    <MESSAGE value="Refactored to use Configurable interface" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored to use Configurable interface" />
   </component>
   <component name="WindowStateProjectService">
     <state x="560" y="205" key="#Project_Structure" timestamp="1582667303842">
@@ -352,10 +349,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="705" y="384" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582667316547" />
-    <state x="543" y="142" key="CommitChangelistDialog2" timestamp="1582916206296">
+    <state x="543" y="142" key="CommitChangelistDialog2" timestamp="1582918865713">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="543" y="142" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582916206296" />
+    <state x="543" y="142" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582918865713" />
     <state width="1920" height="311" key="GridCell.Tab.0.bottom" timestamp="1582918736235">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -376,10 +373,10 @@
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.right/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1582912659728" />
     <state width="1920" height="311" key="GridCell.Tab.0.right/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582918736232" />
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1582916207801">
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1582918905976">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582916207801" />
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582918905976" />
     <state x="217" y="372" key="com.intellij.ide.util.TipDialog" timestamp="1582239678190">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
