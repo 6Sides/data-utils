@@ -42,7 +42,7 @@ dependencies {
     testCompile group: 'org.jdbi', name: 'jdbi3-testing', version: '3.12.0'
 
 
-    implementation 'de.huxhorn.sulky:de.huxhorn.sulky.ulid:8.2.0'
+    compile 'com.fasterxml.uuid:java-uuid-generator:4.0'
 
     compile platform('com.amazonaws:aws-java-sdk-bom:1.11.228')
     compile 'com.amazonaws:aws-java-sdk-s3'
