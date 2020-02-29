@@ -7,7 +7,7 @@ import java.util.Map;
  * Provides a configure method which allows classes to register with a config file
  * on s3.
  */
-public interface Configurable<T extends ConfigurationData<?>> {
+public interface Configurable {
 
     /**
      * Stores properties of fetched configurations to avoid
