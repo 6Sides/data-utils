@@ -2,11 +2,11 @@ package net.dashflight.data.config;
 
 import java.util.Properties;
 
-public class PropertiesConfiguration implements ConfigurationData<Properties> {
+public class PropertiesData implements ConfigurationData<Properties> {
 
     private Properties props;
 
-    public PropertiesConfiguration(Properties props) {
+    public PropertiesData(Properties props) {
         this.props = props;
     }
 

@@ -37,7 +37,7 @@ public class S3ConfigFetcher implements ConfigurationSource<Properties> {
             result.putAll(additionalProperties);
         }
 
-        return new PropertiesConfiguration(result);
+        return new PropertiesData(result);
     }
 
     @Override
