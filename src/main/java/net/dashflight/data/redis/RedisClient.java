@@ -23,6 +23,8 @@ public class RedisClient implements Configurable {
     @ConfigValue("redis_port")
     private int port;
 
+    @ConfigValue("max_pool_size")
+    private int maxPoolSize = 4;
 
     /**
      * Redis connection pool
@@ -38,7 +40,7 @@ public class RedisClient implements Configurable {
         );
 
         GenericObjectPoolConfig config = new GenericObjectPoolConfig();
-        config.setMaxTotal(2);
+        config.setMaxTotal(maxPoolSize);
 
         pool = new JedisPool(config, host, port);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> pool.close()));

@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
 
-public class S3ConfigFetcher implements ConfigurationSource<Properties> {
+public class S3ConfigFetcher implements ConfigurationSource {
 
     private static final String BUCKET = "www.dashflight.net-config";
 

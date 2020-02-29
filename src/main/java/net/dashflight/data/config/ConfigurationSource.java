@@ -4,10 +4,9 @@ import java.util.Map;
 
 /**
  * Fetches configuration data from a source.
- * @param <T> The java type to parse the config file to.
  */
-public interface ConfigurationSource<T> {
+public interface ConfigurationSource {
 
-    ConfigurationData<T> getConfig(String applicationName, RuntimeEnvironment env, Map<String, Object> additionalData);
+    ConfigurationData getConfig(String applicationName, RuntimeEnvironment env, Map<String, Object> additionalData);
 
 }

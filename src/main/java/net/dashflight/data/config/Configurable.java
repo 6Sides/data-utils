@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Provides a configure method which allows classes to register with a config file
- * on s3.
+ * Provides a configure method which allows classes to register with a configuration source.
+ * Default configuration source is s3.
  */
 public interface Configurable {
 
@@ -49,13 +49,13 @@ public interface Configurable {
         private String applicationName;
         private RuntimeEnvironment environment;
         private Map<String, Object> additionalProperties;
-        private ConfigurationSource<?> configurationSource;
+        private ConfigurationSource configurationSource;
 
 
         public RegistrationOptions(String applicationName,
                 RuntimeEnvironment environment,
                 Map<String, Object> additionalProperties,
-                ConfigurationSource<?> configurationSource) {
+                ConfigurationSource configurationSource) {
             this.applicationName = applicationName;
             this.environment = environment;
             this.additionalProperties = additionalProperties;
@@ -74,7 +74,7 @@ public interface Configurable {
             return additionalProperties;
         }
 
-        public ConfigurationSource<?> getConfigurationSource() {
+        public ConfigurationSource getConfigurationSource() {
             return configurationSource;
         }
 
@@ -87,7 +87,7 @@ public interface Configurable {
             private String applicationName;
             private RuntimeEnvironment environment;
             private Map<String, Object> additionalProperties;
-            ConfigurationSource<?> configurationSource;
+            ConfigurationSource configurationSource;
 
             public Builder applicationName(String applicationName) {
                 this.applicationName = applicationName;
@@ -105,7 +105,7 @@ public interface Configurable {
                 return this;
             }
 
-            public Builder configurationSource(ConfigurationSource<?> configurationSource) {
+            public Builder configurationSource(ConfigurationSource configurationSource) {
                 this.configurationSource = configurationSource;
                 return this;
             }
