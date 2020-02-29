@@ -48,10 +48,6 @@ dependencies {
     compile 'com.amazonaws:aws-java-sdk-s3'
 
 
-    // Jackson - https://github.com/FasterXML/jackson-databind
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
-
-
     // Jackson Core
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-properties:2.8.8'

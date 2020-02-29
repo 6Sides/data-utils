@@ -1,4 +1,4 @@
-package net.dashflight.data;
+package net.dashflight.data.config;
 
 public enum RuntimeEnvironment {
 

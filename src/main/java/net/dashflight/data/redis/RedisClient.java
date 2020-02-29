@@ -1,9 +1,9 @@
 package net.dashflight.data.redis;
 
 import java.util.Map;
-import net.dashflight.data.ConfigValue;
-import net.dashflight.data.Configurable;
-import net.dashflight.data.RuntimeEnvironment;
+import net.dashflight.data.config.ConfigValue;
+import net.dashflight.data.config.Configurable;
+import net.dashflight.data.config.RuntimeEnvironment;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -30,7 +30,12 @@ public class RedisClient implements Configurable {
     protected JedisPool pool;
 
     RedisClient(RuntimeEnvironment env, Map<String, Object> properties) {
-        registerWith(APP_NAME, env, properties);
+        registerWith(RegistrationOptions.builder()
+            .applicationName(APP_NAME)
+            .environment(env)
+            .additionalProperties(properties)
+            .build()
+        );
 
         GenericObjectPoolConfig config = new GenericObjectPoolConfig();
         config.setMaxTotal(2);

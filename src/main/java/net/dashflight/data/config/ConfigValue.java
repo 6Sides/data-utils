@@ -1,4 +1,4 @@
-package net.dashflight.data;
+package net.dashflight.data.config;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

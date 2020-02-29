@@ -2,7 +2,7 @@ package net.dashflight.data.redis;
 
 import java.util.HashMap;
 import java.util.Map;
-import net.dashflight.data.RuntimeEnvironment;
+import net.dashflight.data.config.RuntimeEnvironment;
 
 /**
  * Factory to create Redis clients. There can only be one instance of the

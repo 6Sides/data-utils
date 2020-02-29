@@ -1,4 +1,4 @@
-package net.dashflight.data;
+package net.dashflight.data.config;
 
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.regions.Regions;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
 
-public class S3ConfigFetcher {
+public class S3ConfigFetcher implements ConfigurationSource<Properties> {
 
     private static final String BUCKET = "www.dashflight.net-config";
 
@@ -20,16 +20,7 @@ public class S3ConfigFetcher {
                                             .withCredentials(new DefaultAWSCredentialsProviderChain())
                                             .build();
 
-
-    public static Properties getPropertiesForApplication(String applicationName) {
-        return getPropertiesForApplication(applicationName, RuntimeEnvironment.getCurrentEnvironment());
-    }
-
-    public static Properties getPropertiesForApplication(String applicationName, RuntimeEnvironment env) {
-        return getPropertiesForApplication(applicationName, env, null);
-    }
-
-    public static Properties getPropertiesForApplication(String applicationName, RuntimeEnvironment env, Map<String, Object> additionalProperties) {
+    private static ConfigurationData<Properties> getPropertiesForApplication(String applicationName, RuntimeEnvironment env, Map<String, Object> additionalProperties) {
         Properties result;
 
         String key = String.format("%s/%s.properties", applicationName, env.getName());
@@ -46,6 +37,11 @@ public class S3ConfigFetcher {
             result.putAll(additionalProperties);
         }
 
-        return result;
+        return new PropertiesConfiguration(result);
+    }
+
+    @Override
+    public ConfigurationData<Properties> getConfig(String applicationName, RuntimeEnvironment env, Map<String, Object> additionalData) {
+        return getPropertiesForApplication(applicationName, env, additionalData);
     }
 }

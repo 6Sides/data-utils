@@ -8,9 +8,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
 import javax.sql.DataSource;
-import net.dashflight.data.ConfigValue;
-import net.dashflight.data.Configurable;
-import net.dashflight.data.RuntimeEnvironment;
+import net.dashflight.data.config.ConfigValue;
+import net.dashflight.data.config.Configurable;
+import net.dashflight.data.config.RuntimeEnvironment;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.guava.GuavaPlugin;
 import org.jdbi.v3.postgres.PostgresPlugin;
@@ -51,7 +51,12 @@ public class PostgresClient implements Configurable {
 
 
     PostgresClient(RuntimeEnvironment env, Map<String, Object> properties) {
-        registerWith(APP_NAME, env, properties);
+        registerWith(RegistrationOptions.builder()
+            .applicationName(APP_NAME)
+            .environment(env)
+            .additionalProperties(properties)
+            .build()
+        );
         init();
     }
 

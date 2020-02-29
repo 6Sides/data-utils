@@ -1,11 +1,10 @@
-package net.dashflight.data;
+package net.dashflight.data.config;
 
 import java.lang.reflect.Field;
-import java.util.Properties;
 
 public class ValueInjector {
 
-    public static void inject(Object source, Properties props) {
+    public static void inject(Object source, ConfigurationData<?> props) {
         Class<?> clazz = source.getClass().equals(Class.class) ? ((Class<?>) source) : source.getClass();
 
         try {
@@ -19,7 +18,7 @@ public class ValueInjector {
                     Class<?> fieldType = field.getType();
                     Object value;
 
-                    String configValue = props.getProperty(key);
+                    String configValue = (String) props.get(key);
 
                     if (configValue == null) {
                         continue;
