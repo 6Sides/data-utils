@@ -41,7 +41,7 @@ public interface Configurable<T extends ConfigurationData<?>> {
             cache.put(hash, options.configurationSource.getConfig(options.applicationName, options.environment, options.additionalProperties));
         }
 
-        ValueInjector.inject(this, (T) cache.get(hash));
+        ValueInjector.inject(this, cache.get(hash));
     }
 
 

@@ -3,6 +3,7 @@ package net.dashflight.data.config;
 import java.util.Map;
 
 /**
+ * Fetches configuration data from a source.
  * @param <T> The java type to parse the config file to.
  */
 public interface ConfigurationSource<T> {
