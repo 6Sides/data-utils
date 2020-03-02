@@ -28,7 +28,9 @@ public abstract class CacheableFetcher<K, V> {
     private static final ObjectMapper mapper = new ObjectMapper();
 
     static {
-        mapper.registerModule(new Jdk8Module());
+        Jdk8Module java8 = new Jdk8Module();
+        java8.configureAbsentsAsNulls(true);
+        mapper.registerModule(java8);
         mapper.registerModule(new JavaTimeModule());
 
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
