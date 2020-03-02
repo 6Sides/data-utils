@@ -2,6 +2,7 @@ package net.dashflight.data.helpers;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -86,6 +87,7 @@ public abstract class CacheableFetcher<K, V> {
 
         private static final int defaultCacheTTL = 3600;
 
+        @JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, property="@class")
         private V result;
 
         @JsonIgnore
