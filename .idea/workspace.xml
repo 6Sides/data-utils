@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47e27f0e-1967-4be3-87d2-25e1f94092c4" name="Default Changelist" comment="CacheableFetcher now refetches if cache misses">
+    <list default="true" id="47e27f0e-1967-4be3-87d2-25e1f94092c4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/CacheableFetcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/CacheableFetcher.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -137,7 +138,7 @@
       <workItem from="1582836954529" duration="17226000" />
       <workItem from="1582921814105" duration="985000" />
       <workItem from="1582931264621" duration="14394000" />
-      <workItem from="1583008385304" duration="15243000" />
+      <workItem from="1583008385304" duration="16467000" />
     </task>
     <task id="LOCAL-00001" summary="Updated dependencies">
       <created>1582135891750</created>
@@ -377,14 +378,20 @@
       <option name="project" value="LOCAL" />
       <updated>1583182406274</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Refactored CacheableFetcher">
+      <created>1583182933137</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1583182933137</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added more functionality to redis api" />
     <MESSAGE value="Added transaction to redis" />
     <MESSAGE value="Fixed bug with redis transaction" />
     <MESSAGE value="Modified redis visibility" />
@@ -409,7 +416,8 @@
     <MESSAGE value="Added time based UUID Generator" />
     <MESSAGE value="Removed generic type from ConfigurationSource" />
     <MESSAGE value="Added CacheableFetcher" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added CacheableFetcher" />
+    <MESSAGE value="Refactored CacheableFetcher" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored CacheableFetcher" />
   </component>
   <component name="WindowStateProjectService">
     <state x="560" y="205" key="#Project_Structure" timestamp="1582667303842">
@@ -440,10 +448,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="705" y="384" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582667316547" />
-    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1583182894072">
+    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1583182933046">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="492" y="88" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583182894072" />
+    <state x="492" y="88" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583182933046" />
     <state width="1920" height="311" key="GridCell.Tab.0.bottom" timestamp="1583181633682">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -464,10 +472,10 @@
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.right/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1582912659728" />
     <state width="1920" height="311" key="GridCell.Tab.0.right/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583181633680" />
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1583182408283">
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1583182934351">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583182408283" />
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583182934351" />
     <state x="217" y="372" key="com.intellij.ide.util.TipDialog" timestamp="1582239678190">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
