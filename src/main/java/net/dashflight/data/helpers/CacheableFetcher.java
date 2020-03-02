@@ -43,6 +43,23 @@ public abstract class CacheableFetcher<K, V> {
 
     protected abstract CacheableResult<V> fetchResult(K input) throws Exception;
 
+    public CacheableResult<V> get(K key) {
+        CacheableResult<V> result;
+
+        try {
+            String blob = redis.get(this.generateKey(key));
+            if (blob != null) {
+                return mapper.readValue(blob, new TypeReference<CacheableResult<V>>(){});
+            }
+
+            result = fetchResult(key);
+            this.cacheResult(key, result);
+
+            return result;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 
     public void invalidate(K key) {
         redis.del(this.generateKey(key));
@@ -50,24 +67,6 @@ public abstract class CacheableFetcher<K, V> {
 
     public long getKeyTTL(K key) {
         return redis.getTTL(this.generateKey(key));
-    }
-
-
-
-    public CacheableResult<V> get(K key) throws RuntimeException {
-        try {
-            String blob = redis.get(this.generateKey(key));
-            if (blob != null) {
-                return mapper.readValue(blob, new TypeReference<CacheableResult<V>>(){});
-            }
-
-            CacheableResult<V> result = fetchResult(key);
-            this.cacheResult(key, result);
-
-            return result;
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
     }
 
 
