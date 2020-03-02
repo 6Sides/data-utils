@@ -96,6 +96,12 @@ public class RedisClient implements Configurable {
         }
     }
 
+    public long getTTL(String key) {
+        try (Jedis client = pool.getResource()) {
+            return client.ttl(key);
+        }
+    }
+
     /**
      * Adds the members to the set at key `key`
      */

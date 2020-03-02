@@ -52,6 +52,9 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-properties:2.8.8'
 
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.10.2'
+
     // Bcrypt
     implementation 'at.favre.lib:bcrypt:0.8.0'
 

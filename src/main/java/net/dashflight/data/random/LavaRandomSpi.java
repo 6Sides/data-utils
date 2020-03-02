@@ -5,19 +5,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.net.URL;
 import java.security.SecureRandom;
+import java.security.SecureRandomSpi;
 import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import javax.xml.bind.DatatypeConverter;
 
-/**
- * Interfaces with the LavaRandom API
- */
-public class LavaRandom implements RandomGenerator {
+class LavaRandomSpi extends SecureRandomSpi {
 
     private static final int BUFFER_SIZE = 64 * 128;
     private static final ArrayBlockingQueue<Byte> BUFFER = new ArrayBlockingQueue<>(BUFFER_SIZE);
 
-    private static final Runnable producer = new LavaRandomGenerator();
+    private static final Runnable producer = new LavaRandomSpi.LavaRandomGenerator();
 
     private final SecureRandom backupRandom = new SecureRandom();
 
@@ -28,7 +26,12 @@ public class LavaRandom implements RandomGenerator {
     }
 
     @Override
-    public void nextBytes(byte[] bytes) {
+    protected void engineSetSeed(byte[] seed) {
+        throw new UnsupportedOperationException("Lava Random can't use a seed. It's too random :-)");
+    }
+
+    @Override
+    protected void engineNextBytes(byte[] bytes) {
         synchronized (BUFFER) {
             if (BUFFER.size() >= bytes.length) {
                 try {
@@ -38,7 +41,6 @@ public class LavaRandom implements RandomGenerator {
                     }
                 } catch (Exception e) {
                     backupRandom.nextBytes(bytes);
-                    return;
                 }
             } else {
                 backupRandom.nextBytes(bytes);
@@ -46,7 +48,16 @@ public class LavaRandom implements RandomGenerator {
         }
     }
 
-    static class LavaRandomGenerator implements Runnable {
+    @Override
+    protected byte[] engineGenerateSeed(int numBytes) {
+        throw new UnsupportedOperationException("Lava Random can't use a seed. It's too random :-)");
+    }
+
+
+    /**
+     * Background thread that fetches random bytes from the server and puts them in the buffer.
+     */
+    private static class LavaRandomGenerator implements Runnable {
 
         private static final String ENDPOINT = "http://173.68.124.69:5000/bytes?length=512";
 
@@ -57,6 +68,8 @@ public class LavaRandom implements RandomGenerator {
             while (true) {
                 try {
                     Map<String, String> res = mapper.readValue(new URL(ENDPOINT), new TypeReference<Map<String, String>>(){});
+
+                    // Prevents bug in random service where it returns odd length hex string
                     String bytes = res.get("value");
                     if (bytes.length() %2 == 1) {
                         bytes = bytes.substring(1);
