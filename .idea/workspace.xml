@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47e27f0e-1967-4be3-87d2-25e1f94092c4" name="Default Changelist" comment="">
+    <list default="true" id="47e27f0e-1967-4be3-87d2-25e1f94092c4" name="Default Changelist" comment="A">
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/UUIDSerializer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/CacheableLookup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/CacheableFetcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/FetchCheckins.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/FetchCheckins.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/CacheableFetcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/CacheableFetcher.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,7 +138,7 @@
       <workItem from="1582836954529" duration="17226000" />
       <workItem from="1582921814105" duration="985000" />
       <workItem from="1582931264621" duration="14394000" />
-      <workItem from="1583008385304" duration="25500000" />
+      <workItem from="1583008385304" duration="25779000" />
     </task>
     <task id="LOCAL-00001" summary="Updated dependencies">
       <created>1582135891750</created>
@@ -413,7 +413,14 @@
       <option name="project" value="LOCAL" />
       <updated>1583198153464</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="Switched to Kryo">
+      <created>1583198353534</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1583198353534</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -476,10 +483,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="705" y="384" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582667316547" />
-    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1583198343138">
+    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1583198569038">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="492" y="88" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583198343138" />
+    <state x="492" y="88" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583198569038" />
     <state width="1920" height="311" key="GridCell.Tab.0.bottom" timestamp="1583198343221">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -500,10 +507,10 @@
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.right/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1582912659728" />
     <state width="1920" height="311" key="GridCell.Tab.0.right/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583198343218" />
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1583198348375">
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1583198354714">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583198348375" />
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583198354714" />
     <state x="100" y="100" width="1720" height="880" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1583191107616">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>

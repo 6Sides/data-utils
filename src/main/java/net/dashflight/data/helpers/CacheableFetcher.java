@@ -10,6 +10,7 @@ import java.io.ByteArrayOutputStream;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import net.dashflight.data.redis.RedisClient;
 import net.dashflight.data.redis.RedisFactory;
 
@@ -28,6 +29,7 @@ public abstract class CacheableFetcher<K, V> {
 
     static {
         mapper.register(CacheableResult.class);
+        mapper.register(UUID.class, new UUIDSerializer());
     }
 
     private final String keyPrefix;
@@ -37,8 +39,8 @@ public abstract class CacheableFetcher<K, V> {
     }
 
     protected void registerClass(Class<?> clazz, int version) {
-        if (version <= 8) {
-            throw new IllegalArgumentException("Version must be > 8");
+        if (version <= 10) {
+            throw new IllegalArgumentException("Version must be > 10");
         }
 
         Integer v = versions.get(clazz);
