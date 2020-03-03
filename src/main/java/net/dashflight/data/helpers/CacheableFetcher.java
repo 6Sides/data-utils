@@ -4,7 +4,6 @@ import com.amazonaws.util.Base64;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.time.OffsetDateTime;
@@ -72,7 +71,7 @@ public abstract class CacheableFetcher<K, V> {
             if (blob != null) {
                 byte[] bytes = Base64.decode(blob.getBytes());
                 try {
-                    return CacheableResult.of((V) mapper.readClassAndObject(new Input(new ByteArrayInputStream(bytes))));
+                    return (CacheableResult<V>) mapper.readClassAndObject(new Input(new ByteArrayInputStream(bytes)));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -90,17 +89,15 @@ public abstract class CacheableFetcher<K, V> {
 
     private void cacheResult(K key, CacheableResult<V> result) {
         Output out = new Output(new ByteArrayOutputStream());
-        mapper.writeClassAndObject(out, result.getResult());
+        mapper.writeClassAndObject(out, result);
         out.close();
 
         Input input = new Input(out.getBuffer());
 
-        byte[] bytes = new byte[128];
+        byte[] bytes = new byte[(int) out.total()];
         int counter = 0;
-        while (!input.end()) {
-            byte b = input.readByte();
-            if (counter == 128) break;
-            bytes[counter++] = b;
+        while (counter < out.total()) {
+            bytes[counter++] = input.readByte();
         }
 
         byte[] res = new byte[counter];
@@ -115,14 +112,11 @@ public abstract class CacheableFetcher<K, V> {
 
     public static class CacheableResult<V> {
 
-        private static final int defaultCacheTTL = 3600;
+        private static final int defaultCacheTTL = 900;
 
         private V result;
-
-        @JsonIgnore
         private int cacheTTL;
-
-        //private OffsetDateTime lastUpdated = OffsetDateTime.now();
+        private OffsetDateTime lastUpdated = OffsetDateTime.now();
 
 
         private CacheableResult(V result, int cacheTTL) {
@@ -142,7 +136,7 @@ public abstract class CacheableFetcher<K, V> {
         }
 
         public OffsetDateTime getLastUpdated() {
-            return null;//lastUpdated;
+            return lastUpdated;
         }
 
 
