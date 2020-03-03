@@ -94,13 +94,11 @@ public abstract class CacheableFetcher<K, V> {
 
         Input input = new Input(out.getBuffer());
 
-        byte[] bytes = new byte[1024];
+        byte[] bytes = new byte[128];
         int counter = 0;
         boolean hitZero = false;
         while (!input.end()) {
             byte b = input.readByte();
-            if (hitZero) break;
-            if (b == 0) hitZero = true;
             bytes[counter++] = b;
         }
 
