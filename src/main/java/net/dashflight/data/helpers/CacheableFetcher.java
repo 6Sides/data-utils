@@ -83,6 +83,7 @@ public abstract class CacheableFetcher<K, V> {
 
             return result;
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -96,9 +97,9 @@ public abstract class CacheableFetcher<K, V> {
 
         byte[] bytes = new byte[128];
         int counter = 0;
-        boolean hitZero = false;
         while (!input.end()) {
             byte b = input.readByte();
+            if (counter == 128) break;
             bytes[counter++] = b;
         }
 
