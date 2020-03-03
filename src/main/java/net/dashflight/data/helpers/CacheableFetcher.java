@@ -7,9 +7,6 @@ import com.esotericsoftware.kryo.io.Output;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +19,7 @@ import net.dashflight.data.redis.RedisFactory;
  * @param <K> The data type required to make the query (The `key`)
  * @param <V> The result type (The `value`)
  */
-public abstract class CacheableLookup<K, V> {
+public abstract class CacheableFetcher<K, V> {
 
     private static RedisClient redis = RedisFactory.withDefaults();
     private static final Kryo mapper = new Kryo();
@@ -30,16 +27,16 @@ public abstract class CacheableLookup<K, V> {
     private static final Map<Class<?>, Integer> versions = new HashMap<>();
 
     static {
-        mapper.register(CacheableLookupResult.class);
+        mapper.register(CacheableResult.class);
     }
 
     private final String keyPrefix;
 
-    public CacheableLookup(String keyPrefix) {
+    public CacheableFetcher(String keyPrefix) {
         this.keyPrefix = keyPrefix;
     }
 
-    protected <T extends V> void registerClass(Class<T> clazz, int version) {
+    protected void registerClass(Class<?> clazz, int version) {
         if (version <= 8) {
             throw new IllegalArgumentException("Version must be > 8");
         }
@@ -53,7 +50,7 @@ public abstract class CacheableLookup<K, V> {
         versions.put(clazz, version);
     }
 
-    protected abstract CacheableLookupResult<V> fetchResult(K input) throws Exception;
+    protected abstract CacheableResult<V> fetchResult(K input) throws Exception;
 
 
     public void invalidate(K key) {
@@ -65,8 +62,8 @@ public abstract class CacheableLookup<K, V> {
     }
 
 
-    public CacheableLookupResult<V> get(K key) throws RuntimeException {
-        CacheableLookupResult<V> result;
+    public CacheableResult<V> get(K key) throws RuntimeException {
+        CacheableResult<V> result;
 
         try {
             String blob = redis.get(this.generateHash(key));
@@ -74,7 +71,7 @@ public abstract class CacheableLookup<K, V> {
                 byte[] bytes = Base64.decode(blob.getBytes());
                 try {
                     return mapper.readObject(new Input(new ByteArrayInputStream(bytes)),
-                            CacheableLookupResult.class);
+                            CacheableResult.class);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -89,7 +86,7 @@ public abstract class CacheableLookup<K, V> {
         }
     }
 
-    private void cacheResult(K key, CacheableLookupResult<V> result) {
+    private void cacheResult(K key, CacheableResult<V> result) {
         Output out = new Output(new ByteArrayOutputStream());
         mapper.writeObject(out, result);
         out.close();
@@ -114,7 +111,7 @@ public abstract class CacheableLookup<K, V> {
         return keyPrefix + key.hashCode();
     }
 
-    public static class CacheableLookupResult<V> {
+    public static class CacheableResult<V> {
 
         private static final int defaultCacheTTL = 3600;
 
@@ -126,12 +123,12 @@ public abstract class CacheableLookup<K, V> {
         //private OffsetDateTime lastUpdated = OffsetDateTime.now();
 
 
-        private CacheableLookupResult(V result, int cacheTTL) {
+        private CacheableResult(V result, int cacheTTL) {
             this.result = result;
             this.cacheTTL = cacheTTL;
         }
 
-        private CacheableLookupResult() {}
+        private CacheableResult() {}
 
 
         public V getResult() {
@@ -147,12 +144,12 @@ public abstract class CacheableLookup<K, V> {
         }
 
 
-        public static <V> CacheableLookupResult<V> of(V result, int ttl) {
-            return new CacheableLookupResult<>(result, ttl);
+        public static <V> CacheableResult<V> of(V result, int ttl) {
+            return new CacheableResult<>(result, ttl);
         }
 
-        public static <V> CacheableLookupResult<V> of(V result) {
-            return new CacheableLookupResult<>(result, defaultCacheTTL);
+        public static <V> CacheableResult<V> of(V result) {
+            return new CacheableResult<>(result, defaultCacheTTL);
         }
     }
 }
