@@ -72,8 +72,7 @@ public abstract class CacheableFetcher<K, V> {
             if (blob != null) {
                 byte[] bytes = Base64.decode(blob.getBytes());
                 try {
-                    return mapper.readObject(new Input(new ByteArrayInputStream(bytes)),
-                            CacheableResult.class);
+                    return (CacheableResult<V>) mapper.readClassAndObject(new Input(new ByteArrayInputStream(bytes)));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -90,7 +89,7 @@ public abstract class CacheableFetcher<K, V> {
 
     private void cacheResult(K key, CacheableResult<V> result) {
         Output out = new Output(new ByteArrayOutputStream());
-        mapper.writeObject(out, result);
+        mapper.writeClassAndObject(out, result);
         out.close();
 
         Input input = new Input(out.getBuffer());

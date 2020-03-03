@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47e27f0e-1967-4be3-87d2-25e1f94092c4" name="Default Changelist" comment="A">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/UUIDSerializer.java" afterDir="false" />
+    <list default="true" id="47e27f0e-1967-4be3-87d2-25e1f94092c4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/CacheableFetcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/CacheableFetcher.java" afterDir="false" />
     </list>
@@ -138,7 +137,7 @@
       <workItem from="1582836954529" duration="17226000" />
       <workItem from="1582921814105" duration="985000" />
       <workItem from="1582931264621" duration="14394000" />
-      <workItem from="1583008385304" duration="25779000" />
+      <workItem from="1583008385304" duration="26005000" />
     </task>
     <task id="LOCAL-00001" summary="Updated dependencies">
       <created>1582135891750</created>
@@ -420,14 +419,20 @@
       <option name="project" value="LOCAL" />
       <updated>1583198353534</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="Added uuid serializer">
+      <created>1583198622808</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1583198622810</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Updated dependencies" />
     <MESSAGE value="Refactored PostgresConnectionPool to use factory and new config class" />
     <MESSAGE value="Refactored Redis to use new config injector" />
     <MESSAGE value="Refactored rsa key manager to use new config injector" />
@@ -452,7 +457,8 @@
     <MESSAGE value="Bug fix?" />
     <MESSAGE value="Fixed jackson optionals" />
     <MESSAGE value="Switched to Kryo" />
-    <option name="LAST_COMMIT_MESSAGE" value="Switched to Kryo" />
+    <MESSAGE value="Added uuid serializer" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added uuid serializer" />
   </component>
   <component name="WindowStateProjectService">
     <state x="560" y="205" key="#Project_Structure" timestamp="1582667303842">
@@ -483,34 +489,34 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="705" y="384" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582667316547" />
-    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1583198569038">
+    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1583198622729">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="492" y="88" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583198569038" />
-    <state width="1920" height="311" key="GridCell.Tab.0.bottom" timestamp="1583198343221">
+    <state x="492" y="88" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583198622729" />
+    <state width="1920" height="311" key="GridCell.Tab.0.bottom" timestamp="1583198845411">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.bottom/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1582912659730" />
-    <state width="1920" height="311" key="GridCell.Tab.0.bottom/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583198343221" />
-    <state width="1920" height="311" key="GridCell.Tab.0.center" timestamp="1583198343216">
+    <state width="1920" height="311" key="GridCell.Tab.0.bottom/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583198845411" />
+    <state width="1920" height="311" key="GridCell.Tab.0.center" timestamp="1583198845406">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.center/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1582912659725" />
-    <state width="1920" height="311" key="GridCell.Tab.0.center/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583198343216" />
-    <state width="1920" height="311" key="GridCell.Tab.0.left" timestamp="1583198343214">
+    <state width="1920" height="311" key="GridCell.Tab.0.center/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583198845406" />
+    <state width="1920" height="311" key="GridCell.Tab.0.left" timestamp="1583198845403">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.left/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1582912659722" />
-    <state width="1920" height="311" key="GridCell.Tab.0.left/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583198343214" />
-    <state width="1920" height="311" key="GridCell.Tab.0.right" timestamp="1583198343218">
+    <state width="1920" height="311" key="GridCell.Tab.0.left/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583198845403" />
+    <state width="1920" height="311" key="GridCell.Tab.0.right" timestamp="1583198845408">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.right/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1582912659728" />
-    <state width="1920" height="311" key="GridCell.Tab.0.right/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583198343218" />
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1583198354714">
+    <state width="1920" height="311" key="GridCell.Tab.0.right/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583198845408" />
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1583198625499">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583198354714" />
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583198625499" />
     <state x="100" y="100" width="1720" height="880" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1583191107616">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
