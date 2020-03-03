@@ -68,6 +68,12 @@ public class RedisClient implements Configurable {
         }
     }
 
+    public boolean setWithExpiry(String key, int seconds, byte[] value) {
+        try (Jedis client = pool.getResource()) {
+            return client.setex(key.getBytes(), seconds, value).equals("OK");
+        }
+    }
+
     /**
      * Checks if a key exists in the cache
      */

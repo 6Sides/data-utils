@@ -57,6 +57,8 @@ dependencies {
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jdk8
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.10.2'
 
+    compile 'com.esotericsoftware:kryo:5.0.0-RC4'
+
 
     // Bcrypt
     implementation 'at.favre.lib:bcrypt:0.8.0'
