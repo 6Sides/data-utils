@@ -21,13 +21,14 @@ import net.dashflight.data.redis.RedisFactory;
  */
 public abstract class CacheableFetcher<K, V> {
 
-    private static RedisClient redis = RedisFactory.withDefaults();
-    private static final Kryo mapper = new Kryo();
+    private static final RedisClient redis = RedisFactory.withDefaults();
+    protected static final Kryo mapper = new Kryo();
 
     private static final Map<Class<?>, Integer> versions = new HashMap<>();
 
     static {
         mapper.register(CacheableResult.class);
+        mapper.register(OffsetDateTime.class);
         mapper.register(UUID.class, new UUIDSerializer());
     }
 
@@ -87,7 +88,7 @@ public abstract class CacheableFetcher<K, V> {
         }
     }
 
-    private void cacheResult(K key, CacheableResult<V> result) {
+    protected void cacheResult(K key, CacheableResult<V> result) {
         Output out = new Output(new ByteArrayOutputStream());
         mapper.writeClassAndObject(out, result);
         out.close();
