@@ -31,9 +31,11 @@ public abstract class RefreshAheadCacheableFetcher<K,V> extends CacheableFetcher
 
     @Override
     protected void cacheResult(K key, CacheableResult<V> result) {
+        long offset = (long) ((result.getCacheTTL() - (Instant.now().getEpochSecond() - result.getLastUpdated().toEpochSecond()) ) * 0.75);
+
         taskQueue.offer(
                 RefreshCacheTask.of(
-                        Instant.now().plusSeconds((long) (result.getCacheTTL() * 0.75)),
+                        Instant.now().plusSeconds(offset),
                         () -> {
                             try {
                                 this.cacheResult(key, this.fetchResult(key));
