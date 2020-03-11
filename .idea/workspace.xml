@@ -146,14 +146,7 @@
       <workItem from="1583008385304" duration="48344000" />
       <workItem from="1583759788101" duration="123000" />
       <workItem from="1583761790950" duration="136000" />
-      <workItem from="1583761951485" duration="8883000" />
-    </task>
-    <task id="LOCAL-00006" summary="Added Redis and restructured project">
-      <created>1582666990608</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1582666990608</updated>
+      <workItem from="1583761951485" duration="9492000" />
     </task>
     <task id="LOCAL-00007" summary="Added Redis">
       <created>1582668087936</created>
@@ -491,14 +484,20 @@
       <option name="project" value="LOCAL" />
       <updated>1583958209921</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Refactored CacheableFetcher to be easier to use">
+      <created>1583961624917</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1583961624917</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Set limit on redis pool connections" />
     <MESSAGE value="Fixed bug with PostgresFactory" />
     <MESSAGE value="Fixed bug with RedisFactory" />
     <MESSAGE value="Added interfaces for GUIDs" />
@@ -523,7 +522,8 @@
     <MESSAGE value="Possible bug fix in CacheableFetcher" />
     <MESSAGE value="Close input stream after use" />
     <MESSAGE value="Added Joda plugin to Jdbi" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Joda plugin to Jdbi" />
+    <MESSAGE value="Refactored CacheableFetcher to be easier to use" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored CacheableFetcher to be easier to use" />
   </component>
   <component name="WindowStateProjectService">
     <state x="560" y="205" key="#Project_Structure" timestamp="1582667303842">
@@ -534,11 +534,11 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="424" y="202" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583176335017" />
-    <state x="773" y="256" key="#com.intellij.ide.util.MemberChooser" timestamp="1583961220122">
+    <state x="773" y="256" key="#com.intellij.ide.util.MemberChooser" timestamp="1583962063240">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="773" y="256" key="#com.intellij.ide.util.MemberChooser/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583434027902" />
-    <state x="773" y="256" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1583961220122" />
+    <state x="773" y="256" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1583962063240" />
     <state x="697" y="331" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1582909303889">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -556,40 +556,40 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="705" y="384" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582667316547" />
-    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1583958209833">
+    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1583961624782">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="492" y="88" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583458092565" />
-    <state x="492" y="88" key="CommitChangelistDialog2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1583958209833" />
-    <state width="1920" height="269" key="GridCell.Tab.0.bottom" timestamp="1583961357429">
+    <state x="492" y="88" key="CommitChangelistDialog2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1583961624782" />
+    <state width="1920" height="269" key="GridCell.Tab.0.bottom" timestamp="1583962202515">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.bottom/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896596" />
     <state width="1920" height="269" key="GridCell.Tab.0.bottom/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583456731435" />
-    <state width="1920" height="269" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1583961357429" />
-    <state width="1920" height="269" key="GridCell.Tab.0.center" timestamp="1583961357424">
+    <state width="1920" height="269" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1583962202515" />
+    <state width="1920" height="269" key="GridCell.Tab.0.center" timestamp="1583962202510">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.center/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896587" />
     <state width="1920" height="269" key="GridCell.Tab.0.center/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583456731429" />
-    <state width="1920" height="269" key="GridCell.Tab.0.center/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1583961357424" />
-    <state width="1920" height="269" key="GridCell.Tab.0.left" timestamp="1583961357421">
+    <state width="1920" height="269" key="GridCell.Tab.0.center/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1583962202510" />
+    <state width="1920" height="269" key="GridCell.Tab.0.left" timestamp="1583962202508">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.left/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896584" />
     <state width="1920" height="269" key="GridCell.Tab.0.left/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583456731427" />
-    <state width="1920" height="269" key="GridCell.Tab.0.left/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1583961357421" />
-    <state width="1920" height="269" key="GridCell.Tab.0.right" timestamp="1583961357426">
+    <state width="1920" height="269" key="GridCell.Tab.0.left/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1583962202508" />
+    <state width="1920" height="269" key="GridCell.Tab.0.right" timestamp="1583962202513">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.right/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896589" />
     <state width="1920" height="269" key="GridCell.Tab.0.right/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583456731432" />
-    <state width="1920" height="269" key="GridCell.Tab.0.right/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1583961357426" />
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1583939958534">
+    <state width="1920" height="269" key="GridCell.Tab.0.right/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1583962202513" />
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1583961636349">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583458094651" />
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1583939958534" />
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1583961636349" />
     <state x="100" y="100" width="1720" height="880" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1583191107616">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>

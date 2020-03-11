@@ -36,12 +36,10 @@ public abstract class CacheableFetcher<K, V> {
 
 
     /** Prefix for each key in the cache */
-    private final String keyPrefix;
+    private final String keyPrefix = getClass().hashCode() + "";
 
     /** Can't get generic type at runtime so just pass the class */
-    protected CacheableFetcher(Class<V> clazz) {
-        this.keyPrefix = clazz.hashCode() + "";
-    }
+    protected CacheableFetcher() {}
 
 
     /**

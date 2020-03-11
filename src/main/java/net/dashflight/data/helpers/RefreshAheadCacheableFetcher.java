@@ -20,9 +20,7 @@ public abstract class RefreshAheadCacheableFetcher<K,V> extends CacheableFetcher
     private static final BlockingQueue<RefreshCacheTask> taskQueue = new ArrayBlockingQueue<>(1024);
 
 
-    public RefreshAheadCacheableFetcher(Class<V> clazz) {
-        super(clazz);
-
+    public RefreshAheadCacheableFetcher() {
         this.initialize();
 
         Thread refreshThread = new Thread(new TaskScheduler());
