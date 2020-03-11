@@ -38,6 +38,8 @@ dependencies {
 
     compile group: 'org.jdbi', name: 'jdbi3-guava', version: '3.12.0'
 
+    compile group: 'org.jdbi', name: 'jdbi3-jodatime2', version: '3.12.0'
+
     // https://mvnrepository.com/artifact/org.jdbi/jdbi3-testing
     testCompile group: 'org.jdbi', name: 'jdbi3-testing', version: '3.12.0'
 

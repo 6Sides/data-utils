@@ -6,12 +6,12 @@ import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.google.common.io.ByteStreams;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import net.dashflight.data.config.RuntimeEnvironment;
 import net.dashflight.data.redis.RedisClient;
 import net.dashflight.data.redis.RedisFactory;
 
@@ -27,6 +27,8 @@ public abstract class CacheableFetcher<K, V> {
     protected static final Kryo mapper = new Kryo();
 
     private static final Map<Class<?>, Integer> versions = new HashMap<>();
+
+    private static final RuntimeEnvironment currentEnvironment = RuntimeEnvironment.getCurrentEnvironment();
 
     static {
         mapper.register(CacheableResult.class);
@@ -107,7 +109,7 @@ public abstract class CacheableFetcher<K, V> {
     }
 
     private String generateHash(K key) {
-        return keyPrefix + key.hashCode();
+        return currentEnvironment.hashCode() + keyPrefix + key.hashCode();
     }
 
     public static class CacheableResult<V> {

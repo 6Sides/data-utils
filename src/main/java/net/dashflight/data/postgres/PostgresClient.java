@@ -13,6 +13,7 @@ import net.dashflight.data.config.Configurable;
 import net.dashflight.data.config.RuntimeEnvironment;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.guava.GuavaPlugin;
+import org.jdbi.v3.jodatime2.JodaTimePlugin;
 import org.jdbi.v3.postgres.PostgresPlugin;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 
@@ -99,6 +100,7 @@ public class PostgresClient implements Configurable {
         jdbi.installPlugin(new SqlObjectPlugin());
         jdbi.installPlugin(new PostgresPlugin());
         jdbi.installPlugin(new GuavaPlugin());
+        jdbi.installPlugin(new JodaTimePlugin());
     }
 
     public Connection getConnection() throws SQLException {

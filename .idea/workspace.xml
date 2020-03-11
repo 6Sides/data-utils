@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="47e27f0e-1967-4be3-87d2-25e1f94092c4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/CacheableFetcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/CacheableFetcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresClient.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,14 +142,7 @@
       <workItem from="1583008385304" duration="48344000" />
       <workItem from="1583759788101" duration="123000" />
       <workItem from="1583761790950" duration="136000" />
-      <workItem from="1583761951485" duration="3702000" />
-    </task>
-    <task id="LOCAL-00004" summary="Removed unused dependencies">
-      <created>1582299674545</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1582299674545</updated>
+      <workItem from="1583761951485" duration="5459000" />
     </task>
     <task id="LOCAL-00005" summary="Added dependency">
       <created>1582299749682</created>
@@ -485,14 +480,20 @@
       <option name="project" value="LOCAL" />
       <updated>1583939661372</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="Close input stream after use">
+      <created>1583939957320</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1583939957320</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Refactored to use Configurable interface" />
     <MESSAGE value="Added method to get redis pool" />
     <MESSAGE value="Set limit on redis pool connections" />
     <MESSAGE value="Fixed bug with PostgresFactory" />
@@ -517,7 +518,8 @@
     <MESSAGE value="Added RefreshAheadCacheableFetcher" />
     <MESSAGE value="Added Redis reliable queue implementation" />
     <MESSAGE value="Possible bug fix in CacheableFetcher" />
-    <option name="LAST_COMMIT_MESSAGE" value="Possible bug fix in CacheableFetcher" />
+    <MESSAGE value="Close input stream after use" />
+    <option name="LAST_COMMIT_MESSAGE" value="Close input stream after use" />
   </component>
   <component name="WindowStateProjectService">
     <state x="560" y="205" key="#Project_Structure" timestamp="1582667303842">
@@ -548,11 +550,11 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="705" y="384" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582667316547" />
-    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1583939661297">
+    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1583939957238">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="492" y="88" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583458092565" />
-    <state x="492" y="88" key="CommitChangelistDialog2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1583939661297" />
+    <state x="492" y="88" key="CommitChangelistDialog2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1583939957238" />
     <state width="1920" height="269" key="GridCell.Tab.0.bottom" timestamp="1583456731435">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -573,11 +575,11 @@
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.right/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896589" />
     <state width="1920" height="269" key="GridCell.Tab.0.right/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583456731432" />
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1583939662832">
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1583939958534">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583458094651" />
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1583939662832" />
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1583939958534" />
     <state x="100" y="100" width="1720" height="880" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1583191107616">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
