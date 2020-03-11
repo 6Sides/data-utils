@@ -99,6 +99,7 @@ public abstract class CacheableFetcher<K, V> {
 
         try {
             byte[] bytes = ByteStreams.toByteArray(input);
+            input.close();
             redis.setWithExpiry(this.generateHash(key), result.cacheTTL, Base64.encode(bytes));
         } catch (IOException e) {
             e.printStackTrace();
