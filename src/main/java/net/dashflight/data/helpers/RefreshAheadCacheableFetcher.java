@@ -13,48 +13,55 @@ import java.util.concurrent.BlockingQueue;
  * By default, lazily loads on first fetch and then auto-refreshes value based on
  * cache ttl and refresh-ahead factor.
  */
-public abstract class RefreshAheadCacheableFetcher<K,V> extends CacheableFetcher<K,V> {
+public abstract class RefreshAheadCacheableFetcher<K, V> extends CacheableFetcher<K, V> {
 
     private static final float REFRESH_AHEAD_FACTOR = 0.75f;
 
     private static final BlockingQueue<RefreshCacheTask> taskQueue = new ArrayBlockingQueue<>(1024);
 
 
-    public RefreshAheadCacheableFetcher() {
-        this.initialize();
+    private static final Thread refreshThread;
 
-        Thread refreshThread = new Thread(new TaskScheduler());
-        refreshThread.setDaemon(false);
+    // Configures and starts the refresh monitor thread
+    static {
+        refreshThread = new Thread(new TaskScheduler());
+        refreshThread.setDaemon(true);
         refreshThread.start();
     }
 
 
     /**
-     * Used to push tasks to the scheduler to run on startup.
+     * Adds the key,value pair to the refresh queue and then caches the current result value.
+     *
+     * @param key The key to store the result at.
+     * @param result The object to serialize and store.
      */
-    protected void initialize() {}
-
-
     @Override
     protected void cacheResult(K key, CacheableResult<V> result) {
-        long offset = (long) ((result.getTTL() - (Instant.now().getEpochSecond() - result.getLastUpdated().toEpochSecond())) * REFRESH_AHEAD_FACTOR);
+        long timeSinceLastUpdate = Instant.now().getEpochSecond() - result.getLastUpdated().toEpochSecond();
+
+        // Time (in seconds) until the result value should be refreshed
+        long delay = (long) ((result.getTTL() - timeSinceLastUpdate) * REFRESH_AHEAD_FACTOR);
 
         taskQueue.offer(
                 RefreshCacheTask.of(
-                        Instant.now().plusSeconds(offset),
+                        Instant.now().plusSeconds(delay),
                         () -> {
                             try {
                                 this.cacheResult(key, this.fetchResult(key));
-                            } catch (Exception e) {
+                            } catch (CacheableFetchException e) {
                                 e.printStackTrace();
                             }
                         }
                 )
         );
+
         super.cacheResult(key, result);
     }
 
-
+    /**
+     * Runnable to process refresh jobs.
+     */
     private static final class TaskScheduler implements Runnable {
 
         @Override
@@ -62,27 +69,25 @@ public abstract class RefreshAheadCacheableFetcher<K,V> extends CacheableFetcher
             while (true) {
 
                 Set<RefreshCacheTaskDefinition> tasks = new HashSet<>();
+                Instant now = Instant.now();
 
-                if (taskQueue.size() > 0) {
-                    Instant now = Instant.now();
+                // Add all tasks that have a refresh time less than the current time to the task set
+                while (taskQueue.size() > 0 && taskQueue.peek().getRefreshTime().compareTo(now) <= 0) {
                     try {
-                        RefreshCacheTask task;
-
-                        do {
-                            task = taskQueue.take();
-                            tasks.add(task.getTask());
-                        } while (taskQueue.size() > 0 && taskQueue.peek().getRefreshTime().compareTo(now) <= 0);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        RefreshCacheTask task = taskQueue.take();
+                        tasks.add(task.getTask());
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
                     }
                 }
 
                 tasks.forEach(RefreshCacheTaskDefinition::execute);
 
+
                 try {
-                    Thread.sleep(10_000L);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Thread.sleep(5_000L);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
                 }
             }
         }
@@ -108,6 +113,7 @@ public abstract class RefreshAheadCacheableFetcher<K,V> extends CacheableFetcher
         static RefreshCacheTask of(Instant refreshTime, RefreshCacheTaskDefinition task) {
             return new RefreshCacheTask(refreshTime, task);
         }
+
 
         @Override
         public boolean equals(Object o) {
