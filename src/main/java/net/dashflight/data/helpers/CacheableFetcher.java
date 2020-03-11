@@ -93,11 +93,11 @@ public abstract class CacheableFetcher<K, V> {
         mapper.writeClassAndObject(out, result);
         out.close();
 
-        Input input = new Input(out.getBuffer());
+        Input input = new Input(out.toBytes());
 
-        byte[] bytes = new byte[(int) out.total()];
+        byte[] bytes = new byte[out.toBytes().length];
         int counter = 0;
-        while (counter < out.total()) {
+        while (counter < bytes.length) {
             bytes[counter++] = input.readByte();
         }
 
