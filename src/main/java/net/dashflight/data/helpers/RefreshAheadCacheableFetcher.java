@@ -4,8 +4,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 
 /**
  * Implementation of the refresh-ahead caching strategy.
@@ -17,7 +16,7 @@ public abstract class RefreshAheadCacheableFetcher<K, V> extends CacheableFetche
 
     private static final float REFRESH_AHEAD_FACTOR = 0.75f;
 
-    private static final BlockingQueue<RefreshCacheTask> taskQueue = new ArrayBlockingQueue<>(1024);
+    private static final PriorityBlockingQueue<RefreshCacheTask> taskQueue = new PriorityBlockingQueue<>(1024);
 
 
     private static final Thread refreshThread;
@@ -93,7 +92,7 @@ public abstract class RefreshAheadCacheableFetcher<K, V> extends CacheableFetche
         }
     }
 
-    private static final class RefreshCacheTask {
+    private static final class RefreshCacheTask implements Comparable<RefreshCacheTask> {
         private Instant refreshTime;
         private RefreshCacheTaskDefinition task;
 
@@ -131,6 +130,11 @@ public abstract class RefreshAheadCacheableFetcher<K, V> extends CacheableFetche
         @Override
         public int hashCode() {
             return Objects.hash(refreshTime, task);
+        }
+
+        @Override
+        public int compareTo(RefreshCacheTask o) {
+            return this.refreshTime.compareTo(o.refreshTime);
         }
     }
 

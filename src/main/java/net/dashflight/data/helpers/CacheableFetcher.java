@@ -38,7 +38,6 @@ public abstract class CacheableFetcher<K, V> {
     /** Prefix for each key in the cache */
     private final String keyPrefix = getClass().hashCode() + "";
 
-    /** Can't get generic type at runtime so just pass the class */
     protected CacheableFetcher() {}
 
 
@@ -77,10 +76,10 @@ public abstract class CacheableFetcher<K, V> {
      * Fetches data based on the specified key. Attempts to retrieve the result from the cache first.
      * If no value is found the result is refetched, cached, and then returned.
      *
-     * @param key The data being used to make the query.
+     * @param key The data being used to make the query
      * @return The value associated with the specified key (can be null)
      *
-     * @throws CacheableFetchException When a result couldn't be obtained
+     * @throws CacheableFetchException when a result couldn't be obtained
      */
     public CacheableResult<V> get(K key) throws CacheableFetchException {
         CacheableResult<V> result;
@@ -160,11 +159,16 @@ public abstract class CacheableFetcher<K, V> {
 
         private CacheableResult() {}
 
-
+        /**
+         * The result of the fetch
+         */
         public V getResult() {
             return result;
         }
 
+        /**
+         * The ttl the key was set with. Note this is NOT the remaining ttl of the key.
+         */
         public int getTTL() {
             return ttl;
         }
