@@ -2,14 +2,13 @@ package net.dashflight.data.helpers;
 
 import com.amazonaws.util.Base64;
 import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.google.common.io.ByteStreams;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.time.OffsetDateTime;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 import net.dashflight.data.config.RuntimeEnvironment;
 import net.dashflight.data.redis.RedisClient;
@@ -23,12 +22,11 @@ import net.dashflight.data.redis.RedisFactory;
  */
 public abstract class CacheableFetcher<K, V> {
 
-    private static final RedisClient redis = RedisFactory.withDefaults();
     protected static final Kryo mapper = new Kryo();
 
-    private static final Map<Class<?>, Integer> versions = new HashMap<>();
-
+    private static final RedisClient redis = RedisFactory.withDefaults();
     private static final RuntimeEnvironment currentEnvironment = RuntimeEnvironment.getCurrentEnvironment();
+
 
     static {
         mapper.register(CacheableResult.class);
@@ -36,27 +34,36 @@ public abstract class CacheableFetcher<K, V> {
         mapper.register(UUID.class, new UUIDSerializer());
     }
 
+
+    /** Prefix for each key in the cache */
     private final String keyPrefix;
 
-    public CacheableFetcher(String keyPrefix) {
-        this.keyPrefix = keyPrefix;
+    /** Can't get generic type at runtime so just pass the class */
+    protected CacheableFetcher(Class<V> clazz) {
+        this.keyPrefix = clazz.hashCode() + "";
     }
 
-    protected void registerClass(Class<?> clazz, int version) {
-        if (version <= 10) {
-            throw new IllegalArgumentException("Version must be > 10");
-        }
 
-        Integer v = versions.get(clazz);
-        if (v != null && v != version) {
-            throw new IllegalStateException("Class " + clazz + " is already registered!");
-        }
-
-        mapper.register(clazz, version);
-        versions.put(clazz, version);
+    /**
+     * Registers a class with an id based on its hashcode. 12 is added to ensure
+     * there is no version clash with Kryo's default registered classes.
+     */
+    protected <T> void registerClass(Class<T> clazz) {
+        mapper.register(clazz, Math.abs(clazz.hashCode()) + 12);
     }
 
-    protected abstract CacheableResult<V> fetchResult(K input) throws Exception;
+    protected <T> void registerClass(Class<T> clazz, Serializer<T> serializer) {
+        mapper.register(clazz, serializer, Math.abs(clazz.hashCode()) + 12);
+    }
+
+
+    /**
+     * Fetches and returns the
+     * @param input
+     * @return
+     * @throws Exception
+     */
+    protected abstract CacheableResult<V> fetchResult(K input) throws CacheableFetchException;
 
 
     public void invalidate(K key) {
@@ -68,62 +75,89 @@ public abstract class CacheableFetcher<K, V> {
     }
 
 
-    public CacheableResult<V> get(K key) throws RuntimeException {
+    /**
+     * Fetches data based on the specified key. Attempts to retrieve the result from the cache first.
+     * If no value is found the result is refetched, cached, and then returned.
+     *
+     * @param key The data being used to make the query.
+     * @return The value associated with the specified key (can be null)
+     *
+     * @throws CacheableFetchException When a result couldn't be obtained
+     */
+    public CacheableResult<V> get(K key) throws CacheableFetchException {
         CacheableResult<V> result;
 
         try {
             String blob = redis.get(this.generateHash(key));
+
+            // Key exists, attempt to deserialize and return it's associated value.
             if (blob != null) {
-                byte[] bytes = Base64.decode(blob.getBytes());
                 try {
+                    byte[] bytes = Base64.decode(blob.getBytes());
                     return (CacheableResult<V>) mapper.readClassAndObject(new Input(new ByteArrayInputStream(bytes)));
                 } catch (Exception e) {
+                    // Key is in invalid format, delete it.
+                    redis.del(this.generateHash(key));
                     e.printStackTrace();
                 }
             }
 
+            // Refetch result and cache it
             result = fetchResult(key);
             this.cacheResult(key, result);
 
             return result;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException(e.getMessage());
+            throw new CacheableFetchException(e.getMessage());
         }
     }
 
+    /**
+     * Serializes and caches fetched result.
+     * @param key The key to store the result at.
+     * @param result The object to serialize and store.
+     */
     protected void cacheResult(K key, CacheableResult<V> result) {
         Output out = new Output(1024, -1);
         mapper.writeClassAndObject(out, result);
         out.close();
 
-        Input input = new Input(out.getBuffer(), 0, out.position());
-
-        try {
+        try (Input input = new Input(out.getBuffer(), 0, out.position())) {
             byte[] bytes = ByteStreams.toByteArray(input);
             input.close();
-            redis.setWithExpiry(this.generateHash(key), result.cacheTTL, Base64.encode(bytes));
-        } catch (IOException e) {
-            e.printStackTrace();
+            redis.setWithExpiry(this.generateHash(key), result.ttl, Base64.encode(bytes));
+        } catch(IOException ex) {
+            ex.printStackTrace();
         }
     }
 
+    /**
+     * Generates the key to be used in the key,value pair inserted in the cache.
+     * @param key The key to hash.
+     * @return A hash of the key mixed with any other desired data (e.g. environment)
+     */
     private String generateHash(K key) {
         return currentEnvironment.hashCode() + keyPrefix + key.hashCode();
     }
 
+
+    /**
+     * Used by clients to return fetched results.
+     * @param <V> The type of the result being returned.
+     */
     public static class CacheableResult<V> {
 
         private static final int defaultCacheTTL = 900;
 
         private V result;
-        private int cacheTTL;
+        private int ttl;
         private OffsetDateTime lastUpdated = OffsetDateTime.now();
 
 
-        private CacheableResult(V result, int cacheTTL) {
+        private CacheableResult(V result, int ttl) {
             this.result = result;
-            this.cacheTTL = cacheTTL;
+            this.ttl = ttl;
         }
 
         private CacheableResult() {}
@@ -133,8 +167,8 @@ public abstract class CacheableFetcher<K, V> {
             return result;
         }
 
-        public int getCacheTTL() {
-            return cacheTTL;
+        public int getTTL() {
+            return ttl;
         }
 
         public OffsetDateTime getLastUpdated() {
@@ -142,12 +176,26 @@ public abstract class CacheableFetcher<K, V> {
         }
 
 
-        public static <V> CacheableResult<V> of(V result, int ttl) {
-            return new CacheableResult<>(result, ttl);
+        /**
+         * @param result The result of the query.
+         * @param cacheTTL The ttl in seconds.
+         */
+        public static <V> CacheableResult<V> of(V result, int cacheTTL) {
+            return new CacheableResult<>(result, cacheTTL);
         }
 
         public static <V> CacheableResult<V> of(V result) {
             return new CacheableResult<>(result, defaultCacheTTL);
+        }
+    }
+
+    /**
+     * Thrown when fetching a result fails.
+     */
+    public static class CacheableFetchException extends Exception {
+
+        public CacheableFetchException(String message) {
+            super(message);
         }
     }
 }

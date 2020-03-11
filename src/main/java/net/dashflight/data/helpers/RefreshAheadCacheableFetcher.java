@@ -7,13 +7,21 @@ import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+/**
+ * Implementation of the refresh-ahead caching strategy.
+ *
+ * By default, lazily loads on first fetch and then auto-refreshes value based on
+ * cache ttl and refresh-ahead factor.
+ */
 public abstract class RefreshAheadCacheableFetcher<K,V> extends CacheableFetcher<K,V> {
+
+    private static final float REFRESH_AHEAD_FACTOR = 0.75f;
 
     private static final BlockingQueue<RefreshCacheTask> taskQueue = new ArrayBlockingQueue<>(1024);
 
 
-    public RefreshAheadCacheableFetcher(String keyPrefix) {
-        super(keyPrefix);
+    public RefreshAheadCacheableFetcher(Class<V> clazz) {
+        super(clazz);
 
         this.initialize();
 
@@ -31,7 +39,7 @@ public abstract class RefreshAheadCacheableFetcher<K,V> extends CacheableFetcher
 
     @Override
     protected void cacheResult(K key, CacheableResult<V> result) {
-        long offset = (long) ((result.getCacheTTL() - (Instant.now().getEpochSecond() - result.getLastUpdated().toEpochSecond()) ) * 0.75);
+        long offset = (long) ((result.getTTL() - (Instant.now().getEpochSecond() - result.getLastUpdated().toEpochSecond())) * REFRESH_AHEAD_FACTOR);
 
         taskQueue.offer(
                 RefreshCacheTask.of(
