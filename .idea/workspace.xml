@@ -140,14 +140,7 @@
       <workItem from="1583008385304" duration="48344000" />
       <workItem from="1583759788101" duration="123000" />
       <workItem from="1583761790950" duration="136000" />
-      <workItem from="1583761951485" duration="2681000" />
-    </task>
-    <task id="LOCAL-00002" summary="Added setter for app name">
-      <created>1582137342487</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1582137342487</updated>
+      <workItem from="1583761951485" duration="3421000" />
     </task>
     <task id="LOCAL-00003" summary="Updated visibility">
       <created>1582137406358</created>
@@ -485,14 +478,20 @@
       <option name="project" value="LOCAL" />
       <updated>1583458093072</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="Possible bug fix in CacheableFetcher">
+      <created>1583938921696</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1583938921696</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added temporary helper method" />
     <MESSAGE value="Refactored to use Configurable interface" />
     <MESSAGE value="Added method to get redis pool" />
     <MESSAGE value="Set limit on redis pool connections" />
@@ -517,7 +516,8 @@
     <MESSAGE value="Optimized Kryo serialization" />
     <MESSAGE value="Added RefreshAheadCacheableFetcher" />
     <MESSAGE value="Added Redis reliable queue implementation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Redis reliable queue implementation" />
+    <MESSAGE value="Possible bug fix in CacheableFetcher" />
+    <option name="LAST_COMMIT_MESSAGE" value="Possible bug fix in CacheableFetcher" />
   </component>
   <component name="WindowStateProjectService">
     <state x="560" y="205" key="#Project_Structure" timestamp="1582667303842">
@@ -548,10 +548,11 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="705" y="384" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582667316547" />
-    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1583458092565">
+    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1583938921602">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="492" y="88" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583458092565" />
+    <state x="492" y="88" key="CommitChangelistDialog2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1583938921602" />
     <state width="1920" height="269" key="GridCell.Tab.0.bottom" timestamp="1583456731435">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -572,10 +573,11 @@
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.right/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896589" />
     <state width="1920" height="269" key="GridCell.Tab.0.right/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583456731432" />
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1583458094651">
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1583938923093">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583458094651" />
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1583938923093" />
     <state x="100" y="100" width="1720" height="880" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1583191107616">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>

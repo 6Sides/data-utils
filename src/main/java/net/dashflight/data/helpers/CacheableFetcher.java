@@ -4,8 +4,10 @@ import com.amazonaws.util.Base64;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import com.google.common.io.ByteStreams;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -89,22 +91,18 @@ public abstract class CacheableFetcher<K, V> {
     }
 
     protected void cacheResult(K key, CacheableResult<V> result) {
-        Output out = new Output(new ByteArrayOutputStream());
+        Output out = new Output(1024, -1);
         mapper.writeClassAndObject(out, result);
         out.close();
 
-        Input input = new Input(out.toBytes());
+        Input input = new Input(out.getBuffer(), 0, out.position());
 
-        byte[] bytes = new byte[out.toBytes().length];
-        int counter = 0;
-        while (counter < bytes.length) {
-            bytes[counter++] = input.readByte();
+        try {
+            byte[] bytes = ByteStreams.toByteArray(input);
+            redis.setWithExpiry(this.generateHash(key), result.cacheTTL, Base64.encode(bytes));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        byte[] res = new byte[counter];
-        System.arraycopy(bytes, 0, res, 0, counter);
-
-        redis.setWithExpiry(this.generateHash(key), result.cacheTTL, Base64.encode(res));
     }
 
     private String generateHash(K key) {
