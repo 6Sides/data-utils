@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47e27f0e-1967-4be3-87d2-25e1f94092c4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/Computable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/Memoizer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -11,7 +9,8 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/CacheableFetcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/CacheableFetcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/RefreshAheadCacheableFetcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/RefreshAheadCacheableFetcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/KryoPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/KryoPool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/Memoizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/helpers/Memoizer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,8 +65,8 @@
       <list>
         <option value="Enum" />
         <option value="AnnotationType" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -148,14 +147,7 @@
       <workItem from="1583008385304" duration="48344000" />
       <workItem from="1583759788101" duration="123000" />
       <workItem from="1583761790950" duration="136000" />
-      <workItem from="1583761951485" duration="17041000" />
-    </task>
-    <task id="LOCAL-00010" summary="Added more functionality to redis api">
-      <created>1582837325935</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1582837325935</updated>
+      <workItem from="1583761951485" duration="19125000" />
     </task>
     <task id="LOCAL-00011" summary="Added transaction to redis">
       <created>1582837652070</created>
@@ -493,14 +485,20 @@
       <option name="project" value="LOCAL" />
       <updated>1583964798508</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="Added futures to CacheableFetcher">
+      <created>1584021651889</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1584021651889</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added interfaces for GUIDs" />
     <MESSAGE value="Refactored to use new configuration classes" />
     <MESSAGE value="Updated documentation" />
     <MESSAGE value="Renamed PropertiesData.java" />
@@ -525,7 +523,8 @@
     <MESSAGE value="Refactored CacheableFetcher to be easier to use" />
     <MESSAGE value="Refactored RefreshAheadCacheableFetcher to be easier to read" />
     <MESSAGE value="Fixed bug where RefreshAheadCacheableFetcher would not execute tasks at correct time" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed bug where RefreshAheadCacheableFetcher would not execute tasks at correct time" />
+    <MESSAGE value="Added futures to CacheableFetcher" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added futures to CacheableFetcher" />
   </component>
   <component name="WindowStateProjectService">
     <state x="560" y="205" key="#Project_Structure" timestamp="1582667303842">
@@ -536,20 +535,20 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="424" y="202" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583176335017" />
-    <state x="773" y="256" key="#com.intellij.ide.util.MemberChooser" timestamp="1584020357973">
+    <state x="773" y="256" key="#com.intellij.ide.util.MemberChooser" timestamp="1584022583903">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="773" y="256" key="#com.intellij.ide.util.MemberChooser/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583434027902" />
-    <state x="773" y="256" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1584020357973" />
+    <state x="773" y="256" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1584022583903" />
     <state x="697" y="331" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1582909303889">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="697" y="331" key="#com.intellij.ide.util.TreeClassChooserDialog/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582909303889" />
-    <state x="0" y="0" width="986" height="1080" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1583960907804">
+    <state x="0" y="0" width="622" height="1080" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1584023406729">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="0" y="0" width="986" height="1080" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583174041872" />
-    <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1583960907804" />
+    <state x="0" y="0" width="622" height="1080" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1584023406729" />
     <state x="698" y="294" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1583181703710">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -558,35 +557,35 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="705" y="384" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1582667316547" />
-    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1583964798404">
+    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1584021651753">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="492" y="88" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583458092565" />
-    <state x="492" y="88" key="CommitChangelistDialog2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1583964798404" />
-    <state width="1920" height="252" key="GridCell.Tab.0.bottom" timestamp="1584021532683">
+    <state x="492" y="88" key="CommitChangelistDialog2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1584021651753" />
+    <state width="1920" height="252" key="GridCell.Tab.0.bottom" timestamp="1584023593126">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.bottom/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896596" />
     <state width="1920" height="269" key="GridCell.Tab.0.bottom/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583456731435" />
-    <state width="1920" height="252" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1584021532683" />
-    <state width="1920" height="252" key="GridCell.Tab.0.center" timestamp="1584021532679">
+    <state width="1920" height="252" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1584023593126" />
+    <state width="1920" height="252" key="GridCell.Tab.0.center" timestamp="1584023593114">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.center/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896587" />
     <state width="1920" height="269" key="GridCell.Tab.0.center/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583456731429" />
-    <state width="1920" height="252" key="GridCell.Tab.0.center/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1584021532679" />
-    <state width="1920" height="252" key="GridCell.Tab.0.left" timestamp="1584021532677">
+    <state width="1920" height="252" key="GridCell.Tab.0.center/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1584023593114" />
+    <state width="1920" height="252" key="GridCell.Tab.0.left" timestamp="1584023593111">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.left/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896584" />
     <state width="1920" height="269" key="GridCell.Tab.0.left/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583456731427" />
-    <state width="1920" height="252" key="GridCell.Tab.0.left/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1584021532677" />
-    <state width="1920" height="252" key="GridCell.Tab.0.right" timestamp="1584021532681">
+    <state width="1920" height="252" key="GridCell.Tab.0.left/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1584023593111" />
+    <state width="1920" height="252" key="GridCell.Tab.0.right" timestamp="1584023593121">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.right/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896589" />
     <state width="1920" height="269" key="GridCell.Tab.0.right/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1583456731432" />
-    <state width="1920" height="252" key="GridCell.Tab.0.right/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1584021532681" />
+    <state width="1920" height="252" key="GridCell.Tab.0.right/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1584023593121" />
     <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1583964799963">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>

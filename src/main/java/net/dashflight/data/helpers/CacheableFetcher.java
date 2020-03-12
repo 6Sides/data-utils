@@ -2,9 +2,9 @@ package net.dashflight.data.helpers;
 
 import com.amazonaws.util.Base64;
 import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import com.esotericsoftware.kryo.util.Pool;
 import com.google.common.io.ByteStreams;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -14,6 +14,7 @@ import net.dashflight.data.config.RuntimeEnvironment;
 import net.dashflight.data.helpers.Computable.DataFetchException;
 import net.dashflight.data.redis.RedisClient;
 import net.dashflight.data.redis.RedisFactory;
+
 
 /**
  * Handles caching of results. Should be used for computationally expensive queries.
@@ -27,16 +28,16 @@ import net.dashflight.data.redis.RedisFactory;
 public abstract class CacheableFetcher<K, V> {
 
     // TODO: Kryo is not thread safe, refactor to use a pool
-    protected static final Kryo mapper = new Kryo();
+    protected static final Pool<Kryo> kryoPool = KryoPool.getPool();
 
     private static final RedisClient redis = RedisFactory.withDefaults();
     private static final RuntimeEnvironment currentEnvironment = RuntimeEnvironment.getCurrentEnvironment();
 
 
     static {
-        mapper.register(CacheableResult.class);
-        mapper.register(OffsetDateTime.class);
-        mapper.register(UUID.class, new UUIDSerializer());
+        KryoPool.registerClass(CacheableResult.class);
+        KryoPool.registerClass(OffsetDateTime.class);
+        KryoPool.registerClass(UUID.class, new UUIDSerializer());
     }
 
 
@@ -47,19 +48,6 @@ public abstract class CacheableFetcher<K, V> {
 
     protected CacheableFetcher() {
         this.memoizer = new Memoizer<>(key -> this.memoizedGet(key));
-    }
-
-
-    /**
-     * Registers a class with an id based on its hashcode. 12 is added to ensure
-     * there is no version clash with Kryo's default registered classes.
-     */
-    protected <T> void registerClass(Class<T> clazz) {
-        mapper.register(clazz, Math.abs(clazz.hashCode()) + 12);
-    }
-
-    protected <T> void registerClass(Class<T> clazz, Serializer<T> serializer) {
-        mapper.register(clazz, serializer, Math.abs(clazz.hashCode()) + 12);
     }
 
 
@@ -104,15 +92,25 @@ public abstract class CacheableFetcher<K, V> {
         }
     }
 
+    /**
+     * TODO: Refactor. This code sucks
+     *
+     * This is the method supplied to the memoizer
+     */
     private CacheableResult<V> memoizedGet(K key) throws DataFetchException {
         String blob = redis.get(this.generateHash(key));
 
         // Key exists, attempt to deserialize and return it's associated value.
         if (blob != null) {
             try {
+                Kryo kryo = kryoPool.obtain();
                 byte[] bytes = Base64.decode(blob.getBytes());
-                return (CacheableResult<V>) mapper
-                        .readClassAndObject(new Input(new ByteArrayInputStream(bytes)));
+
+                CacheableResult<V> result = (CacheableResult<V>) kryo.readClassAndObject(new Input(new ByteArrayInputStream(bytes)));
+
+                kryoPool.free(kryo);
+
+                return result;
             } catch (Exception e) {
                 // Key is in invalid format, delete it.
                 redis.del(this.generateHash(key));
@@ -128,23 +126,28 @@ public abstract class CacheableFetcher<K, V> {
     }
 
 
-        /**
-         * Serializes and caches fetched result.
-         * @param key The key to store the result at.
-         * @param result The object to serialize and store.
-         */
+    /**
+     * Serializes and caches fetched result.
+     * @param key The key to store the result at.
+     * @param result The object to serialize and store.
+     */
     protected void cacheResult(K key, CacheableResult<V> result) {
-        Output out = new Output(1024, -1);
-        mapper.writeClassAndObject(out, result);
-        out.close();
+        new Thread(() -> {
+            Kryo kryo = kryoPool.obtain();
 
-        try (Input input = new Input(out.getBuffer(), 0, out.position())) {
-            byte[] bytes = ByteStreams.toByteArray(input);
-            input.close();
-            redis.setWithExpiry(this.generateHash(key), result.ttl, Base64.encode(bytes));
-        } catch(IOException ex) {
-            ex.printStackTrace();
-        }
+            Output out = new Output(1024, -1);
+            kryo.writeClassAndObject(out, result);
+            kryoPool.free(kryo);
+            out.close();
+
+            try (Input input = new Input(out.getBuffer(), 0, out.position())) {
+                byte[] bytes = ByteStreams.toByteArray(input);
+                input.close();
+                redis.setWithExpiry(this.generateHash(key), result.ttl, Base64.encode(bytes));
+            } catch(IOException ex) {
+                ex.printStackTrace();
+            }
+        }).start();
     }
 
     /**

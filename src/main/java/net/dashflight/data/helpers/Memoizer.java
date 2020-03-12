@@ -8,45 +8,47 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 
-
+/**
+ * Prevents many concurrent calls from independently fetching the same data.
+ *
+ * If computation is not running, start it and wrap in a Future for other callers.
+ * If computation is running, caller will wait for computation to finish and collect result.
+ */
 public class Memoizer<A, V> implements Computable<A, V> {
 
     private final ConcurrentMap<A, Future<V>> cache = new ConcurrentHashMap<>();
 
-    private final Computable<A, V> c;
+    private final Computable<A, V> computeFunction;
 
-    public Memoizer(Computable<A, V> c) {
-        this.c = c;
+    public Memoizer(Computable<A, V> computeFunction) {
+        this.computeFunction = computeFunction;
     }
+
 
     public V compute(final A arg) throws InterruptedException {
         while (true) {
 
-            Future<V> f = cache.get(arg);
-            // computation not started
-            if (f == null) {
-                System.out.println("Computation not started");
-                Callable<V> eval = () -> c.compute(arg);
+            Future<V> future = cache.get(arg);
 
-                FutureTask<V> ft = new FutureTask<>(eval);
-                f = cache.putIfAbsent(arg, ft);
-                // start computation if it's not started in the meantime
-                if (f == null) {
-                    System.out.println("Computation beginning...");
+            // Computation not started
+            if (future == null) {
+                Callable<V> eval = () -> computeFunction.compute(arg);
 
-                    f = ft;
-                    ft.run();
+                FutureTask<V> futureTask = new FutureTask<>(eval);
+                future = cache.putIfAbsent(arg, futureTask);
+
+                // Start computation if it's not started in the meantime
+                if (future == null) {
+                    future = futureTask;
+                    futureTask.run();
                 }
-            } else {
-                System.out.println("Computation already started!");
             }
 
-            // get result if ready, otherwise block and wait
+            // Get result if ready, otherwise block and wait
             try {
-                System.out.println("Waiting for result...");
-                return f.get();
+                return future.get();
             } catch (CancellationException e) {
-                cache.remove(arg, f);
+                cache.remove(arg, future);
             } catch (ExecutionException e) {
                 e.printStackTrace();
                 throw new RuntimeException(e.getCause());
