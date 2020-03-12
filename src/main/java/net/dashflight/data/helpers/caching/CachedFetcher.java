@@ -1,4 +1,4 @@
-package net.dashflight.data.helpers;
+package net.dashflight.data.helpers.caching;
 
 import com.amazonaws.util.Base64;
 import com.esotericsoftware.kryo.Kryo;
@@ -13,7 +13,9 @@ import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import net.dashflight.data.config.RuntimeEnvironment;
-import net.dashflight.data.helpers.Computable.DataFetchException;
+import net.dashflight.data.helpers.serialize.UUIDSerializer;
+import net.dashflight.data.helpers.caching.Computable.DataFetchException;
+import net.dashflight.data.helpers.serialize.KryoPool;
 import net.dashflight.data.redis.RedisClient;
 import net.dashflight.data.redis.RedisFactory;
 
@@ -27,14 +29,15 @@ import net.dashflight.data.redis.RedisFactory;
  * @param <K> The data type required to make the query (The `key`)
  * @param <V> The result type (The `value`)
  */
-public abstract class CacheableFetcher<K, V> {
+public abstract class CachedFetcher<K, V> {
 
     // Use cached thread pool since caching tasks are short lived
     private static final ExecutorService threadPool = Executors.newCachedThreadPool();
 
     protected static final Pool<Kryo> kryoPool = KryoPool.getPool();
 
-    private static final RedisClient redis = RedisFactory.withDefaults();
+    protected static final RedisClient redis = RedisFactory.withDefaults();
+
     private static final RuntimeEnvironment currentEnvironment = RuntimeEnvironment.getCurrentEnvironment();
 
 
@@ -47,9 +50,11 @@ public abstract class CacheableFetcher<K, V> {
 
     private final Memoizer<K, CacheableResult<V>> memoizer;
 
-    protected CacheableFetcher() {
+    protected CachedFetcher() {
         this.memoizer = new Memoizer<>(this::memoizedGet);
     }
+
+    protected abstract CacheableResult<V> memoizedGet(K input) throws DataFetchException;
 
 
     /**
@@ -63,30 +68,29 @@ public abstract class CacheableFetcher<K, V> {
     /**
      * Invalidates the result associated with the specified object
      */
-    public void invalidate(K key) {
-        redis.del(this.generateHash(key));
+    public final void invalidate(K input) {
+        redis.del(this.generateHash(input));
     }
 
     /**
-     * Returns the remaining ttl of the key,value pair associated with the specified object
+     * Returns the remaining ttl of the input,value pair associated with the specified object
      */
-    public long getKeyTTL(K key) {
-        return redis.getTTL(this.generateHash(key));
+    public final long getKeyTTL(K input) {
+        return redis.getTTL(this.generateHash(input));
     }
 
 
     /**
-     * Fetches data based on the specified key. Attempts to retrieve the result from the cache first.
-     * If no value is found the result is refetched, cached, and then returned.
+     * Fetches data based on the specified key.
      *
-     * @param key The data being used to make the query
+     * @param input The data being used to make the query
      * @return The value associated with the specified key (can be null)
      *
      * @throws DataFetchException when a result couldn't be obtained
      */
-    public CacheableResult<V> get(K key) throws DataFetchException {
+    public final CacheableResult<V> get(K input) throws DataFetchException {
         try {
-            return this.memoizer.compute(key);
+            return this.memoizer.compute(input);
         } catch (InterruptedException ex) {
             ex.printStackTrace();
             throw new DataFetchException(ex.getMessage());
@@ -94,12 +98,12 @@ public abstract class CacheableFetcher<K, V> {
     }
 
     /**
-     * TODO: Refactor. This code sucks
+     * Attempts to get a value from the cache based on the input.
      *
-     * This is the method supplied to the memoizer
+     * @return A CacheableResult containing the computed result, or null if none is found.
      */
-    private CacheableResult<V> memoizedGet(K key) throws DataFetchException {
-        String blob = redis.get(this.generateHash(key));
+    protected final CacheableResult<V> getValueFromCache(K input) {
+        String blob = redis.get(this.generateHash(input));
 
         // Key exists, attempt to deserialize and return it's associated value.
         if (blob != null) {
@@ -114,18 +118,13 @@ public abstract class CacheableFetcher<K, V> {
                 return result;
             } catch (Exception e) {
                 // Key is in invalid format, delete it.
-                redis.del(this.generateHash(key));
+                redis.del(this.generateHash(input));
                 e.printStackTrace();
             }
         }
 
-        // Refetch result and cache it
-        CacheableResult<V> result = fetchResult(key);
-        this.cacheResult(key, result);
-
-        return result;
+        return null;
     }
-
 
     /**
      * Serializes and caches a fetched result. Runs asynchronously.
@@ -133,7 +132,7 @@ public abstract class CacheableFetcher<K, V> {
      * @param key The key to store the result at.
      * @param result The object to serialize and store.
      */
-    protected void cacheResult(K key, CacheableResult<V> result) {
+    protected final void cacheResult(K key, CacheableResult<V> result) {
         threadPool.submit(() -> {
             Kryo kryo = kryoPool.obtain();
 
@@ -157,13 +156,14 @@ public abstract class CacheableFetcher<K, V> {
      * @param key The key to hash.
      * @return A hash of the key mixed with any other desired data (e.g. environment)
      */
-    private String generateHash(K key) {
+    protected String generateHash(K key) {
         return (currentEnvironment.getName().hashCode() + getClass().hashCode() + key.hashCode()) + "";
     }
 
 
     /**
      * Used by clients to return fetched results.
+     *
      * @param <V> The type of the result being returned.
      */
     public static class CacheableResult<V> {

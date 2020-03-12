@@ -1,4 +1,4 @@
-package net.dashflight.data.helpers;
+package net.dashflight.data.helpers.caching;
 
 /**
  * Computes a result based on an input
@@ -18,5 +18,6 @@ public interface Computable<K, V> {
         public DataFetchException(String message) {
             super(message);
         }
+
     }
 }

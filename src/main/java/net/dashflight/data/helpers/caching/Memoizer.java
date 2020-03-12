@@ -1,4 +1,4 @@
-package net.dashflight.data.helpers;
+package net.dashflight.data.helpers.caching;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
@@ -11,7 +11,7 @@ import java.util.concurrent.FutureTask;
 /**
  * Prevents many concurrent calls from independently fetching the same data.
  *
- * If computation is not running, start it and wrap in a Future for other callers.
+ * If computation is not running, begin and wrap result in a Future for other callers.
  * If computation is running, caller will wait for computation to finish and collect result.
  */
 public class Memoizer<A, V> implements Computable<A, V> {
@@ -20,6 +20,7 @@ public class Memoizer<A, V> implements Computable<A, V> {
 
     private final Computable<A, V> computeFunction;
 
+
     public Memoizer(Computable<A, V> computeFunction) {
         this.computeFunction = computeFunction;
     }
@@ -27,6 +28,8 @@ public class Memoizer<A, V> implements Computable<A, V> {
 
     public V compute(final A arg) throws InterruptedException {
         while (true) {
+
+            boolean startedComputation = false;
 
             Future<V> future = cache.get(arg);
 
@@ -41,6 +44,7 @@ public class Memoizer<A, V> implements Computable<A, V> {
                 if (future == null) {
                     future = futureTask;
                     futureTask.run();
+                    startedComputation = true;
                 }
             }
 
@@ -49,7 +53,9 @@ public class Memoizer<A, V> implements Computable<A, V> {
                 V result = future.get();
 
                 // Remove future from map to prevent caching value forever
-                cache.remove(arg);
+                if (startedComputation) {
+                    cache.remove(arg);
+                }
 
                 return result;
             } catch (CancellationException e) {
