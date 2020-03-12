@@ -10,6 +10,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import net.dashflight.data.config.RuntimeEnvironment;
 import net.dashflight.data.helpers.Computable.DataFetchException;
 import net.dashflight.data.redis.RedisClient;
@@ -27,7 +29,9 @@ import net.dashflight.data.redis.RedisFactory;
  */
 public abstract class CacheableFetcher<K, V> {
 
-    // TODO: Kryo is not thread safe, refactor to use a pool
+    // Use cached thread pool since caching tasks are short lived
+    private static final ExecutorService threadPool = Executors.newCachedThreadPool();
+
     protected static final Pool<Kryo> kryoPool = KryoPool.getPool();
 
     private static final RedisClient redis = RedisFactory.withDefaults();
@@ -47,7 +51,7 @@ public abstract class CacheableFetcher<K, V> {
     private final Memoizer<K, CacheableResult<V>> memoizer;
 
     protected CacheableFetcher() {
-        this.memoizer = new Memoizer<>(key -> this.memoizedGet(key));
+        this.memoizer = new Memoizer<>(this::memoizedGet);
     }
 
 
@@ -103,6 +107,7 @@ public abstract class CacheableFetcher<K, V> {
         // Key exists, attempt to deserialize and return it's associated value.
         if (blob != null) {
             try {
+                long start = System.currentTimeMillis();
                 Kryo kryo = kryoPool.obtain();
                 byte[] bytes = Base64.decode(blob.getBytes());
 
@@ -110,6 +115,9 @@ public abstract class CacheableFetcher<K, V> {
 
                 kryoPool.free(kryo);
 
+                long end = System.currentTimeMillis();
+
+                System.out.println("Time to fetch " + key + ": " + (end-start));
                 return result;
             } catch (Exception e) {
                 // Key is in invalid format, delete it.
@@ -127,12 +135,13 @@ public abstract class CacheableFetcher<K, V> {
 
 
     /**
-     * Serializes and caches fetched result.
+     * Serializes and caches a fetched result. Runs asynchronously.
+     *
      * @param key The key to store the result at.
      * @param result The object to serialize and store.
      */
     protected void cacheResult(K key, CacheableResult<V> result) {
-        new Thread(() -> {
+        threadPool.submit(() -> {
             Kryo kryo = kryoPool.obtain();
 
             Output out = new Output(1024, -1);
@@ -147,7 +156,7 @@ public abstract class CacheableFetcher<K, V> {
             } catch(IOException ex) {
                 ex.printStackTrace();
             }
-        }).start();
+        });
     }
 
     /**

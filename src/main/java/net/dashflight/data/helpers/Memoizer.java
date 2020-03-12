@@ -46,7 +46,12 @@ public class Memoizer<A, V> implements Computable<A, V> {
 
             // Get result if ready, otherwise block and wait
             try {
-                return future.get();
+                V result = future.get();
+
+                // Remove future from map to prevent caching value forever
+                cache.remove(arg);
+
+                return result;
             } catch (CancellationException e) {
                 cache.remove(arg, future);
             } catch (ExecutionException e) {

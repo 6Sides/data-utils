@@ -6,6 +6,9 @@ import com.esotericsoftware.kryo.util.Pool;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Based on https://github.com/EsotericSoftware/kryo#pooling
+ */
 class KryoPool {
 
     // Stores classes Kryo needs to register on creation
