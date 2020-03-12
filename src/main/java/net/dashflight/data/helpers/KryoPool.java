@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Based on https://github.com/EsotericSoftware/kryo#pooling
  */
-class KryoPool {
+public class KryoPool {
 
     // Stores classes Kryo needs to register on creation
     private static final Map<Class<?>, Serializer<?>> registeredClasses = new HashMap<>();
