@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.PriorityBlockingQueue;
+import net.dashflight.data.helpers.Computable.DataFetchException;
 
 /**
  * Implementation of the refresh-ahead caching strategy.
@@ -48,7 +49,7 @@ public abstract class RefreshAheadCacheableFetcher<K, V> extends CacheableFetche
                         () -> {
                             try {
                                 this.cacheResult(key, this.fetchResult(key));
-                            } catch (CacheableFetchException e) {
+                            } catch (DataFetchException e) {
                                 e.printStackTrace();
                             }
                         }
@@ -59,7 +60,7 @@ public abstract class RefreshAheadCacheableFetcher<K, V> extends CacheableFetche
     }
 
     /**
-     * Runnable to process refresh jobs.
+     * Runnable to monitor and schedule refresh jobs.
      */
     private static final class TaskScheduler implements Runnable {
 
