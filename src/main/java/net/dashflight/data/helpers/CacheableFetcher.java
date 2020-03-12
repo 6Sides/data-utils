@@ -45,9 +45,6 @@ public abstract class CacheableFetcher<K, V> {
     }
 
 
-    /** Prefix for each key in the cache */
-    private final String keyPrefix = getClass().hashCode() + "";
-
     private final Memoizer<K, CacheableResult<V>> memoizer;
 
     protected CacheableFetcher() {
@@ -161,7 +158,7 @@ public abstract class CacheableFetcher<K, V> {
      * @return A hash of the key mixed with any other desired data (e.g. environment)
      */
     private String generateHash(K key) {
-        return currentEnvironment.hashCode() + keyPrefix + key.hashCode();
+        return (currentEnvironment.getName().hashCode() + getClass().hashCode() + key.hashCode()) + "";
     }
 
 
