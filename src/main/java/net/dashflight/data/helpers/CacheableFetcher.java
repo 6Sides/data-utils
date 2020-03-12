@@ -107,7 +107,6 @@ public abstract class CacheableFetcher<K, V> {
         // Key exists, attempt to deserialize and return it's associated value.
         if (blob != null) {
             try {
-                long start = System.currentTimeMillis();
                 Kryo kryo = kryoPool.obtain();
                 byte[] bytes = Base64.decode(blob.getBytes());
 
@@ -115,9 +114,6 @@ public abstract class CacheableFetcher<K, V> {
 
                 kryoPool.free(kryo);
 
-                long end = System.currentTimeMillis();
-
-                System.out.println("Time to fetch " + key + ": " + (end-start));
                 return result;
             } catch (Exception e) {
                 // Key is in invalid format, delete it.
