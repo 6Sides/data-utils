@@ -26,14 +26,20 @@ public class JwtCreator extends JwtOperator {
      */
     public SecuredJwtToken generateJwt(String userId) {
         try {
-            String fgp = fgpService.generateRandomFingerprint();
+
+            String fgp, fgpHash;
+            synchronized (fgpService) {
+                fgp = fgpService.generateRandomFingerprint();
+                fgpHash = fgpService.hashFingerprint(fgp);
+            }
+
 
             String token = JWT.create()
                             .withIssuer(ISSUER)
                             .withIssuedAt(new Date())
                             .withExpiresAt(Date.from(Instant.now().plusSeconds(ACCESS_TOKEN_TTL)))
                             .withClaim("user_id", userId)
-                            .withClaim("user_fingerprint", fgpService.hashFingerprint(fgp))
+                            .withClaim("user_fingerprint", fgpHash)
                             .sign(Algorithm.RSA512(null, keyManager.getPrivateKey()));
 
             // return new SecuredJwtToken(tokenCipher.cipherToken(token), fgp);

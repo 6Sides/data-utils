@@ -1,5 +1,7 @@
 package net.dashflight.data.jwt;
 
+import com.google.common.hash.Hashing;
+import com.sun.tools.doclets.standard.Standard;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -46,12 +48,7 @@ public class FingerprintService {
             return null;
         }
 
-        System.out.println("Secure-Fgp: " + fgp);
-        System.out.print("Bytes: ");
         byte[] fingerprintDigest = digest.digest(fgp.getBytes(StandardCharsets.UTF_8));
-        for (int i = 0; i < fingerprintDigest.length; i++) {
-            System.out.print(fingerprintDigest[i]);
-        } System.out.println();
 
         return DatatypeConverter.printHexBinary(fingerprintDigest);
     }
