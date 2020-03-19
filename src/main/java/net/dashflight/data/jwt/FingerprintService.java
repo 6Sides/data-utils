@@ -1,6 +1,5 @@
 package net.dashflight.data.jwt;
 
-import com.google.common.hash.Hashing;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -42,12 +41,12 @@ public class FingerprintService {
     /**
      * Hashes a fingerprint with SHA-256
      */
-    public String hashFingerprint(String fgp) {
+    public synchronized String hashFingerprint(String fgp) {
         if (fgp == null) {
             return null;
         }
 
-        byte[] fingerprintDigest = Hashing.sha256().hashBytes(fgp.getBytes(StandardCharsets.UTF_8)).asBytes();
+        byte[] fingerprintDigest = digest.digest(fgp.getBytes(StandardCharsets.UTF_8));
 
         return DatatypeConverter.printHexBinary(fingerprintDigest);
     }
