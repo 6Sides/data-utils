@@ -50,7 +50,7 @@ public class FingerprintService {
         System.out.print("Bytes: ");
         byte[] fingerprintDigest = digest.digest(fgp.getBytes(StandardCharsets.UTF_8));
         for (int i = 0; i < fingerprintDigest.length; i++) {
-            System.out.print(i);
+            System.out.print(fingerprintDigest[i]);
         } System.out.println();
 
         return DatatypeConverter.printHexBinary(fingerprintDigest);
