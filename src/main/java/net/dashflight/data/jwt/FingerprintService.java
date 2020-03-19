@@ -1,8 +1,7 @@
 package net.dashflight.data.jwt;
 
+import com.google.common.hash.Hashing;
 import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import javax.xml.bind.DatatypeConverter;
 import net.dashflight.data.random.LavaRandom;
@@ -15,17 +14,9 @@ public class FingerprintService {
     private static final int FINGERPRINT_LENGTH = 64;
 
     private SecureRandom secureRandom;
-    private MessageDigest digest;
-
 
     public FingerprintService() {
         this.secureRandom = new LavaRandom();
-
-        try {
-            this.digest = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -41,12 +32,12 @@ public class FingerprintService {
     /**
      * Hashes a fingerprint with SHA-256
      */
-    public synchronized String hashFingerprint(String fgp) {
+    public String hashFingerprint(String fgp) {
         if (fgp == null) {
             return null;
         }
 
-        byte[] fingerprintDigest = digest.digest(fgp.getBytes(StandardCharsets.UTF_8));
+        byte[] fingerprintDigest = Hashing.sha256().hashBytes(fgp.getBytes(StandardCharsets.UTF_8)).asBytes();
 
         return DatatypeConverter.printHexBinary(fingerprintDigest);
     }
