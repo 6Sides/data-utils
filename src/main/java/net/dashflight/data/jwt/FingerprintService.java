@@ -42,6 +42,9 @@ public class FingerprintService {
      * Hashes a fingerprint with SHA-256
      */
     public String hashFingerprint(String fgp) {
+        if (true) {
+            return fgp;
+        }
         if (fgp == null) {
             return null;
         }
