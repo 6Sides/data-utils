@@ -1,7 +1,5 @@
 package net.dashflight.data.jwt;
 
-import com.google.common.hash.Hashing;
-import com.sun.tools.doclets.standard.Standard;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
