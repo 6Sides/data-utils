@@ -34,17 +34,13 @@ public class JwtVerifier extends JwtOperator {
         String fgpHash = fgpService.hashFingerprint(fingerprint);
         // String decipheredToken = tokenCipher.decipherToken(token);
 
-        System.out.println("Token: " + token);
-        System.out.println("Fingerprint: " + fingerprint);
-        System.out.println("Fingerprint-hash: " + fgpHash);
-
         if (jwtCache.has(fgpHash)) {
             throw new JWTVerificationException("That token has been revoked");
         }
 
         JWTVerifier jwtVerifier = JWT.require(Algorithm.RSA512(keyManager.getPublicKey(), null))
                 .withIssuer(ISSUER)
-                //.withClaim("user_fingerprint", fgpHash)
+                .withClaim("user_fingerprint", fgpHash)
                 .build();
 
         return jwtVerifier.verify(token);

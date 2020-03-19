@@ -9,10 +9,6 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
-
-    maven {
-        url 'https://jitpack.io'
-    }
 }
 
 dependencies {
@@ -78,6 +74,4 @@ dependencies {
 
     // Bcrypt
     implementation 'at.favre.lib:bcrypt:0.8.0'
-
-
 }
