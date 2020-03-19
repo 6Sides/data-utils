@@ -42,14 +42,17 @@ public class FingerprintService {
      * Hashes a fingerprint with SHA-256
      */
     public String hashFingerprint(String fgp) {
-        if (true) {
-            return fgp;
-        }
         if (fgp == null) {
             return null;
         }
 
+        System.out.println("Secure-Fgp: " + fgp);
+        System.out.print("Bytes: ");
         byte[] fingerprintDigest = digest.digest(fgp.getBytes(StandardCharsets.UTF_8));
+        for (int i = 0; i < fingerprintDigest.length; i++) {
+            System.out.print(i);
+        } System.out.println();
+
         return DatatypeConverter.printHexBinary(fingerprintDigest);
     }
 
