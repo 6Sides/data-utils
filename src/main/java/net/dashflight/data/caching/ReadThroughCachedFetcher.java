@@ -1,6 +1,6 @@
-package net.dashflight.data.helpers.caching;
+package net.dashflight.data.caching;
 
-import net.dashflight.data.helpers.caching.Computable.DataFetchException;
+import net.dashflight.data.caching.Computable.DataFetchException;
 
 /**
  * Basic read-through cache implementation. Attempts to read a value from the

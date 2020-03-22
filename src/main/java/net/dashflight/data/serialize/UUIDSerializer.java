@@ -1,4 +1,4 @@
-package net.dashflight.data.helpers.serialize;
+package net.dashflight.data.serialize;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.Serializer;

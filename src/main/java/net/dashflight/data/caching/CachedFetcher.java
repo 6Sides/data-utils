@@ -1,4 +1,4 @@
-package net.dashflight.data.helpers.caching;
+package net.dashflight.data.caching;
 
 import com.amazonaws.util.Base64;
 import com.esotericsoftware.kryo.Kryo;
@@ -13,9 +13,9 @@ import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import net.dashflight.data.config.RuntimeEnvironment;
-import net.dashflight.data.helpers.serialize.UUIDSerializer;
-import net.dashflight.data.helpers.caching.Computable.DataFetchException;
-import net.dashflight.data.helpers.serialize.KryoPool;
+import net.dashflight.data.serialize.UUIDSerializer;
+import net.dashflight.data.caching.Computable.DataFetchException;
+import net.dashflight.data.serialize.KryoPool;
 import net.dashflight.data.redis.RedisClient;
 import net.dashflight.data.redis.RedisFactory;
 

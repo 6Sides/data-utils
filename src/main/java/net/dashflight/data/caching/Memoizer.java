@@ -1,4 +1,4 @@
-package net.dashflight.data.helpers.caching;
+package net.dashflight.data.caching;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;

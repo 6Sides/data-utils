@@ -1,4 +1,4 @@
-package net.dashflight.data.helpers.caching;
+package net.dashflight.data.caching;
 
 /**
  * Computes a result based on an input

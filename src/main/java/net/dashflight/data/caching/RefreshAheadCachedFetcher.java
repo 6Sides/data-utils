@@ -1,8 +1,8 @@
-package net.dashflight.data.helpers.caching;
+package net.dashflight.data.caching;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import net.dashflight.data.helpers.caching.Computable.DataFetchException;
+import net.dashflight.data.caching.Computable.DataFetchException;
 import net.dashflight.data.redis.RedisFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
