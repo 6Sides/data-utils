@@ -74,4 +74,8 @@ dependencies {
 
     // Bcrypt
     implementation 'at.favre.lib:bcrypt:0.8.0'
+
+
+    compile 'de.taimos:totp:1.0'
+    compile 'commons-codec:commons-codec:1.10'
 }
