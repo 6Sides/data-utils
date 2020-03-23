@@ -22,7 +22,7 @@ import net.dashflight.data.config.Configurable;
 import net.dashflight.data.config.RuntimeEnvironment;
 
 
-public class DefaultRSAKeyManager implements Configurable {
+public class DefaultRSAKeyManager implements RSAKeyManager, Configurable {
 
     private static final String APP_NAME = "rsa-keypair";
 

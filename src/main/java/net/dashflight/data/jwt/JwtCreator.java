@@ -3,18 +3,14 @@ package net.dashflight.data.jwt;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
-import java.time.Instant;
 import java.util.Date;
-import net.dashflight.data.config.ConfigValue;
 
 /**
  * Handles creating JWTs
  */
-public class JwtCreator extends JwtOperator {
+public class JwtCreator {
 
-    @ConfigValue("access_token_ttl")
-    private int ACCESS_TOKEN_TTL;
-
+    private final FingerprintService fingerprintService = new FingerprintService();
 
     /**
      * Creates a secure JWT with the userId encoded in its payload.
@@ -22,26 +18,18 @@ public class JwtCreator extends JwtOperator {
      * How it works:
      *      1. Random fingerprint is generated.
      *      2. JWT is created storing any necessary claims and the hash of the fingerprint.
-     *      3. The JWT is ciphered to obfuscate any internal data stored in the payload.
+     *      3. The JWT is ciphered to obfuscate any internal data stored in the payload. (Currently omitted)
      */
-    public SecuredJwtToken generateJwt(String userId) {
-        try {
-            String fgp = fgpService.generateRandomFingerprint();
+    public SecuredJwt generateJwt(CreateJwtRequest request) throws JWTCreationException {
+        String token = JWT.create()
+                        .withIssuer(request.getIssuer())
+                        .withIssuedAt(Date.from(request.getIssuedAt()))
+                        .withExpiresAt(Date.from(request.getIssuedAt().plusSeconds(request.getTtl())))
+                        .withClaim("user_id", request.getUserId())
+                        .withClaim("user_fingerprint", fingerprintService.hashFingerprint(request.getFingerprint()))
+                        .sign(Algorithm.RSA512(null, request.getPrivateKey()));
 
-            String token = JWT.create()
-                            .withIssuer(ISSUER)
-                            .withIssuedAt(new Date())
-                            .withExpiresAt(Date.from(Instant.now().plusSeconds(ACCESS_TOKEN_TTL)))
-                            .withClaim("user_id", userId)
-                            .withClaim("user_fingerprint", fgpService.hashFingerprint(fgp))
-                            .sign(Algorithm.RSA512(null, keyManager.getPrivateKey()));
-
-            // return new SecuredJwtToken(tokenCipher.cipherToken(token), fgp);
-            return new SecuredJwtToken(token, fgp);
-        } catch (JWTCreationException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return new SecuredJwt(token, request.getFingerprint());
     }
 
 }
