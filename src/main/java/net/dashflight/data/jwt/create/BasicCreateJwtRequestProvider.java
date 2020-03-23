@@ -1,12 +1,13 @@
-package net.dashflight.data.jwt;
+package net.dashflight.data.jwt.create;
 
 import java.time.Instant;
 import net.dashflight.data.config.ConfigValue;
 import net.dashflight.data.config.Configurable;
+import net.dashflight.data.jwt.FingerprintService;
 import net.dashflight.data.keys.DefaultRSAKeyManager;
 import net.dashflight.data.keys.RSAKeyManagerFactory;
 
-public class BasicJwtRequestProvider implements JwtRequestProvider, Configurable {
+public class BasicCreateJwtRequestProvider implements CreateJwtRequestProvider, Configurable {
 
     @ConfigValue("issuer")
     private static String ISSUER = "https://api.dashflight.net";
@@ -19,17 +20,20 @@ public class BasicJwtRequestProvider implements JwtRequestProvider, Configurable
     private final DefaultRSAKeyManager keyManager = RSAKeyManagerFactory.withDefaults();
 
 
-    public BasicJwtRequestProvider() {
+    public BasicCreateJwtRequestProvider() {
         registerWith("jwt-utils");
     }
 
 
     @Override
     public CreateJwtRequest create(String userId) {
+        String fingerprint = fingerprintService.generateRandomFingerprint();
+
         return CreateJwtRequest.builder()
                 .issuer(ISSUER)
                 .ttl(TOKEN_TTL)
-                .fingerprint(fingerprintService.generateRandomFingerprint())
+                .fingerprint(fingerprint)
+                .fingerprintHash(fingerprintService.hashFingerprint(fingerprint))
                 .issuedAt(Instant.now())
                 .userId(userId)
                 .privateKey(keyManager.getPrivateKey())

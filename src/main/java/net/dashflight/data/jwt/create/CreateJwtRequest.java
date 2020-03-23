@@ -1,4 +1,4 @@
-package net.dashflight.data.jwt;
+package net.dashflight.data.jwt.create;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.time.Instant;
@@ -29,6 +29,11 @@ public class CreateJwtRequest {
      * The fingerprint associated with the `user_fingerprint` claim of the token
      */
     private String fingerprint;
+
+    /**
+     * The hash of the fingerprint
+     */
+    private String fingerprintHash;
 
     /**
      * The time the token was issued

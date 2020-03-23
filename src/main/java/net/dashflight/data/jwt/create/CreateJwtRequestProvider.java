@@ -1,6 +1,6 @@
-package net.dashflight.data.jwt;
+package net.dashflight.data.jwt.create;
 
-public interface JwtRequestProvider {
+public interface CreateJwtRequestProvider {
 
     /**
      * Creates a jwt request for the specified userId

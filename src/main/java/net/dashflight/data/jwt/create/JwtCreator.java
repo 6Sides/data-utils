@@ -1,16 +1,15 @@
-package net.dashflight.data.jwt;
+package net.dashflight.data.jwt.create;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import java.util.Date;
+import net.dashflight.data.jwt.SecuredJwt;
 
 /**
  * Handles creating JWTs
  */
 public class JwtCreator {
-
-    private final FingerprintService fingerprintService = new FingerprintService();
 
     /**
      * Creates a secure JWT with the userId encoded in its payload.
@@ -26,7 +25,7 @@ public class JwtCreator {
                         .withIssuedAt(Date.from(request.getIssuedAt()))
                         .withExpiresAt(Date.from(request.getIssuedAt().plusSeconds(request.getTtl())))
                         .withClaim("user_id", request.getUserId())
-                        .withClaim("user_fingerprint", fingerprintService.hashFingerprint(request.getFingerprint()))
+                        .withClaim("user_fingerprint", request.getFingerprintHash())
                         .sign(Algorithm.RSA512(null, request.getPrivateKey()));
 
         return new SecuredJwt(token, request.getFingerprint());

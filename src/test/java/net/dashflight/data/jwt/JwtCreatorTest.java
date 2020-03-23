@@ -1,6 +1,8 @@
 package net.dashflight.data.jwt;
 
 import java.time.Instant;
+import net.dashflight.data.jwt.create.CreateJwtRequest;
+import net.dashflight.data.jwt.create.JwtCreator;
 import net.dashflight.data.keys.RSAKeyManager;
 import net.dashflight.data.keys.StaticRSAKeyManager;
 import org.junit.Assert;
@@ -17,6 +19,7 @@ public class JwtCreatorTest {
                 .issuer("test")
                 .ttl(15)
                 .fingerprint("12345")
+                .fingerprintHash("22222")
                 .issuedAt(Instant.ofEpochSecond(1584996995))
                 .userId("11111")
                 .privateKey(keyManager.getPrivateKey())
@@ -24,12 +27,13 @@ public class JwtCreatorTest {
 
 
         SecuredJwt expected = new SecuredJwt(
-            "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJ1c2VyX2lkIjoiMTExMTEiLCJpc3MiOiJ0ZXN0IiwiZXhwIjoxNTg0OTk3MDEwLCJpYXQiOjE1ODQ5OTY5OTUsInVzZXJfZmluZ2VycHJpbnQiOiI1OTk0NDcxQUJCMDExMTJBRkNDMTgxNTlGNkNDNzRCNEY1MTFCOTk4MDZEQTU5QjNDQUY1QTlDMTczQ0FDRkM1In0.AM7WG2kFtsUtqUBO1fQcwbbSckBogsndqdgpuTw9xiVnAELVQTrGF4EGdC-0Gj4Or9RlUTV9jixdHVMTwqnTMdoBzilNfP_v316AetCsGmsOH_GOqwvu8ig69A4DNtLmXHKY2hoDK6ZYneGdl0_OyStY3sqaTFd_sWkr8_K3bmtgXFBW9QgBf0TPEtWmWArFfZc_N0vA_Loyvno",
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJ1c2VyX2lkIjoiMTExMTEiLCJpc3MiOiJ0ZXN0IiwiZXhwIjoxNTg0OTk3MDEwLCJpYXQiOjE1ODQ5OTY5OTUsInVzZXJfZmluZ2VycHJpbnQiOiIyMjIyMiJ9.LVXHUdFxGPNNhdiEX3rqOOn_lMYUmcmOzxPbE2MRzcgpWf-4syrTzkPhd9upKbAhCO-MGu-LC8MqmApAyLDjJL5LOVAOObRADfjwI64lU6UZpUjkIfJiAspHuHx9AP2_ej8yl1Pfx9-UujHmO-D2DMjRNEGzHyNtXRctMNPFwnk",
             "12345"
         );
 
         SecuredJwt result = creator.generateJwt(request);
 
+        System.out.println(result.getToken());
         Assert.assertEquals(result.getToken(), expected.getToken());
         Assert.assertEquals(result.getFingerprint(), expected.getFingerprint());
     }
