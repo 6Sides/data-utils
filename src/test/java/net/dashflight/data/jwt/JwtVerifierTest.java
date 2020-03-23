@@ -36,7 +36,7 @@ public class JwtVerifierTest {
                 .publicKey(keyManager.getPublicKey())
                 .build();
 
-        DecodedJWT result = verifier.decodeJwtToken(request);
+        verifier.decodeJwtToken(request);
     }
 
 

@@ -33,7 +33,6 @@ public class JwtCreatorTest {
 
         SecuredJwt result = creator.generateJwt(request);
 
-        System.out.println(result.getToken());
         Assert.assertEquals(result.getToken(), expected.getToken());
         Assert.assertEquals(result.getFingerprint(), expected.getFingerprint());
     }
