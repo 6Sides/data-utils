@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id "io.freefair.lombok" version "4.1.6"
 }
 
 group 'net.dashflight'
@@ -48,6 +49,7 @@ dependencies {
 
     compile platform('com.amazonaws:aws-java-sdk-bom:1.11.228')
     compile 'com.amazonaws:aws-java-sdk-s3'
+    compile 'com.amazonaws:aws-java-sdk-ses'
 
 
     // Tink - Used for ciphering the JWTs
@@ -78,4 +80,8 @@ dependencies {
 
     compile 'de.taimos:totp:1.0'
     compile 'commons-codec:commons-codec:1.10'
+
+
+    compile 'org.projectlombok:lombok:1.18.10'
+
 }
