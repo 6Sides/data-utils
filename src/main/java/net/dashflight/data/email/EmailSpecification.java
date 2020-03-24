@@ -1,5 +1,6 @@
 package net.dashflight.data.email;
 
+import java.util.List;
 import lombok.Builder;
 import lombok.Data;
 
@@ -7,6 +8,24 @@ import lombok.Data;
 @Builder
 public class EmailSpecification {
 
-    private String recipient, subject, body;
+    /**
+     * The value in the `from` field of the email
+     */
+    private String from;
+
+    /**
+     * The email address of the recipient
+     */
+    private List<String> recipients;
+
+    /**
+     * Subject line of the email
+     */
+    private String subject;
+
+    /**
+     * Contents of the email. Can be plain text or formatted as html
+     */
+    private String body;
 
 }
