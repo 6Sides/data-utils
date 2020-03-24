@@ -6,7 +6,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import com.google.inject.Inject;
-import net.dashflight.data.jwt.verify.request.VerifyJwtRequest;
+import net.dashflight.data.jwt.verify.request.JwtVerificationRequirements;
 import net.dashflight.data.jwt.verify.request.VerifyJwtRequestProvider;
 
 /**
@@ -34,7 +34,7 @@ public class BasicJwtVerifier implements JwtVerifier {
      * @throws JWTVerificationException if token is unable to be decoded or verified
      */
     public DecodedJWT verifyToken(String token, String fingerprint) throws JWTVerificationException {
-        VerifyJwtRequest request = provider.create(token, fingerprint);
+        JwtVerificationRequirements request = provider.create(token, fingerprint);
 
         if (request.getToken() == null || request.getFingerprint() == null) {
             throw new JWTVerificationException("The token and fingerprint must both be non-null.");

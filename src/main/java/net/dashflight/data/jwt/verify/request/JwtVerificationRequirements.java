@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class VerifyJwtRequest {
+public class JwtVerificationRequirements {
 
     /**
      * The jwt to verify and decode

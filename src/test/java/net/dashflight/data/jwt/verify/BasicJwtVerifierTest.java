@@ -3,7 +3,7 @@ package net.dashflight.data.jwt.verify;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import net.dashflight.data.jwt.SecuredJwt;
-import net.dashflight.data.jwt.verify.request.VerifyJwtRequest;
+import net.dashflight.data.jwt.verify.request.JwtVerificationRequirements;
 import net.dashflight.data.jwt.verify.request.VerifyJwtRequestProvider;
 import net.dashflight.data.keys.RSAKeyPairProvider;
 import net.dashflight.data.keys.StaticRSAKeyPairProvider;
@@ -25,7 +25,7 @@ public class BasicJwtVerifierTest {
     public void setup() {
         RSAKeyPairProvider keyManager = new StaticRSAKeyPairProvider();
 
-        provider = ((token, fingerprint) -> VerifyJwtRequest.builder()
+        provider = ((token, fingerprint) -> JwtVerificationRequirements.builder()
                 .issuer("test")
                 .token(token)
                 .fingerprint(fingerprint)

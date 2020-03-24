@@ -25,8 +25,8 @@ public class DashflightVerifyJwtRequestProvider implements VerifyJwtRequestProvi
 
 
     @Override
-    public VerifyJwtRequest create(String token, String fingerprint) {
-        return VerifyJwtRequest.builder()
+    public JwtVerificationRequirements create(String token, String fingerprint) {
+        return JwtVerificationRequirements.builder()
                 .issuer(ISSUER)
                 .token(token)
                 .fingerprint(fingerprint)
