@@ -13,7 +13,7 @@ import net.dashflight.data.config.Configurable;
 import net.dashflight.data.config.RuntimeEnvironment;
 
 
-public class DashflightRSAKeyPairProvider implements RSAKeyPairDataProvider, Configurable {
+public class DashflightRSAKeyPairDataProvider implements RSAKeyPairDataProvider, Configurable {
 
     private static final String APP_NAME = "rsa-keypair";
 
@@ -24,7 +24,7 @@ public class DashflightRSAKeyPairProvider implements RSAKeyPairDataProvider, Con
     private static String privateKey;
 
 
-    DashflightRSAKeyPairProvider(RuntimeEnvironment env, Map<String, Object> properties) {
+    DashflightRSAKeyPairDataProvider(RuntimeEnvironment env, Map<String, Object> properties) {
         registerWith(RegistrationOptions.builder()
             .applicationName(APP_NAME)
             .environment(env)
@@ -44,7 +44,7 @@ public class DashflightRSAKeyPairProvider implements RSAKeyPairDataProvider, Con
     }
 
 
-    private String keyToJson(RSAKey key, String kid) {
+    public static String keyToJson(RSAKey key, String kid) {
         Map<String, String> data = new HashMap<>();
 
         data.put("kty", "RSA");

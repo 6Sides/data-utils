@@ -5,10 +5,14 @@ import java.security.InvalidKeyException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 
+/**
+ * Creates an RSA key pair based on the provided data and transformer.
+ */
 public class BasicRSAKeyPairProvider implements RSAKeyPairProvider {
 
     private final RSAPublicKey publicKey;
     private final RSAPrivateKey privateKey;
+
 
     @Inject
     public BasicRSAKeyPairProvider(RSAKeyPairDataProvider dataProvider, RSAKeyPairTransformer dataTransformer) throws InvalidKeyException {

@@ -1,0 +1,38 @@
+package net.dashflight.data.keys;
+
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+import org.junit.Assert;
+import org.junit.Test;
+
+public class Base64RSAKeyTransformerTest {
+
+    private final String publicKeyBase64 = "ewogICJrdHkiIDogIlJTQSIsCiAgImUiIDogIkFRQUIiLAogICJ1c2UiIDogInNpZyIsCiAgImtpZCIgOiAidGVzdC1qd2siLAogICJhbGciIDogIlJTNTEyIiwKICAibiIgOiAiQUltSGVTeDMvLzJEd2NpVUVXOFA4djFkUFpQbXEwcEF6VElQSzc4L3VIRldwWmRoL0dyM3F3N3U4YTNBOEhtU3NqdGg1TzdESDNDT0lla0dzR1dWODhGWHFpdnRNSXArRXNiK3hDcU81ZWpOUU52TFMydTFmaEttd2N5dHVHVzJ1ZllndSszaFFMTzhla1Vhczd5TktKQlloMmN2ZGZxTzdCQk9Dc0MzaGxxSCIKfQ==";
+    private final String privateKeyBase64 = "ewogICJrdHkiIDogIlJTQSIsCiAgImUiIDogIkE3UXZVa0JGRjZuRnZVWW5sZ3NpNnlub3I2UUZ0dkU1MVlCTkdGQjZBaXRvT0VSK1RNOHd2eTAyT3d5NExUNERLTkJCSHlFSUpycmROTzVtTDhZekUxYkU0ZWMwSktXZmxMMVBvTUxsaFpGaDJpOTh2Y1FaVEFjc1hER1IyNUdTNVVwRHpZM2p6SmtXclAvV256SlNQTFpSMU5NdzRLcE9NUkhPUm9EWUhDRT0iLAogICJ1c2UiIDogInNpZyIsCiAgImtpZCIgOiAidGVzdC1qd2siLAogICJhbGciIDogIlJTNTEyIiwKICAibiIgOiAiQUltSGVTeDMvLzJEd2NpVUVXOFA4djFkUFpQbXEwcEF6VElQSzc4L3VIRldwWmRoL0dyM3F3N3U4YTNBOEhtU3NqdGg1TzdESDNDT0lla0dzR1dWODhGWHFpdnRNSXArRXNiK3hDcU81ZWpOUU52TFMydTFmaEttd2N5dHVHVzJ1ZllndSszaFFMTzhla1Vhczd5TktKQlloMmN2ZGZxTzdCQk9Dc0MzaGxxSCIKfQ==";
+
+    @Test
+    public void transformPrivateKey() throws NoSuchAlgorithmException, InvalidKeyException {
+        Base64RSAKeyTransformer transformer = new Base64RSAKeyTransformer();
+
+        RSAPrivateKey result = transformer.transformPrivateKey(privateKeyBase64);
+
+        Assert.assertEquals(result.getAlgorithm(), "RSA");
+        Assert.assertEquals(result.getFormat(), "PKCS#8");
+        Assert.assertEquals(result.getPrivateExponent().toString(), "2600929860337671805999026467977707184870764791116166703173835853967995863191463381848252071391710295459306780173602057379762904336421856609208053731920399897921619416151311392334806604241188461991514230911394103761725897094704423042818576391831844953283999692198857558748574673777070684599883227136051911713");
+        Assert.assertEquals(result.getModulus().toString(), "96576283431699715099013143134195465028257967204181426190313699921530053759761436632401640794786695543068888641494253843907944170819308338015676043869046619255688171618031967009523286947377133311142530095587031956590472146293928260549155737150889541195990980706075372730148000892827852263154673998781040974471");
+    }
+
+    @Test
+    public void transformPublicKey() throws NoSuchAlgorithmException, InvalidKeyException {
+        Base64RSAKeyTransformer transformer = new Base64RSAKeyTransformer();
+
+        RSAPublicKey result = transformer.transformPublicKey(publicKeyBase64);
+
+        Assert.assertEquals(result.getAlgorithm(), "RSA");
+        Assert.assertEquals(result.getFormat(), "X.509");
+        Assert.assertEquals(result.getPublicExponent().toString(), "65537");
+        Assert.assertEquals(result.getModulus().toString(), "96576283431699715099013143134195465028257967204181426190313699921530053759761436632401640794786695543068888641494253843907944170819308338015676043869046619255688171618031967009523286947377133311142530095587031956590472146293928260549155737150889541195990980706075372730148000892827852263154673998781040974471");
+    }
+}
