@@ -10,6 +10,11 @@ import net.dashflight.data.config.RuntimeEnvironment;
  */
 public class DashflightRSAKeyPairModule extends AbstractModule {
 
+    @Override
+    protected void configure() {
+        bind(RSAKeyPairProvider.class).to(BasicRSAKeyPairProvider.class);
+    }
+
     @Provides
     RSAKeyPairDataProvider provideData() {
         return new DashflightRSAKeyPairDataProvider(RuntimeEnvironment.getCurrentEnvironment(), Collections.emptyMap());
@@ -19,4 +24,5 @@ public class DashflightRSAKeyPairModule extends AbstractModule {
     RSAKeyPairTransformer provideTransformer() throws Exception {
         return new Base64RSAKeyTransformer();
     }
+
 }

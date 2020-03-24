@@ -1,4 +1,4 @@
-package net.dashflight.data.jwt.verify;
+package net.dashflight.data.jwt.verify.request;
 
 import java.security.interfaces.RSAPublicKey;
 import lombok.Builder;

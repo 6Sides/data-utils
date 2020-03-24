@@ -1,4 +1,4 @@
-package net.dashflight.data.jwt.create;
+package net.dashflight.data.jwt.create.request;
 
 public interface CreateJwtRequestProvider {
 

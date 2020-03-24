@@ -1,4 +1,4 @@
-package net.dashflight.data.jwt.verify;
+package net.dashflight.data.jwt.verify.request;
 
 import com.google.inject.Inject;
 import net.dashflight.data.config.ConfigValue;
@@ -6,7 +6,7 @@ import net.dashflight.data.config.Configurable;
 import net.dashflight.data.jwt.FingerprintService;
 import net.dashflight.data.keys.RSAKeyPairProvider;
 
-public class BasicVerifyJwtRequestProvider implements VerifyJwtRequestProvider, Configurable {
+public class DashflightVerifyJwtRequestProvider implements VerifyJwtRequestProvider, Configurable {
 
     @ConfigValue("issuer")
     private static String ISSUER;
@@ -16,7 +16,7 @@ public class BasicVerifyJwtRequestProvider implements VerifyJwtRequestProvider, 
 
 
     @Inject
-    public BasicVerifyJwtRequestProvider(FingerprintService fingerprintService, RSAKeyPairProvider keyPairProvider) {
+    public DashflightVerifyJwtRequestProvider(FingerprintService fingerprintService, RSAKeyPairProvider keyPairProvider) {
         registerWith("jwt-utils");
 
         this.fingerprintService = fingerprintService;

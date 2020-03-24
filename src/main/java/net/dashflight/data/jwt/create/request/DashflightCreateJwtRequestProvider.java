@@ -1,12 +1,18 @@
-package net.dashflight.data.jwt.create;
+package net.dashflight.data.jwt.create.request;
 
+import com.google.inject.Inject;
 import java.time.Instant;
+import java.util.HashMap;
+import java.util.Map;
 import net.dashflight.data.config.ConfigValue;
 import net.dashflight.data.config.Configurable;
 import net.dashflight.data.jwt.FingerprintService;
 import net.dashflight.data.keys.RSAKeyPairProvider;
 
-public class BasicCreateJwtRequestProvider implements CreateJwtRequestProvider, Configurable {
+/**
+ * Used to generate jwts for authentication with dashflight
+ */
+class DashflightCreateJwtRequestProvider implements CreateJwtRequestProvider, Configurable {
 
     @ConfigValue("issuer")
     private static String ISSUER;
@@ -18,7 +24,8 @@ public class BasicCreateJwtRequestProvider implements CreateJwtRequestProvider, 
     private final RSAKeyPairProvider keyManager;
 
 
-    public BasicCreateJwtRequestProvider(FingerprintService fingerprintService, RSAKeyPairProvider keyPairProvider) {
+    @Inject
+    public DashflightCreateJwtRequestProvider(FingerprintService fingerprintService, RSAKeyPairProvider keyPairProvider) {
         registerWith("jwt-utils");
 
         this.fingerprintService = fingerprintService;
@@ -30,13 +37,16 @@ public class BasicCreateJwtRequestProvider implements CreateJwtRequestProvider, 
     public CreateJwtRequest create(String userId) {
         String fingerprint = fingerprintService.generateRandomFingerprint();
 
+        Map<String, String> claims = new HashMap<>();
+
+        claims.put("user_id", userId);
+        claims.put("user_fingerprint", fingerprintService.hashFingerprint(fingerprint));
+
         return CreateJwtRequest.builder()
                 .issuer(ISSUER)
-                .ttl(TOKEN_TTL)
-                .fingerprint(fingerprint)
-                .fingerprintHash(fingerprintService.hashFingerprint(fingerprint))
                 .issuedAt(Instant.now())
-                .userId(userId)
+                .ttl(TOKEN_TTL)
+                .claims(claims)
                 .privateKey(keyManager.getPrivateKey())
                 .build();
     }

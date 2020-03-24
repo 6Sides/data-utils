@@ -1,15 +1,19 @@
 package net.dashflight.data.jwt.create;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Key;
-import com.google.inject.Provides;
-import net.dashflight.data.keys.StaticRSAKeyPairProvider;
+import net.dashflight.data.jwt.create.request.DashflightCreateJwtRequestProviderModule;
+import net.dashflight.data.keys.BasicRSAKeyPairProvider;
+import net.dashflight.data.keys.DashflightRSAKeyPairModule;
+import net.dashflight.data.keys.RSAKeyPairProvider;
 
 public class DashflightJwtCreatorModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(Key.get(BasicCreateJwtRequestProvider.class));
+        install(new DashflightCreateJwtRequestProviderModule());
+        install(new DashflightRSAKeyPairModule());
+
+        bind(JwtCreator.class).to(BasicJwtCreator.class);
     }
 
 }
