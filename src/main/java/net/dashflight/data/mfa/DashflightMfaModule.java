@@ -1,18 +1,15 @@
 package net.dashflight.data.mfa;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
 
 public class DashflightMfaModule extends AbstractModule {
 
-    @Provides
-    MfaDataProvider provideMfaDataProvider() {
-        return new DashflightMfaDataProvider();
-    }
+    @Override
+    protected void configure() {
+        bind(MfaDataProvider.class).toInstance(new DashflightMfaDataProvider());
+        bind(MfaUriDataProvider.class).toInstance(new DashflightUriDataProvider());
 
-    @Provides
-    MfaUriDataProvider provideMfaUriDataProvider() {
-        return new DashflightUriDataProvider();
+        bind(MfaService.class).to(BasicMfaService.class);
     }
 
 }
