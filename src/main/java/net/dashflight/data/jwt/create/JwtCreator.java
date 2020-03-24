@@ -3,6 +3,7 @@ package net.dashflight.data.jwt.create;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.google.inject.Inject;
 import java.util.Date;
 import net.dashflight.data.jwt.SecuredJwt;
 
@@ -10,6 +11,14 @@ import net.dashflight.data.jwt.SecuredJwt;
  * Handles creating JWTs
  */
 public class JwtCreator {
+
+    private final CreateJwtRequestProvider provider;
+
+    @Inject
+    public JwtCreator(CreateJwtRequestProvider provider) {
+        this.provider = provider;
+    }
+
 
     /**
      * Creates a secure JWT with the userId encoded in its payload.
@@ -19,7 +28,9 @@ public class JwtCreator {
      *      2. JWT is created storing any necessary claims and the hash of the fingerprint.
      *      3. The JWT is ciphered to obfuscate any internal data stored in the payload. (Currently omitted)
      */
-    public SecuredJwt generateJwt(CreateJwtRequest request) throws JWTCreationException {
+    public SecuredJwt generateJwt(String userId) throws JWTCreationException {
+        CreateJwtRequest request = provider.create(userId);
+
         String token = JWT.create()
                         .withIssuer(request.getIssuer())
                         .withIssuedAt(Date.from(request.getIssuedAt()))

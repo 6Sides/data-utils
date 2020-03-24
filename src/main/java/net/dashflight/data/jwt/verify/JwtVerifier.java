@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import com.google.inject.Inject;
 
 /**
  * TODO: Add back check to redis to ensure token hasn't been revoked
@@ -12,6 +13,14 @@ import com.auth0.jwt.interfaces.JWTVerifier;
  * Handles verifying and decoding JWTs
  */
 public class JwtVerifier {
+
+    private final VerifyJwtRequestProvider provider;
+
+    @Inject
+    public JwtVerifier(VerifyJwtRequestProvider provider) {
+        this.provider = provider;
+    }
+
 
     /**
      * Decodes a JWT and returns it if it is valid
@@ -24,7 +33,9 @@ public class JwtVerifier {
      *
      * @throws JWTVerificationException if token is unable to be decoded or verified
      */
-    public DecodedJWT decodeJwtToken(VerifyJwtRequest request) {
+    public DecodedJWT decodeJwtToken(String token, String fingerprint) throws JWTVerificationException {
+        VerifyJwtRequest request = provider.create(token, fingerprint);
+
         if (request.getToken() == null || request.getFingerprint() == null) {
             throw new JWTVerificationException("The token and fingerprint must both be non-null.");
         }
