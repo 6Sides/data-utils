@@ -2,8 +2,8 @@ package net.dashflight.data.jwt.create;
 
 import java.time.Instant;
 import net.dashflight.data.jwt.SecuredJwt;
-import net.dashflight.data.keys.RSAKeyManager;
-import net.dashflight.data.keys.StaticRSAKeyManager;
+import net.dashflight.data.keys.RSAKeyPairProvider;
+import net.dashflight.data.keys.StaticRSAKeyPairProvider;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -20,7 +20,7 @@ public class JwtCreatorTest {
 
     @Before
     public void setup() {
-        RSAKeyManager keyManager = new StaticRSAKeyManager();
+        RSAKeyPairProvider keyManager = new StaticRSAKeyPairProvider();
 
         provider = userId -> CreateJwtRequest.builder()
                 .issuer("test")

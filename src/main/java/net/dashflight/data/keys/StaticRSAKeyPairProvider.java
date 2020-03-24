@@ -10,12 +10,12 @@ import java.security.spec.RSAPublicKeySpec;
 /**
  * Always returns the same hardcoded RSA keys. Used for testing.
  */
-public class StaticRSAKeyManager implements RSAKeyManager {
+public class StaticRSAKeyPairProvider implements RSAKeyPairProvider {
 
     private RSAPublicKey publicKey;
     private RSAPrivateKey privateKey;
 
-    public StaticRSAKeyManager() {
+    public StaticRSAKeyPairProvider() {
         try {
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 
@@ -39,6 +39,7 @@ public class StaticRSAKeyManager implements RSAKeyManager {
             privateKey = null;
         }
     }
+
 
     @Override
     public RSAPublicKey getPublicKey() {

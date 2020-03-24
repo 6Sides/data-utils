@@ -4,8 +4,7 @@ import java.time.Instant;
 import net.dashflight.data.config.ConfigValue;
 import net.dashflight.data.config.Configurable;
 import net.dashflight.data.jwt.FingerprintService;
-import net.dashflight.data.keys.DefaultRSAKeyManager;
-import net.dashflight.data.keys.RSAKeyManagerFactory;
+import net.dashflight.data.keys.RSAKeyPairProvider;
 
 public class BasicCreateJwtRequestProvider implements CreateJwtRequestProvider, Configurable {
 
@@ -17,11 +16,13 @@ public class BasicCreateJwtRequestProvider implements CreateJwtRequestProvider, 
 
     private final FingerprintService fingerprintService = new FingerprintService();
 
-    private final DefaultRSAKeyManager keyManager = RSAKeyManagerFactory.withDefaults();
+    private RSAKeyPairProvider keyManager;
 
 
-    public BasicCreateJwtRequestProvider() {
+    public BasicCreateJwtRequestProvider(RSAKeyPairProvider keyPairProvider) {
         registerWith("jwt-utils");
+
+        this.keyManager = keyPairProvider;
     }
 
 
