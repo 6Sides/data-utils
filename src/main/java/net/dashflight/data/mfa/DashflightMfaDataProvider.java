@@ -4,30 +4,24 @@ import de.taimos.totp.TOTP;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.ByteBuffer;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.UUID;
 import net.dashflight.data.config.ConfigValue;
 import net.dashflight.data.config.Configurable;
-import net.dashflight.data.postgres.PostgresFactory;
 import org.apache.commons.codec.binary.Base32;
 import org.apache.commons.codec.binary.Hex;
-import org.postgresql.util.PGobject;
 
 
 /**
  * Service for handling google authenticator 2FA for Dashflight
  */
-public class DashflightMFADataProvider implements Configurable, MFADataProvider {
+public class DashflightMfaDataProvider implements Configurable, MfaDataProvider {
 
     @ConfigValue("issuer")
     private static String ISSUER;
 
     private final Base32 base32 = new Base32();
 
-    public DashflightMFADataProvider() {
+    public DashflightMfaDataProvider() {
         registerWith("multi-factor");
     }
 

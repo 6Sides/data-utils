@@ -5,7 +5,7 @@ import java.util.UUID;
 /**
  * Provides necessary functionality for implementing an MFA authentication flow
  */
-public interface MFADataProvider {
+public interface MfaDataProvider {
 
     /**
      * Returns the user's current TOTP (Temporary One Time Password) needed

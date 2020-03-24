@@ -2,7 +2,7 @@ package net.dashflight.data.mfa;
 
 import java.util.UUID;
 
-public interface MFA_URIDataProvider {
+public interface MfaUriDataProvider {
 
     /**
      * Returns a map of data necessary to build the authenticator URI

@@ -6,14 +6,14 @@ import java.util.UUID;
 /**
  * Basic implementation of an mfa service.
  */
-public class BasicMFAService {
+public class BasicMfaService {
 
-    private MFADataProvider mfaDataProvider;
-    private MFA_URIDataProvider uriDataProvider;
+    private MfaDataProvider mfaDataProvider;
+    private MfaUriDataProvider uriDataProvider;
 
 
     @Inject
-    public BasicMFAService(MFADataProvider dataProvider, MFA_URIDataProvider uriDataProvider) {
+    public BasicMfaService(MfaDataProvider dataProvider, MfaUriDataProvider uriDataProvider) {
         this.mfaDataProvider = dataProvider;
         this.uriDataProvider = uriDataProvider;
     }
