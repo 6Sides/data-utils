@@ -8,8 +8,6 @@ import com.auth0.jwt.interfaces.JWTVerifier;
 import com.google.inject.Inject;
 
 /**
- * TODO: Add back check to redis to ensure token hasn't been revoked
- *
  * Handles verifying and decoding JWTs
  */
 public class JwtVerifier {

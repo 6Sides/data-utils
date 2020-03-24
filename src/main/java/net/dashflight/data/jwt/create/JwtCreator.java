@@ -29,6 +29,10 @@ public class JwtCreator {
      *      3. The JWT is ciphered to obfuscate any internal data stored in the payload. (Currently omitted)
      */
     public SecuredJwt generateJwt(String userId) throws JWTCreationException {
+        if (userId == null) {
+            throw new IllegalArgumentException("userId must be non-null");
+        }
+
         CreateJwtRequest request = provider.create(userId);
 
         String token = JWT.create()

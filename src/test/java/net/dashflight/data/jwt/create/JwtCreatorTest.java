@@ -6,9 +6,15 @@ import net.dashflight.data.keys.RSAKeyManager;
 import net.dashflight.data.keys.StaticRSAKeyManager;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class JwtCreatorTest {
+
+    @Rule
+    public ExpectedException exceptionRule = ExpectedException.none();
+
 
     private CreateJwtRequestProvider provider;
 
@@ -41,4 +47,14 @@ public class JwtCreatorTest {
         Assert.assertEquals(result.getToken(), expected.getToken());
         Assert.assertEquals(result.getFingerprint(), expected.getFingerprint());
     }
+
+    @Test
+    public void testGenerateJwtWithNullUserId() {
+        exceptionRule.expect(IllegalArgumentException.class);
+
+        JwtCreator creator = new JwtCreator(provider);
+
+        creator.generateJwt(null);
+    }
+
 }
