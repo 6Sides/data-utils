@@ -18,22 +18,24 @@ import org.postgresql.util.PGobject;
 
 
 /**
- * Service for handling MFA related tasks
+ * Service for handling google authenticator 2FA for Dashflight
  */
-public class MFAService implements Configurable {
+public class DashflightMFADataProvider implements Configurable, MFADataProvider {
 
     @ConfigValue("issuer")
     private static String ISSUER;
 
     private final Base32 base32 = new Base32();
 
-    public MFAService() {
+    public DashflightMFADataProvider() {
         registerWith("multi-factor");
     }
+
 
     /**
      * Gets the current TOTP code associated with the specified user
      */
+    @Override
     public String getTOTPCode(UUID userId) {
         byte[] bytes = base32.decode(getUserSecret(userId));
         String hexKey = Hex.encodeHexString(bytes);
@@ -43,6 +45,7 @@ public class MFAService implements Configurable {
     /**
      * Converts UUID (only 16 bytes) to 20 byte String for use with TOTP mfa
      */
+    @Override
     public String getUserSecret(UUID userId) {
         ByteBuffer bb = ByteBuffer.wrap(new byte[20]);
 
@@ -56,11 +59,12 @@ public class MFAService implements Configurable {
     }
 
     /**
-     * Returns a uri for the user to scan with the Authenticator app.
+     * Returns a URI for the user to scan with the Authenticator app.
      */
-    public String getGoogleAuthenticatorBarCode(UUID userId) {
-        String email = getUserEmail(userId);
-        email = email != null ? email : "";
+    @Override
+    public String getAuthenticatorURI(BasicUserData data) {
+        UUID userId = data.getUserId();
+        String email = data.getEmail();
 
         try {
             return "otpauth://totp/"
@@ -70,29 +74,5 @@ public class MFAService implements Configurable {
         } catch (UnsupportedEncodingException e) {
             throw new IllegalStateException(e);
         }
-    }
-
-
-    /**
-     * Retrieves the email address associated with the user
-     */
-    private String getUserEmail(UUID userId) {
-        try (Connection conn = PostgresFactory.withDefaults().getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("select email from accounts.users where id = ?");
-
-            PGobject uid = new PGobject();
-            uid.setType("uuid");
-            uid.setValue(userId.toString());
-
-            stmt.setObject(1, uid);
-
-            ResultSet res = stmt.executeQuery();
-
-            if (res.next()) {
-                return res.getString("email");
-            }
-        } catch (SQLException ignored) {}
-
-        return null;
     }
 }
