@@ -23,9 +23,9 @@ import java.util.Map;
  */
 public class Base64RSAKeyTransformer implements RSAKeyPairTransformer {
 
-    private KeyFactory keyFactory;
+    private final KeyFactory keyFactory;
 
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     public Base64RSAKeyTransformer() throws NoSuchAlgorithmException {
         keyFactory = KeyFactory.getInstance("RSA");

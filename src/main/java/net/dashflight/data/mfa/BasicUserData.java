@@ -1,7 +1,6 @@
 package net.dashflight.data.mfa;
 
 import java.util.UUID;
-import lombok.Builder;
 import lombok.Data;
 
 @Data

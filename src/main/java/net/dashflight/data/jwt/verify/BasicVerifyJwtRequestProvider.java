@@ -11,15 +11,15 @@ public class BasicVerifyJwtRequestProvider implements VerifyJwtRequestProvider, 
     @ConfigValue("issuer")
     private static String ISSUER;
 
-    private final FingerprintService fingerprintService = new FingerprintService();
-
-    private RSAKeyPairProvider keyManager;
+    private final FingerprintService fingerprintService;
+    private final RSAKeyPairProvider keyManager;
 
 
     @Inject
-    public BasicVerifyJwtRequestProvider(RSAKeyPairProvider keyPairProvider) {
+    public BasicVerifyJwtRequestProvider(FingerprintService fingerprintService, RSAKeyPairProvider keyPairProvider) {
         registerWith("jwt-utils");
 
+        this.fingerprintService = fingerprintService;
         this.keyManager = keyPairProvider;
     }
 

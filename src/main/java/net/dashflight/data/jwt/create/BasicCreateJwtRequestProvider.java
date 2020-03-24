@@ -9,19 +9,19 @@ import net.dashflight.data.keys.RSAKeyPairProvider;
 public class BasicCreateJwtRequestProvider implements CreateJwtRequestProvider, Configurable {
 
     @ConfigValue("issuer")
-    private static String ISSUER = "https://api.dashflight.net";
+    private static String ISSUER;
 
     @ConfigValue("access_token_ttl")
     private static int TOKEN_TTL;
 
-    private final FingerprintService fingerprintService = new FingerprintService();
+    private final FingerprintService fingerprintService;
+    private final RSAKeyPairProvider keyManager;
 
-    private RSAKeyPairProvider keyManager;
 
-
-    public BasicCreateJwtRequestProvider(RSAKeyPairProvider keyPairProvider) {
+    public BasicCreateJwtRequestProvider(FingerprintService fingerprintService, RSAKeyPairProvider keyPairProvider) {
         registerWith("jwt-utils");
 
+        this.fingerprintService = fingerprintService;
         this.keyManager = keyPairProvider;
     }
 

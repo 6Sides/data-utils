@@ -8,8 +8,8 @@ import java.util.UUID;
  */
 public class BasicMfaService {
 
-    private MfaDataProvider mfaDataProvider;
-    private MfaUriDataProvider uriDataProvider;
+    private final MfaDataProvider mfaDataProvider;
+    private final MfaUriDataProvider uriDataProvider;
 
 
     @Inject
