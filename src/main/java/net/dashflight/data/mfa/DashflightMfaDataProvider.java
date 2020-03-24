@@ -14,7 +14,7 @@ import org.apache.commons.codec.binary.Hex;
 /**
  * Service for handling google authenticator 2FA for Dashflight
  */
-public class DashflightMfaDataProvider implements Configurable, MfaDataProvider {
+class DashflightMfaDataProvider implements Configurable, MfaDataProvider {
 
     @ConfigValue("issuer")
     private static String ISSUER;

@@ -6,7 +6,7 @@ import java.util.UUID;
 /**
  * Basic implementation of an mfa service.
  */
-public class BasicMfaService implements MfaService {
+class BasicMfaService implements MfaService {
 
     private final MfaDataProvider mfaDataProvider;
     private final MfaUriDataProvider uriDataProvider;

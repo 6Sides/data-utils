@@ -11,7 +11,7 @@ import org.postgresql.util.PGobject;
 /**
  * Retrieves the necessary data associated with a user to construct an MFA URI
  */
-public class DashflightUriDataProvider implements MfaUriDataProvider {
+class DashflightUriDataProvider implements MfaUriDataProvider {
 
     @Override
     public BasicUserData getData(UUID userId) {
