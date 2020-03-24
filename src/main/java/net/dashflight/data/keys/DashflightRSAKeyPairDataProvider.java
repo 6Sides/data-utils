@@ -24,13 +24,8 @@ public class DashflightRSAKeyPairDataProvider implements RSAKeyPairDataProvider,
     private static String privateKey;
 
 
-    DashflightRSAKeyPairDataProvider(RuntimeEnvironment env, Map<String, Object> properties) {
-        registerWith(RegistrationOptions.builder()
-            .applicationName(APP_NAME)
-            .environment(env)
-            .additionalProperties(properties)
-            .build()
-        );
+    DashflightRSAKeyPairDataProvider() {
+        registerWith(APP_NAME);
     }
 
     @Override

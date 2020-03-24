@@ -93,4 +93,8 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.google.inject/guice
     compile group: 'com.google.inject', name: 'guice', version: '4.2.3'
+
+    // https://mvnrepository.com/artifact/com.google.inject.extensions/guice-grapher
+    compile group: 'com.google.inject.extensions', name: 'guice-grapher', version: '4.2.3'
+
 }

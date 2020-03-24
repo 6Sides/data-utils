@@ -23,12 +23,16 @@ import java.util.Map;
  */
 public class Base64RSAKeyTransformer implements RSAKeyPairTransformer {
 
-    private final KeyFactory keyFactory;
+    private KeyFactory keyFactory;
 
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public Base64RSAKeyTransformer() throws NoSuchAlgorithmException {
-        keyFactory = KeyFactory.getInstance("RSA");
+    public Base64RSAKeyTransformer() {
+        try {
+            keyFactory = KeyFactory.getInstance("RSA");
+        } catch (NoSuchAlgorithmException ex) {
+            ex.printStackTrace();
+        }
     }
 
 

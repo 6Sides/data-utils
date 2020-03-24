@@ -11,7 +11,6 @@ public class DashflightJwtCreatorModule extends AbstractModule {
     @Override
     protected void configure() {
         install(new DashflightCreateJwtRequestProviderModule());
-        install(new DashflightRSAKeyPairModule());
 
         bind(JwtCreator.class).to(BasicJwtCreator.class);
     }
