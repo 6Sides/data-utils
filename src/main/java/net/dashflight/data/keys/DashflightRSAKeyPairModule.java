@@ -5,7 +5,10 @@ import com.google.inject.Provides;
 import java.util.Collections;
 import net.dashflight.data.config.RuntimeEnvironment;
 
-public class EnvironmentAwareRSAKeyPairModule extends AbstractModule {
+/**
+ * Provides environment specific implementations used for Dashflight project.
+ */
+public class DashflightRSAKeyPairModule extends AbstractModule {
 
     @Provides
     RSAKeyPairDataProvider provideData() {

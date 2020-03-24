@@ -56,6 +56,7 @@ public class Base64RSAKeyTransformer implements RSAKeyPairTransformer {
         }
     }
 
+
     private KeyComponents parseData(String rawData) throws IOException {
         try (InputStream input = new ByteArrayInputStream(Base64.getDecoder().decode(rawData))) {
             Map<String, String> data = mapper.readValue(input, new TypeReference<HashMap<String, String>>(){});

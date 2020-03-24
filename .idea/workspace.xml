@@ -2,16 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47e27f0e-1967-4be3-87d2-25e1f94092c4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/EnvironmentAwareRSAKeyPairModule.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/net/dashflight/data/keys/Base64RSAKeyTransformerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/BasicRSAKeyPairProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/BasicRSAKeyPairProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/DashflightRSAKeyPairProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/DashflightRSAKeyPairDataProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/Base64RSAKeyTransformer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/Base64RSAKeyTransformer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/EnvironmentAwareRSAKeyPairModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/DashflightRSAKeyPairModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/net/dashflight/data/keys/Base64RSAKeyTransformerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/net/dashflight/data/keys/Base64RSAKeyTransformerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -262,14 +256,7 @@
       <workItem from="1584897026951" duration="63000" />
       <workItem from="1584897110324" duration="8879000" />
       <workItem from="1584994547892" duration="7382000" />
-      <workItem from="1585053433386" duration="12514000" />
-    </task>
-    <task id="LOCAL-00042" summary="bug fix">
-      <created>1583198861003</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1583198861003</updated>
+      <workItem from="1585053433386" duration="12691000" />
     </task>
     <task id="LOCAL-00043" summary="bug fix">
       <created>1583199262114</created>
@@ -607,14 +594,20 @@
       <option name="project" value="LOCAL" />
       <updated>1585063968688</updated>
     </task>
-    <option name="localTasksCounter" value="91" />
+    <task id="LOCAL-00091" summary="Added rsa key tests">
+      <created>1585068437249</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1585068437249</updated>
+    </task>
+    <option name="localTasksCounter" value="92" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Minor refactoring and added some docs" />
     <MESSAGE value="Modified KryoPool access modifier" />
     <MESSAGE value="Removed debug prints" />
     <MESSAGE value="Modified CacheableFetcher's key hash function" />
@@ -639,7 +632,8 @@
     <MESSAGE value="Javadoc updates" />
     <MESSAGE value="Refactored email package" />
     <MESSAGE value="Refactored keys package" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactored keys package" />
+    <MESSAGE value="Added rsa key tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added rsa key tests" />
   </component>
   <component name="WindowStateProjectService">
     <state x="560" y="205" key="#Project_Structure" timestamp="1585056074958">
@@ -686,11 +680,11 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="705" y="384" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1584896932706" />
-    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1585063968523">
+    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1585068437048">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="492" y="88" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585003097748" />
-    <state x="492" y="88" key="CommitChangelistDialog2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585063968523" />
+    <state x="492" y="88" key="CommitChangelistDialog2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585068437048" />
     <state x="560" y="205" key="GrepConsoleSettings" timestamp="1584997955755">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
