@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 
-public class BasicJwtVerifierTest {
+public class JwtVerifierTest {
 
     @Rule
     public ExpectedException exceptionRule = ExpectedException.none();
@@ -38,7 +38,7 @@ public class BasicJwtVerifierTest {
     public void testVerifyExpiredToken() {
         exceptionRule.expect(JWTVerificationException.class);
 
-        BasicJwtVerifier verifier = new BasicJwtVerifier(provider);
+        JwtVerifier verifier = new JwtVerifier(provider);
 
         SecuredJwt input = new SecuredJwt(
                 "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJ1c2VyX2lkIjoiMTExMTEiLCJpc3MiOiJ0ZXN0IiwiZXhwIjoxNTg0OTk3MDEwLCJpYXQiOjE1ODQ5OTY5OTUsInVzZXJfZmluZ2VycHJpbnQiOiIyMjIyMiJ9.LVXHUdFxGPNNhdiEX3rqOOn_lMYUmcmOzxPbE2MRzcgpWf-4syrTzkPhd9upKbAhCO-MGu-LC8MqmApAyLDjJL5LOVAOObRADfjwI64lU6UZpUjkIfJiAspHuHx9AP2_ej8yl1Pfx9-UujHmO-D2DMjRNEGzHyNtXRctMNPFwnk",
@@ -51,7 +51,7 @@ public class BasicJwtVerifierTest {
 
     @Test
     public void testVerifyValidToken() {
-        BasicJwtVerifier verifier = new BasicJwtVerifier(provider);
+        JwtVerifier verifier = new JwtVerifier(provider);
 
         SecuredJwt input = new SecuredJwt(
                 "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJ1c2VyX2lkIjoiMTExMTEiLCJpc3MiOiJ0ZXN0IiwiZXhwIjoyMDM4NTk2OTk1LCJpYXQiOjE1ODQ5OTY5OTUsInVzZXJfZmluZ2VycHJpbnQiOiIyMjIyMiJ9.UHHN0GSkqko3rJnN63yZMT8b38pApvUYE0ENf4GSHbSd5-JzoMjMP680XhFfR2rmRpckClPm0sEnk_NTu4_olnvytlkbzVHgMQh-Nkt6Wo1fJlO20DQX7ydDOk0rGDwqNxkbu6UZ7AiPes-K4tTZJ7KZnJnyBefwAxqNm8gXXJM",

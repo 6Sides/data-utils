@@ -13,7 +13,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-public class BasicJwtCreatorTest {
+public class JwtCreatorTest {
 
     @Rule
     public ExpectedException exceptionRule = ExpectedException.none();
@@ -43,7 +43,7 @@ public class BasicJwtCreatorTest {
 
     @Test
     public void testGenerateJwt() {
-        BasicJwtCreator creator = new BasicJwtCreator(provider);
+        JwtCreator creator = new JwtCreator(provider);
         String expected = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJ1c2VyX2lkIjoiMTExMTEiLCJpc3MiOiJ0ZXN0IiwiZXhwIjoxNTg0OTk3MDEwLCJpYXQiOjE1ODQ5OTY5OTUsInVzZXJfZmluZ2VycHJpbnQiOiIyMjIyMiJ9.LVXHUdFxGPNNhdiEX3rqOOn_lMYUmcmOzxPbE2MRzcgpWf-4syrTzkPhd9upKbAhCO-MGu-LC8MqmApAyLDjJL5LOVAOObRADfjwI64lU6UZpUjkIfJiAspHuHx9AP2_ej8yl1Pfx9-UujHmO-D2DMjRNEGzHyNtXRctMNPFwnk";
 
         String result = creator.generateFor("11111");
@@ -54,7 +54,7 @@ public class BasicJwtCreatorTest {
     public void testGenerateJwtWithNullUserId() {
         exceptionRule.expect(IllegalArgumentException.class);
 
-        BasicJwtCreator creator = new BasicJwtCreator(provider);
+        JwtCreator creator = new JwtCreator(provider);
 
         creator.generateFor(null);
     }
