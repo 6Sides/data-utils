@@ -11,7 +11,7 @@ public class DashflightJwtUtilModule extends AbstractModule {
         install(new DashflightJwtCreatorModule());
         install(new DashflightJwtVerifierModule());
 
-        bind(JwtUtil.class).to(JwtUtil.class);
+        bind(JwtUtil.class);
     }
 
 }
