@@ -1,36 +1,29 @@
 package net.dashflight.data.queue;
 
-import net.dashflight.data.redis.RedisFactory;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
+import net.dashflight.data.redis.RedisClient;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
 
 /**
  * Consumes tasks from a queue with Redis. Does NOT scale to more than one consumer.
  */
 public class RedisConsumerNode {
 
-    private static final JedisPool redisPool = RedisFactory.withDefaults().getPool();
+    private final RedisClient redis;
+    private final RedisConsumerNodeTask task;
 
-    private RedisConsumerNodeTask task;
-
-    private static RedisConsumerNode instance;
-
-    public static RedisConsumerNode getInstance(RedisConsumerNodeTask task) {
-        if (instance == null || !instance.task.equals(task)) {
-            instance = new RedisConsumerNode(task);
-        }
-
-        return instance;
-    }
-
-    private RedisConsumerNode(RedisConsumerNodeTask task) {
+    @Inject
+    public RedisConsumerNode(RedisClient redisClient, @Assisted RedisConsumerNodeTask task) {
+        this.redis = redisClient;
         this.task = task;
     }
+
 
     public void start() {
         Thread t = new Thread(() -> {
             while(true) {
-                try (Jedis client = redisPool.getResource()) {
+                try (Jedis client = redis.getPool().getResource()) {
                     // Get next task in queue and move it to processing list
                     String data = client.brpoplpush("queue", "processing", 0);
 
@@ -41,7 +34,7 @@ public class RedisConsumerNode {
                         client.lrem("processing", -1, data);
                     } catch (Exception e) {
                         // TODO: Implement procedure to requeue tasks that failed to be processed
-                        System.out.println("Failed to process: " + data);
+                        System.err.println("Failed to process: " + data);
                         e.printStackTrace();
                     }
                 }
