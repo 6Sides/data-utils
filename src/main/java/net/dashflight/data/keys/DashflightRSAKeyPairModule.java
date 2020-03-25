@@ -12,7 +12,7 @@ public class DashflightRSAKeyPairModule extends AbstractModule {
         bind(RSAKeyPairDataProvider.class).toInstance(new DashflightRSAKeyPairDataProvider());
         bind(RSAKeyPairTransformer.class).toInstance(new Base64RSAKeyTransformer());
 
-        bind(RSAKeyPairProvider.class).to(BasicRSAKeyPairProvider.class);
+        bind(RSAKeyPairProvider.class).to(DynamicRSAKeyPairProvider.class);
     }
 
 }

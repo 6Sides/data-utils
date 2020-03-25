@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47e27f0e-1967-4be3-87d2-25e1f94092c4" name="Default Changelist" comment="Removed unnecessary interfaces">
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/DashflightFingerprintServiceModule.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/DashflightJwtUtilModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/DashflightJwtUtilModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/create/DashflightJwtCreatorModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/create/DashflightJwtCreatorModule.java" afterDir="false" />
+    <list default="true" id="47e27f0e-1967-4be3-87d2-25e1f94092c4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/BasicRSAKeyPairProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/DynamicRSAKeyPairProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/DashflightRSAKeyPairModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/DashflightRSAKeyPairModule.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -272,14 +265,7 @@
       <workItem from="1585072045929" duration="643000" />
       <workItem from="1585072706809" duration="8358000" />
       <workItem from="1585083779170" duration="4189000" />
-      <workItem from="1585141326153" duration="757000" />
-    </task>
-    <task id="LOCAL-00054" summary="Added Joda plugin to Jdbi">
-      <created>1583958209921</created>
-      <option name="number" value="00054" />
-      <option name="presentableId" value="LOCAL-00054" />
-      <option name="project" value="LOCAL" />
-      <updated>1583958209921</updated>
+      <workItem from="1585141326153" duration="1056000" />
     </task>
     <task id="LOCAL-00055" summary="Refactored CacheableFetcher to be easier to use">
       <created>1583961624917</created>
@@ -617,14 +603,20 @@
       <option name="project" value="LOCAL" />
       <updated>1585141910327</updated>
     </task>
-    <option name="localTasksCounter" value="103" />
+    <task id="LOCAL-00103" summary="refactored jwt guice modules">
+      <created>1585142486226</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1585142486226</updated>
+    </task>
+    <option name="localTasksCounter" value="104" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Use guava for hashing" />
     <MESSAGE value="Moved packages and added README.md" />
     <MESSAGE value="Added MFAService" />
     <MESSAGE value="Added SES client" />
@@ -649,7 +641,8 @@
     <MESSAGE value="Refactored PasswordService and added guice module" />
     <MESSAGE value="Renamed VerifyJwtRequest.java" />
     <MESSAGE value="Removed unnecessary interfaces" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed unnecessary interfaces" />
+    <MESSAGE value="refactored jwt guice modules" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactored jwt guice modules" />
   </component>
   <component name="WindowStateProjectService">
     <state x="560" y="205" key="#Project_Structure" timestamp="1585082092890">
@@ -697,10 +690,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="705" y="384" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1584896932706" />
-    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1585141938308">
+    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1585142486016">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="492" y="88" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585141938308" />
+    <state x="492" y="88" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585142486016" />
     <state x="492" y="88" key="CommitChangelistDialog2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585092657409" />
     <state x="453" y="43" key="DiffContextDialog" timestamp="1585072871185">
       <screen x="0" y="0" width="1920" height="1080" />
