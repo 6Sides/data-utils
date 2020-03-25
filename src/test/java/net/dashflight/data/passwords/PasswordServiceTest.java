@@ -5,11 +5,11 @@ import static org.junit.Assert.*;
 import java.nio.charset.StandardCharsets;
 import org.junit.Test;
 
-public class BasicPasswordServiceTest {
+public class PasswordServiceTest {
 
     @Test
     public void testPasswordHashAndVerify() {
-        BasicPasswordService pwd = new BasicPasswordService();
+        PasswordService pwd = new PasswordService();
 
         byte[] password = "testPassword".getBytes(StandardCharsets.UTF_8);
 

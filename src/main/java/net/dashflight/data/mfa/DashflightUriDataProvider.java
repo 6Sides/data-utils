@@ -1,17 +1,26 @@
 package net.dashflight.data.mfa;
 
+import com.google.inject.Inject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
-import net.dashflight.data.postgres.PostgresFactory;
+import net.dashflight.data.postgres.PostgresClient;
 import org.postgresql.util.PGobject;
 
 /**
  * Retrieves the necessary data associated with a user to construct an MFA URI
  */
 class DashflightUriDataProvider implements MfaUriDataProvider {
+
+    private final PostgresClient postgresClient;
+
+    @Inject
+    public DashflightUriDataProvider(PostgresClient client) {
+        this.postgresClient = client;
+    }
+
 
     @Override
     public BasicUserData getData(UUID userId) {
@@ -25,7 +34,7 @@ class DashflightUriDataProvider implements MfaUriDataProvider {
     }
 
     private String getUserEmail(UUID userId) {
-        try (Connection conn = PostgresFactory.withDefaults().getConnection()) {
+        try (Connection conn = postgresClient.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("select email from accounts.users where id = ?");
 
             PGobject uid = new PGobject();
