@@ -34,11 +34,10 @@ class DashflightCreateJwtRequestProvider implements CreateJwtRequestProvider, Co
 
 
     @Override
-    public CreateJwtRequest create(String userId, String fingerprint) {
+    public CreateJwtRequest create(String userId) {
         Map<String, String> claims = new HashMap<>();
 
         claims.put("user_id", userId);
-        claims.put("user_fingerprint", fingerprintService.hashFingerprint(fingerprint));
 
         return CreateJwtRequest.builder()
                 .issuer(ISSUER)

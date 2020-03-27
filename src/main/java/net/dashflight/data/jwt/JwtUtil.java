@@ -19,8 +19,8 @@ public class JwtUtil {
     }
 
 
-    public SecuredJwt generateFor(String userId, String fingerprint) throws JWTCreationException {
-        return creator.generateFor(userId, fingerprint);
+    public SecuredJwt generateFor(String userId) throws JWTCreationException {
+        return creator.generateFor(userId);
     }
 
     public DecodedJWT verifyToken(String token, String fingerprint) throws JWTVerificationException {
