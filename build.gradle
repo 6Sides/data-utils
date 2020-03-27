@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id "io.freefair.lombok" version "4.1.6"
+    id "org.flywaydb.flyway" version "6.3.2"
 }
 
 group 'net.dashflight'
@@ -99,4 +100,18 @@ dependencies {
 
 
     testCompile "org.testcontainers:testcontainers:1.13.0"
+    compile "org.flywaydb:flyway-core:6.3.2"
+
+
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-compress
+    compile group: 'org.apache.commons', name: 'commons-compress', version: '1.20'
+
+    // https://mvnrepository.com/artifact/commons-io/commons-io
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
+}
+
+test {
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
 }

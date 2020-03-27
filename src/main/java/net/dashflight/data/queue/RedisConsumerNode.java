@@ -14,7 +14,7 @@ public class RedisConsumerNode {
     private final RedisConsumerNodeTask task;
 
     @Inject
-    public RedisConsumerNode(RedisClient redisClient, @Assisted RedisConsumerNodeTask task) {
+    RedisConsumerNode(RedisClient redisClient, @Assisted RedisConsumerNodeTask task) {
         this.redis = redisClient;
         this.task = task;
     }

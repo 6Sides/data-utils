@@ -6,9 +6,9 @@ import net.dashflight.data.config.Configurable;
 /**
  * Pulls the required postgres connection options from s3
  */
-class DashflightPostgresConnectionOptionProvider implements PostgresConnectionOptionProvider, Configurable {
+public class DashflightPostgresConnectionOptionProvider implements PostgresConnectionOptionProvider, Configurable {
 
-    private static final String APP_NAME = "java-postgres";
+    private static final String DEFAULT_APP_NAME = "java-postgres";
 
 
     @ConfigValue("pg_host")
@@ -33,10 +33,13 @@ class DashflightPostgresConnectionOptionProvider implements PostgresConnectionOp
     private int maxPoolSize;
 
 
-    public DashflightPostgresConnectionOptionProvider() {
-        registerWith(APP_NAME);
+    public DashflightPostgresConnectionOptionProvider(String applicationName) {
+        registerWith(applicationName);
     }
 
+    public DashflightPostgresConnectionOptionProvider() {
+        this(DEFAULT_APP_NAME);
+    }
 
     @Override
     public PostgresConnectionOptions get() {

@@ -35,7 +35,7 @@ public class PostgresClient {
     }
 
     private void init() {
-        String dbUrl = String.format("jdbc:postgresql://%s:%s/?dbname=%s&user=%s&password=%s",
+        String dbUrl = String.format("jdbc:postgresql://%s:%s/%s?user=%s&password=%s",
                 options.getHost(),
                 options.getPort(),
                 options.getDbname(),
