@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47e27f0e-1967-4be3-87d2-25e1f94092c4" name="Default Changelist" comment="Refactored redis package and associated implementations">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/flyway.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/FlywayManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/net/dashflight/data/postgres/PostgresClientTest.java" afterDir="false" />
+    <list default="true" id="47e27f0e-1967-4be3-87d2-25e1f94092c4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -14,9 +10,6 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/DashflightPostgresConnectionOptionProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/DashflightPostgresConnectionOptionProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/queue/RedisConsumerNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/queue/RedisConsumerNode.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -302,14 +295,7 @@
       <workItem from="1585072045929" duration="643000" />
       <workItem from="1585072706809" duration="8358000" />
       <workItem from="1585083779170" duration="4189000" />
-      <workItem from="1585141326153" duration="41342000" />
-    </task>
-    <task id="LOCAL-00058" summary="Fixed bug where RefreshAheadCacheableFetcher would not execute tasks at correct time">
-      <created>1583964798508</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1583964798508</updated>
+      <workItem from="1585141326153" duration="42587000" />
     </task>
     <task id="LOCAL-00059" summary="Added futures to CacheableFetcher">
       <created>1584021651889</created>
@@ -647,15 +633,20 @@
       <option name="project" value="LOCAL" />
       <updated>1585146071733</updated>
     </task>
-    <option name="localTasksCounter" value="107" />
+    <task id="LOCAL-00107" summary="Refactored postgres package and added flyway support">
+      <created>1585327318608</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1585327318608</updated>
+    </task>
+    <option name="localTasksCounter" value="108" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Refactoring and added tests" />
-    <MESSAGE value="Refactored jwt package and added tests" />
     <MESSAGE value="Updates to tests" />
     <MESSAGE value="test push" />
     <MESSAGE value="Added deps" />
@@ -679,7 +670,9 @@
     <MESSAGE value="Refactored keys package namings" />
     <MESSAGE value="Refactored postgres package and added guice module" />
     <MESSAGE value="Refactored redis package and associated implementations" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactored redis package and associated implementations" />
+    <MESSAGE value="Refactored postgres package and added flyway support" />
+    <MESSAGE value="Removed pretty print for gradle tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed pretty print for gradle tests" />
   </component>
   <component name="WindowStateProjectService">
     <state x="560" y="205" key="#Project_Structure" timestamp="1585170012804">
@@ -732,11 +725,11 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="705" y="384" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1584896932706" />
-    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1585327154572">
+    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1585330307690">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="492" y="88" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585146071424" />
-    <state x="492" y="88" key="CommitChangelistDialog2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585327154572" />
+    <state x="492" y="88" key="CommitChangelistDialog2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585330307690" />
     <state x="453" y="43" key="DiffContextDialog" timestamp="1585072871185">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -745,39 +738,39 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="560" y="205" key="GrepConsoleSettings/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1584997955755" />
-    <state width="1920" height="285" key="GridCell.Tab.0.bottom" timestamp="1585327275513">
+    <state width="1920" height="285" key="GridCell.Tab.0.bottom" timestamp="1585328965577">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.bottom/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896596" />
     <state width="1920" height="285" key="GridCell.Tab.0.bottom/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585169887961" />
     <state width="1792" height="285" key="GridCell.Tab.0.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1585089279417" />
     <state width="1920" height="285" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1080.-331.1080.1897/1920.832.1792.1097@0.0.1920.1080" timestamp="1584055583905" />
-    <state width="1920" height="285" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585327275513" />
-    <state width="1920" height="285" key="GridCell.Tab.0.center" timestamp="1585327275510">
+    <state width="1920" height="285" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585328965577" />
+    <state width="1920" height="285" key="GridCell.Tab.0.center" timestamp="1585328965574">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.center/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896587" />
     <state width="1920" height="285" key="GridCell.Tab.0.center/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585169887958" />
     <state width="1792" height="285" key="GridCell.Tab.0.center/0.0.1792.1120@0.0.1792.1120" timestamp="1585089279415" />
     <state width="1920" height="285" key="GridCell.Tab.0.center/0.0.1920.1080/-1080.-331.1080.1897/1920.832.1792.1097@0.0.1920.1080" timestamp="1584055583902" />
-    <state width="1920" height="285" key="GridCell.Tab.0.center/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585327275510" />
+    <state width="1920" height="285" key="GridCell.Tab.0.center/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585328965574" />
     <state width="1920" height="285" key="GridCell.Tab.0.center/0.0.1920.1080/-1080.-354.1080.1920/1920.832.1792.1097@0.0.1920.1080" timestamp="1584050242172" />
-    <state width="1920" height="285" key="GridCell.Tab.0.left" timestamp="1585327275509">
+    <state width="1920" height="285" key="GridCell.Tab.0.left" timestamp="1585328965573">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.left/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896584" />
     <state width="1920" height="285" key="GridCell.Tab.0.left/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585169887957" />
     <state width="1792" height="285" key="GridCell.Tab.0.left/0.0.1792.1120@0.0.1792.1120" timestamp="1585089279414" />
     <state width="1920" height="285" key="GridCell.Tab.0.left/0.0.1920.1080/-1080.-331.1080.1897/1920.832.1792.1097@0.0.1920.1080" timestamp="1584055583897" />
-    <state width="1920" height="285" key="GridCell.Tab.0.left/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585327275509" />
-    <state width="1920" height="285" key="GridCell.Tab.0.right" timestamp="1585327275512">
+    <state width="1920" height="285" key="GridCell.Tab.0.left/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585328965573" />
+    <state width="1920" height="285" key="GridCell.Tab.0.right" timestamp="1585328965576">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.right/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896589" />
     <state width="1920" height="285" key="GridCell.Tab.0.right/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585169887960" />
     <state width="1792" height="285" key="GridCell.Tab.0.right/0.0.1792.1120@0.0.1792.1120" timestamp="1585089279416" />
     <state width="1920" height="285" key="GridCell.Tab.0.right/0.0.1920.1080/-1080.-331.1080.1897/1920.832.1792.1097@0.0.1920.1080" timestamp="1584055583904" />
-    <state width="1920" height="285" key="GridCell.Tab.0.right/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585327275512" />
+    <state width="1920" height="285" key="GridCell.Tab.0.right/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585328965576" />
     <state width="1920" height="384" key="GridCell.Tab.1.bottom" timestamp="1585083720576">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -808,11 +801,11 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="461" y="179" key="SettingsEditor/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585169493843" />
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1585085244618">
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1585328785767">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585003099037" />
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585085244618" />
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585328785767" />
     <state x="200" y="200" width="1720" height="880" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1585092487588">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -847,10 +840,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="420" y="154" key="new project wizard/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585170320986" />
-    <state x="625" y="241" width="670" height="676" key="search.everywhere.popup" timestamp="1585326817310">
+    <state x="625" y="241" width="670" height="676" key="search.everywhere.popup" timestamp="1585327490667">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="625" y="241" width="670" height="676" key="search.everywhere.popup/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585162887627" />
-    <state x="625" y="241" width="670" height="676" key="search.everywhere.popup/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585326817310" />
+    <state x="625" y="241" width="670" height="676" key="search.everywhere.popup/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585327490667" />
   </component>
 </project>
