@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.google.inject.Inject;
 import java.util.Date;
 import java.util.Map.Entry;
+import net.dashflight.data.jwt.FingerprintService;
 import net.dashflight.data.jwt.SecuredJwt;
 import net.dashflight.data.jwt.create.request.CreateJwtRequest;
 import net.dashflight.data.jwt.create.request.CreateJwtRequestProvider;
@@ -17,10 +18,12 @@ import net.dashflight.data.jwt.create.request.CreateJwtRequestProvider;
 public class JwtCreator {
 
     private final CreateJwtRequestProvider provider;
+    private final FingerprintService fingerprintService;
 
     @Inject
-    public JwtCreator(CreateJwtRequestProvider provider) {
+    public JwtCreator(CreateJwtRequestProvider provider, FingerprintService fingerprintService) {
         this.provider = provider;
+        this.fingerprintService = fingerprintService;
     }
 
 
@@ -32,12 +35,13 @@ public class JwtCreator {
      *      2. JWT is created storing any necessary claims and the hash of the fingerprint.
      *      3. The JWT is ciphered to obfuscate any internal data stored in the payload. (Currently omitted)
      */
-    public SecuredJwt generateFor(String userId, String fingerprint) throws JWTCreationException {
+    public SecuredJwt generateFor(String userId) throws JWTCreationException {
         if (userId == null) {
             throw new IllegalArgumentException("userId must be non-null");
         }
 
-        CreateJwtRequest request = provider.create(userId, fingerprint);
+        CreateJwtRequest request = provider.create(userId);
+        String fingerprint = fingerprintService.generateRandomFingerprint();
 
         JWTCreator.Builder tokenBuilder = JWT.create();
 
@@ -49,6 +53,8 @@ public class JwtCreator {
         for (Entry<String, String> entry : request.getClaims().entrySet()) {
             tokenBuilder.withClaim(entry.getKey(), entry.getValue());
         }
+
+        tokenBuilder.withClaim("fgp", fingerprintService.hashFingerprint(fingerprint));
 
         String token = tokenBuilder.sign(Algorithm.RSA512(null, request.getPrivateKey()));
 
