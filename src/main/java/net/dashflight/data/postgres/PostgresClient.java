@@ -18,8 +18,7 @@ import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 /**
  * Creates a pool of Postgres connections
  */
-public class PostgresClient {
-
+public class PostgresClient implements AutoCloseable {
 
     private HikariConfig config = new HikariConfig();
     private HikariDataSource connectionPool;
@@ -88,4 +87,9 @@ public class PostgresClient {
         return jdbi;
     }
 
+
+    @Override
+    public void close() {
+        connectionPool.close();
+    }
 }
