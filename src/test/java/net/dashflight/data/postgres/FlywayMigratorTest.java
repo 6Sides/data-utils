@@ -5,6 +5,7 @@ import static net.dashflight.data.postgres.FlywayMigrator.migrateAndExecute;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -37,12 +38,12 @@ public class FlywayMigratorTest {
     public void test() throws Exception {
         migrateAndExecute(postgresContainer, postgres -> {
             try (Connection conn = postgres.getConnection()) {
-                PreparedStatement stmt = conn.prepareStatement("select * from accounts.organizations");
+                PreparedStatement stmt = conn.prepareStatement("select * from accounts.organizations order by id asc");
 
                 ResultSet res = stmt.executeQuery();
 
-                while (res.next()) {
-                    System.out.println(res.getString("name"));
+                if (res.next()) {
+                    Assert.assertEquals(1, res.getInt("id"));
                 }
             }
         });
