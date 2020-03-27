@@ -5,13 +5,22 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import com.google.inject.Inject;
+import net.dashflight.data.jwt.verify.request.JwtVerificationRequirements;
+import net.dashflight.data.jwt.verify.request.VerifyJwtRequestProvider;
 
 /**
- * TODO: Add back check to redis to ensure token hasn't been revoked
- *
  * Handles verifying and decoding JWTs
  */
 public class JwtVerifier {
+
+    private final VerifyJwtRequestProvider provider;
+
+    @Inject
+    public JwtVerifier(VerifyJwtRequestProvider provider) {
+        this.provider = provider;
+    }
+
 
     /**
      * Decodes a JWT and returns it if it is valid
@@ -24,7 +33,9 @@ public class JwtVerifier {
      *
      * @throws JWTVerificationException if token is unable to be decoded or verified
      */
-    public DecodedJWT decodeJwtToken(VerifyJwtRequest request) {
+    public DecodedJWT verifyToken(String token, String fingerprint) throws JWTVerificationException {
+        JwtVerificationRequirements request = provider.create(token, fingerprint);
+
         if (request.getToken() == null || request.getFingerprint() == null) {
             throw new JWTVerificationException("The token and fingerprint must both be non-null.");
         }

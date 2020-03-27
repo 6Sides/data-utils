@@ -1,48 +1,36 @@
 package net.dashflight.data.redis;
 
-import java.util.Map;
-import net.dashflight.data.config.ConfigValue;
-import net.dashflight.data.config.Configurable;
-import net.dashflight.data.config.RuntimeEnvironment;
+import com.google.inject.Inject;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 /**
  * Handles interfacing with Redis cache. All methods in this class
- * interface with database 0 by default.
+ * interface with database 0.
  */
-public class RedisClient implements Configurable {
-
-    private static final String APP_NAME = "redis";
-
-
-    @ConfigValue("redis_host")
-    private String host;
-
-    @ConfigValue("redis_port")
-    private int port;
-
-    @ConfigValue("max_pool_size")
-    private int maxPoolSize = 4;
+public class RedisClient {
 
     /**
      * Redis connection pool
      */
     protected JedisPool pool;
 
-    RedisClient(RuntimeEnvironment env, Map<String, Object> properties) {
-        registerWith(RegistrationOptions.builder()
-            .applicationName(APP_NAME)
-            .environment(env)
-            .additionalProperties(properties)
-            .build()
-        );
+
+    @Inject
+    RedisClient(RedisConnectionOptionProvider optionProvider) {
+        RedisConnectionOptions options = optionProvider.get();
 
         GenericObjectPoolConfig config = new GenericObjectPoolConfig();
-        config.setMaxTotal(maxPoolSize);
+        config.setMaxTotal(options.getMaxPoolSize());
 
-        pool = new JedisPool(config, host, port);
+        pool = new JedisPool(
+                config,
+                options.getHost(),
+                options.getPort()
+        );
+
+        // Close pool on shutdown
         Runtime.getRuntime().addShutdownHook(new Thread(() -> pool.close()));
     }
 

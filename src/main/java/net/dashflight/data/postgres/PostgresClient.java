@@ -1,48 +1,24 @@
 package net.dashflight.data.postgres;
 
+import com.google.inject.Inject;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Map;
 import javax.sql.DataSource;
-import net.dashflight.data.config.ConfigValue;
 import net.dashflight.data.config.Configurable;
-import net.dashflight.data.config.RuntimeEnvironment;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.guava.GuavaPlugin;
 import org.jdbi.v3.jodatime2.JodaTimePlugin;
 import org.jdbi.v3.postgres.PostgresPlugin;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 
-
-public class PostgresClient implements Configurable {
-
-    private static final String APP_NAME = "java-postgres";
-
-
-    @ConfigValue("pg_host")
-    private String host;
-
-    @ConfigValue("pg_port")
-    private int port;
-
-    @ConfigValue("pg_dbname")
-    private String dbname;
-
-    @ConfigValue("pg_username")
-    private String username;
-
-    @ConfigValue("pg_password")
-    private String password;
-
-    @ConfigValue("application_name")
-    private String applicationName = "DataUtils application";
-
-    @ConfigValue("max_pool_size")
-    private int maxPoolSize = 2;
+/**
+ * Creates a pool of Postgres connections
+ */
+public class PostgresClient {
 
 
     private HikariConfig config = new HikariConfig();
@@ -50,25 +26,22 @@ public class PostgresClient implements Configurable {
 
     private Jdbi jdbi;
 
+    private final PostgresConnectionOptions options;
 
-    PostgresClient(RuntimeEnvironment env, Map<String, Object> properties) {
-        registerWith(RegistrationOptions.builder()
-            .applicationName(APP_NAME)
-            .environment(env)
-            .additionalProperties(properties)
-            .build()
-        );
+    @Inject
+    PostgresClient(PostgresConnectionOptionProvider optionProvider) {
+        this.options = optionProvider.get();
         init();
     }
 
     private void init() {
-        String dbUrl = String.format("jdbc:postgresql://%s:%s/?dbname=%s&user=%s&password=%s",
-                host,
-                port,
-                dbname,
-                username,
-                password,
-                applicationName);
+        String dbUrl = String.format("jdbc:postgresql://%s:%s/%s?user=%s&password=%s",
+                options.getHost(),
+                options.getPort(),
+                options.getDbname(),
+                options.getUsername(),
+                options.getPassword()
+        );
 
         URI dbUri = null;
         try {
@@ -84,15 +57,15 @@ public class PostgresClient implements Configurable {
         }
 
         config.setJdbcUrl(dbUrl);
-        config.setPoolName(applicationName);
-        config.setMaximumPoolSize(maxPoolSize);
+        config.setPoolName(options.getApplicationName());
+        config.setMaximumPoolSize(options.getMaxPoolSize());
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-        config.addDataSourceProperty("ApplicationName", applicationName);
+        config.addDataSourceProperty("ApplicationName", options.getApplicationName());
         connectionPool = new HikariDataSource(config);
 
-
+        // Close the pool on shutdown
         Runtime.getRuntime().addShutdownHook(new Thread(() -> connectionPool.close()));
 
 

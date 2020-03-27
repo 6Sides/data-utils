@@ -1,8 +1,10 @@
 package net.dashflight.data.jwt;
 
 import com.google.common.hash.Hashing;
+import com.google.inject.Inject;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
+import java.util.Random;
 import javax.xml.bind.DatatypeConverter;
 import net.dashflight.data.random.LavaRandom;
 
@@ -13,10 +15,11 @@ public class FingerprintService {
 
     private static final int FINGERPRINT_LENGTH = 64;
 
-    private SecureRandom secureRandom;
+    private final Random random;
 
-    public FingerprintService() {
-        this.secureRandom = new LavaRandom();
+    @Inject
+    public FingerprintService(Random random) {
+        this.random = random;
     }
 
     /**
@@ -24,7 +27,7 @@ public class FingerprintService {
      */
     public String generateRandomFingerprint() {
         byte[] randomBytes = new byte[FINGERPRINT_LENGTH];
-        secureRandom.nextBytes(randomBytes);
+        random.nextBytes(randomBytes);
 
         return DatatypeConverter.printHexBinary(randomBytes);
     }

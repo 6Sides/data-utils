@@ -6,6 +6,7 @@ import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.esotericsoftware.kryo.util.Pool;
 import com.google.common.io.ByteStreams;
+import com.google.inject.Inject;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.time.OffsetDateTime;
@@ -15,7 +16,6 @@ import java.util.concurrent.Executors;
 import net.dashflight.data.caching.Computable.DataFetchException;
 import net.dashflight.data.config.RuntimeEnvironment;
 import net.dashflight.data.redis.RedisClient;
-import net.dashflight.data.redis.RedisFactory;
 import net.dashflight.data.serialize.KryoPool;
 import net.dashflight.data.serialize.UUIDSerializer;
 
@@ -36,7 +36,8 @@ public abstract class CachedFetcher<K, V> {
 
     protected static final Pool<Kryo> kryoPool = KryoPool.getPool();
 
-    protected static final RedisClient redis = RedisFactory.withDefaults();
+    @Inject
+    protected RedisClient redis;
 
     private static final RuntimeEnvironment currentEnvironment = RuntimeEnvironment.getCurrentEnvironment();
 
@@ -49,6 +50,7 @@ public abstract class CachedFetcher<K, V> {
 
 
     private final Memoizer<K, CacheableResult<V>> memoizer;
+
 
     protected CachedFetcher() {
         this.memoizer = new Memoizer<>(this::memoizedGet);

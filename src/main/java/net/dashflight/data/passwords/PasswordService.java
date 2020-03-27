@@ -8,7 +8,7 @@ import java.nio.ByteBuffer;
 /**
  * Utility for hashing & verifying user passwords
  */
-public class PasswordService {
+class PasswordService {
 
     private Hasher hasher = BCrypt.withDefaults();
     private Verifyer verifier = BCrypt.verifyer();
