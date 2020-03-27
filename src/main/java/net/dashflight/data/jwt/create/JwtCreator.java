@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.google.inject.Inject;
 import java.util.Date;
 import java.util.Map.Entry;
+import net.dashflight.data.jwt.SecuredJwt;
 import net.dashflight.data.jwt.create.request.CreateJwtRequest;
 import net.dashflight.data.jwt.create.request.CreateJwtRequestProvider;
 
@@ -31,12 +32,12 @@ public class JwtCreator {
      *      2. JWT is created storing any necessary claims and the hash of the fingerprint.
      *      3. The JWT is ciphered to obfuscate any internal data stored in the payload. (Currently omitted)
      */
-    public String generateFor(String userId) throws JWTCreationException {
+    public SecuredJwt generateFor(String userId, String fingerprint) throws JWTCreationException {
         if (userId == null) {
             throw new IllegalArgumentException("userId must be non-null");
         }
 
-        CreateJwtRequest request = provider.create(userId);
+        CreateJwtRequest request = provider.create(userId, fingerprint);
 
         JWTCreator.Builder tokenBuilder = JWT.create();
 
@@ -49,7 +50,10 @@ public class JwtCreator {
             tokenBuilder.withClaim(entry.getKey(), entry.getValue());
         }
 
-        return tokenBuilder.sign(Algorithm.RSA512(null, request.getPrivateKey()));
+        String token = tokenBuilder.sign(Algorithm.RSA512(null, request.getPrivateKey()));
+
+
+        return new SecuredJwt(token, fingerprint);
     }
 
 }

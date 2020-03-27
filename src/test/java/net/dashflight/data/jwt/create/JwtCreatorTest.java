@@ -3,6 +3,7 @@ package net.dashflight.data.jwt.create;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
+import net.dashflight.data.jwt.SecuredJwt;
 import net.dashflight.data.jwt.create.request.CreateJwtRequest;
 import net.dashflight.data.jwt.create.request.CreateJwtRequestProvider;
 import net.dashflight.data.keys.RSAKeyPairProvider;
@@ -25,11 +26,11 @@ public class JwtCreatorTest {
     public void setup() {
         RSAKeyPairProvider keyManager = new StaticRSAKeyPairProvider();
 
-        provider = userId -> {
+        provider = (userId, fingerprint) -> {
             Map<String, String> claims = new HashMap<>();
 
             claims.put("user_id", userId);
-            claims.put("user_fingerprint", "22222");
+            claims.put("user_fingerprint", fingerprint);
 
             return CreateJwtRequest.builder()
                     .issuer("test")
@@ -44,10 +45,12 @@ public class JwtCreatorTest {
     @Test
     public void testGenerateJwt() {
         JwtCreator creator = new JwtCreator(provider);
-        String expected = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJ1c2VyX2lkIjoiMTExMTEiLCJpc3MiOiJ0ZXN0IiwiZXhwIjoxNTg0OTk3MDEwLCJpYXQiOjE1ODQ5OTY5OTUsInVzZXJfZmluZ2VycHJpbnQiOiIyMjIyMiJ9.LVXHUdFxGPNNhdiEX3rqOOn_lMYUmcmOzxPbE2MRzcgpWf-4syrTzkPhd9upKbAhCO-MGu-LC8MqmApAyLDjJL5LOVAOObRADfjwI64lU6UZpUjkIfJiAspHuHx9AP2_ej8yl1Pfx9-UujHmO-D2DMjRNEGzHyNtXRctMNPFwnk";
+        String expectedToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJ1c2VyX2lkIjoiMTExMTEiLCJpc3MiOiJ0ZXN0IiwiZXhwIjoxNTg0OTk3MDEwLCJpYXQiOjE1ODQ5OTY5OTUsInVzZXJfZmluZ2VycHJpbnQiOiIyMjIyMiJ9.LVXHUdFxGPNNhdiEX3rqOOn_lMYUmcmOzxPbE2MRzcgpWf-4syrTzkPhd9upKbAhCO-MGu-LC8MqmApAyLDjJL5LOVAOObRADfjwI64lU6UZpUjkIfJiAspHuHx9AP2_ej8yl1Pfx9-UujHmO-D2DMjRNEGzHyNtXRctMNPFwnk";
+        String expectedFingerprint = "22222";
 
-        String result = creator.generateFor("11111");
-        Assert.assertEquals(expected, result);
+        SecuredJwt result = creator.generateFor("11111", "22222");
+        Assert.assertEquals(expectedToken, result.getToken());
+        Assert.assertEquals(expectedFingerprint, result.getFingerprint());
     }
 
     @Test
@@ -56,7 +59,7 @@ public class JwtCreatorTest {
 
         JwtCreator creator = new JwtCreator(provider);
 
-        creator.generateFor(null);
+        creator.generateFor(null, null);
     }
 
 }
