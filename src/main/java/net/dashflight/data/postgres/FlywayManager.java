@@ -50,8 +50,7 @@ public class FlywayManager {
         this(new DashflightPostgresConnectionOptionProvider("flyway-migration"));
     }
 
-    public FlywayManager(PostgresConnectionOptionProvider provider)
-            throws IOException, NoSuchAlgorithmException {
+    public FlywayManager(PostgresConnectionOptionProvider provider) throws IOException, NoSuchAlgorithmException {
         this(new PostgresClient(provider));
     }
 
