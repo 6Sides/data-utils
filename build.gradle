@@ -99,6 +99,7 @@ dependencies {
     compile group: 'com.google.inject.extensions', name: 'guice-grapher', version: '4.2.3'
 
 
+    compile "org.testcontainers:testcontainers:1.13.0"
     testCompile "org.testcontainers:testcontainers:1.13.0"
     compile "org.flywaydb:flyway-core:6.3.2"
 
