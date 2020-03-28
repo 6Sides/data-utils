@@ -29,6 +29,11 @@ public class BasicMfaServiceTest {
                     public String getAuthenticatorURI(BasicUserData data) {
                         return String.format("test://%s:%s:%s", data.getUserId(), data.getUserSecret(), data.getEmail());
                     }
+
+                    @Override
+                    public String generateOneTimePassword() {
+                        return "1";
+                    }
                 },
                 userId -> {
                     BasicUserData data = new BasicUserData();
