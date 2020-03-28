@@ -47,7 +47,7 @@ public class FlywayMigrator {
     }
 
 
-    interface PostgresTestCase {
+    public interface PostgresTestCase {
         void run(PostgresClient client) throws Exception;
     }
 }
