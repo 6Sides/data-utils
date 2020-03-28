@@ -44,4 +44,9 @@ class BasicMfaService implements MfaService {
         return mfaDataProvider.getAuthenticatorURI(data);
     }
 
+    @Override
+    public String generateOneTimePassword() {
+        return mfaDataProvider.generateOneTimePassword();
+    }
+
 }

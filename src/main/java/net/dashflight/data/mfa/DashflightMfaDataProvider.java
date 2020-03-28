@@ -1,10 +1,13 @@
 package net.dashflight.data.mfa;
 
+import com.google.inject.Inject;
 import de.taimos.totp.TOTP;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.ByteBuffer;
+import java.util.Random;
 import java.util.UUID;
+import javax.xml.bind.DatatypeConverter;
 import net.dashflight.data.config.ConfigValue;
 import net.dashflight.data.config.Configurable;
 import org.apache.commons.codec.binary.Base32;
@@ -20,9 +23,13 @@ class DashflightMfaDataProvider implements Configurable, MfaDataProvider {
     private static String ISSUER;
 
     private final Base32 base32 = new Base32();
+    private final Random random;
 
-    public DashflightMfaDataProvider() {
+    @Inject
+    public DashflightMfaDataProvider(Random random) {
         registerWith("multi-factor");
+
+        this.random = random;
     }
 
 
@@ -68,5 +75,13 @@ class DashflightMfaDataProvider implements Configurable, MfaDataProvider {
         } catch (UnsupportedEncodingException e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    @Override
+    public String generateOneTimePassword() {
+        byte[] randomBytes = new byte[64];
+        random.nextBytes(randomBytes);
+
+        return DatatypeConverter.printHexBinary(randomBytes);
     }
 }

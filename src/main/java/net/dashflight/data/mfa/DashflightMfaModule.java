@@ -6,7 +6,6 @@ public class DashflightMfaModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(MfaDataProvider.class).toInstance(new DashflightMfaDataProvider());
         bind(MfaUriDataProvider.class).to(DashflightUriDataProvider.class);
 
         bind(MfaService.class).to(BasicMfaService.class);

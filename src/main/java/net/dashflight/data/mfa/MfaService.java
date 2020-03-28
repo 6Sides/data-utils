@@ -22,4 +22,9 @@ public interface MfaService {
      * adding mfa implementations simple for users.
      */
     String getAuthenticatorURI(UUID userId);
+
+    /**
+     * Generates a one time password to associate with a user
+     */
+    String generateOneTimePassword();
 }

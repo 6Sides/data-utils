@@ -26,4 +26,9 @@ public interface MfaDataProvider {
      */
     String getAuthenticatorURI(BasicUserData data);
 
+    /**
+     * Generates a one time password to associate with a user
+     */
+    String generateOneTimePassword();
+
 }
