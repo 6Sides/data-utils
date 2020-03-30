@@ -42,7 +42,7 @@ public class JwtVerifier {
 
         JWTVerifier jwtVerifier = JWT.require(Algorithm.RSA512(request.getPublicKey(), null))
                 .withIssuer(request.getIssuer())
-                .withClaim("user_fingerprint", request.getFingerprintHash())
+                .withClaim("fgp", request.getFingerprintHash())
                 .build();
 
         return jwtVerifier.verify(request.getToken());
