@@ -1,6 +1,7 @@
 package net.dashflight.data.redis;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -9,6 +10,7 @@ import redis.clients.jedis.JedisPool;
  * Handles interfacing with Redis cache. All methods in this class
  * interface with database 0.
  */
+@Singleton
 public class RedisClient {
 
     /**

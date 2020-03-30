@@ -1,6 +1,7 @@
 package net.dashflight.data.postgres;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import java.net.URI;
@@ -18,6 +19,7 @@ import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 /**
  * Creates a pool of Postgres connections
  */
+@Singleton
 public class PostgresClient implements AutoCloseable {
 
     private HikariConfig config = new HikariConfig();
