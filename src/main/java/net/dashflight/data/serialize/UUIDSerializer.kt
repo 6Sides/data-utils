@@ -7,6 +7,11 @@ import com.esotericsoftware.kryo.io.Output
 import java.util.*
 
 class UUIDSerializer : Serializer<UUID>() {
+
+    init {
+        isImmutable = true
+    }
+
     override fun write(kryo: Kryo, output: Output, uuid: UUID) {
         output.writeLong(uuid.mostSignificantBits)
         output.writeLong(uuid.leastSignificantBits)
@@ -14,9 +19,5 @@ class UUIDSerializer : Serializer<UUID>() {
 
     override fun read(kryo: Kryo, input: Input, uuidClass: Class<out UUID>): UUID {
         return UUID(input.readLong(), input.readLong())
-    }
-
-    init {
-        isImmutable = true
     }
 }

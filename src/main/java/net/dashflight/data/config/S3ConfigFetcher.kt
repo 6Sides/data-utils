@@ -22,7 +22,7 @@ class S3ConfigFetcher : ConfigurationSource {
 
         private fun getPropertiesForApplication(applicationName: String?, env: RuntimeEnvironment?, additionalProperties: Map<String?, Any?>?): ConfigurationData<Properties> {
             val result: Properties
-            val key = String.format("%s/%s.properties", applicationName, env?.name)
+            val key = String.format("%s/%s.properties", applicationName, env?.description)
             result = try {
                 val configFile = s3Client.getObject(GetObjectRequest(BUCKET, key))
                 JavaPropsMapper().readValue(configFile.objectContent, Properties::class.java)

@@ -7,17 +7,18 @@ import java.security.NoSuchAlgorithmException
  * Migrates the test container to the correct version and returns a client connected to it.
  */
 object FlywayMigrator {
-    @kotlin.jvm.JvmStatic
+
     @Throws(Exception::class)
-    fun migrateAndExecute(container: PostgresContainer?, testCase: PostgresTestCase) {
-        requireNotNull(container) { "Container cannot be null" }
+    fun migrateAndExecute(container: PostgresContainer, testCase: (client: PostgresClient) -> Unit) {
         val address = container.containerIpAddress
         val port = container.firstMappedPort
         val env = container.envMap
+
         val username = env["POSTGRES_USER"]
         val password = env["POSTGRES_PASSWORD"]
         val database = env["POSTGRES_DB"]
-        var options = PostgresConnectionOptions(address, port, database, username, password)
+
+        val options = PostgresConnectionOptions(address, port, database, username, password)
 
         PostgresClient(object : PostgresConnectionOptionProvider {
             override fun get(): PostgresConnectionOptions {
@@ -33,12 +34,7 @@ object FlywayMigrator {
                 e.printStackTrace()
                 throw RuntimeException("Flyway could not migrate database")
             }
-            testCase.run(pgClient)
+            testCase(pgClient)
         }
-    }
-
-    interface PostgresTestCase {
-        @Throws(Exception::class)
-        fun run(client: PostgresClient?)
     }
 }

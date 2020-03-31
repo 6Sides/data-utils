@@ -9,41 +9,40 @@ import net.dashflight.data.email.EmailClient.EmailSendException
  * Sends emails from AWS SES
  */
 class SESEmailClient : EmailClient {
-    @Throws(EmailSendException::class)
-    override fun send(specification: EmailSpecification?) {
-        val from = specification?.from
-        val recipients = specification?.recipients
-        val subject = specification?.subject
-        val body = specification?.body
 
-        val request = SendEmailRequest()
-                .withDestination(getDestination(recipients))
-                .withMessage(Message()
-                        .withSubject(getSubject(subject))
-                        .withBody(getBody(body)))
-                .withSource(from)
+    @Throws(EmailSendException::class)
+    override fun send(specification: EmailSpecification) {
+        val (from, recipients, subject, body) = specification
+
+        val request = SendEmailRequest().apply {
+            this.source = from
+            this.destination = getDestination(recipients)
+
+            message = Message().apply {
+                this.subject = getSubject(subject)
+                this.body = getBody(body)
+            }
+        }
+
         try {
             sesClient.sendEmail(request)
-        } catch (e: MessageRejectedException) {
-            throw EmailSendException(e.message)
-        } catch (e: MailFromDomainNotVerifiedException) {
-            throw EmailSendException(e.message)
-        } catch (e: ConfigurationSetDoesNotExistException) {
+        } catch (e: AmazonSimpleEmailServiceException) {
             throw EmailSendException(e.message)
         }
     }
 
-    private fun getDestination(addresses: List<String>?): Destination {
-        return Destination().withToAddresses(addresses!!)
+    private fun getDestination(addresses: List<String>): Destination {
+        return Destination().withToAddresses(addresses)
     }
 
-    private fun getSubject(subject: String?): Content {
-        return Content().withCharset("UTF-8").withData(subject!!)
+    private fun getSubject(subject: String): Content {
+        return Content().withCharset("UTF-8").withData(subject)
     }
 
-    private fun getBody(body: String?): Body {
-        return Body().withHtml(Content().withCharset("UTF-8").withData(body!!))
+    private fun getBody(body: String): Body {
+        return Body().withHtml(Content().withCharset("UTF-8").withData(body))
     }
+
 
     companion object {
         private val sesClient = AmazonSimpleEmailServiceClientBuilder.standard()

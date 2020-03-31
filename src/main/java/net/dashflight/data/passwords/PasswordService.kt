@@ -31,7 +31,7 @@ class PasswordService {
      * Checks if the password matches the password hash. Then overwrites password data.
      * @return true if the passwords match, false otherwise.
      */
-    fun verifyPassword(password: ByteArray, passwordHash: ByteArray?): Boolean {
+    fun verifyPassword(password: ByteArray, passwordHash: ByteArray): Boolean {
         val result = verifier.verify(password, passwordHash).verified
         overwriteBytes(password)
         return result

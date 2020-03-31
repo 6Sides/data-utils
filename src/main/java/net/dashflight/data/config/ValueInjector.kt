@@ -1,16 +1,20 @@
 package net.dashflight.data.config
 
 object ValueInjector {
+
     fun inject(source: Any, props: ConfigurationData<*>?) {
         val clazz = if (source.javaClass == Class::class.java) source as Class<*> else source.javaClass
+
         try {
             for (field in clazz.declaredFields) {
                 if (field.isAnnotationPresent(ConfigValue::class.java)) {
                     val key: String = field.getAnnotation(ConfigValue::class.java).value
                     field.isAccessible = true
+
                     val fieldType = field.type
                     var value: Any
-                    val configValue = props!![key] as String ?: continue
+                    val configValue = props?.get(key) as String? ?: continue
+
                     try {
                         value = if (fieldType == Int::class.java || fieldType == Int::class.javaPrimitiveType) {
                             configValue.toInt()

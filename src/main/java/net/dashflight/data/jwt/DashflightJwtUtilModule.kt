@@ -8,6 +8,7 @@ class DashflightJwtUtilModule : AbstractModule() {
     override fun configure() {
         install(DashflightJwtCreatorModule())
         install(DashflightJwtVerifierModule())
+
         bind(JwtUtil::class.java)
     }
 }

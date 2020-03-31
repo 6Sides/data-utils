@@ -1,66 +1,56 @@
-package net.dashflight.data.postgres;
+package net.dashflight.data.postgres
 
-import static net.dashflight.data.postgres.FlywayMigrator.migrateAndExecute;
+import net.dashflight.data.postgres.FlywayMigrator.migrateAndExecute
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+class FlywayMigratorTest {
 
-
-public class FlywayMigratorTest {
-
-    @Rule
-    public PostgresContainer postgresContainer = new PostgresContainer();
-
+    @get:Rule
+    var postgresContainer = PostgresContainer()
 
     @Before
-    public void setup() throws Exception {
-        migrateAndExecute(postgresContainer, postgres -> {
-            try (Connection conn = postgres.getConnection()) {
-                PreparedStatement stmt = conn.prepareStatement("insert into accounts.organizations (id, name) VALUES (?, ?), (?,?)");
-
-                stmt.setInt(1, 1);
-                stmt.setString(2, "Organization!");
-                stmt.setInt(3, 2);
-                stmt.setString(4, "Organization 2!");
-
-                stmt.executeUpdate();
+    @Throws(Exception::class)
+    fun setup() {
+        migrateAndExecute(postgresContainer) { client ->
+            client.connection.use { conn ->
+                val stmt = conn.prepareStatement("insert into accounts.organizations (id, name) VALUES (?, ?), (?,?)")
+                stmt.setInt(1, 1)
+                stmt.setString(2, "Organization!")
+                stmt.setInt(3, 2)
+                stmt.setString(4, "Organization 2!")
+                stmt.executeUpdate()
             }
-        });
+        }
     }
 
-
     @Test
-    public void test() throws Exception {
-        migrateAndExecute(postgresContainer, postgres -> {
-            try (Connection conn = postgres.getConnection()) {
-                PreparedStatement stmt = conn.prepareStatement("select * from accounts.organizations order by id asc");
-
-                ResultSet res = stmt.executeQuery();
-
+    @Throws(Exception::class)
+    fun test() {
+        migrateAndExecute(postgresContainer) { client ->
+            client.connection.use { conn ->
+                val stmt = conn.prepareStatement("select * from accounts.organizations order by id asc")
+                val res = stmt.executeQuery()
                 if (res.next()) {
-                    Assert.assertEquals(1, res.getInt("id"));
+                    Assert.assertEquals(1, res.getInt("id").toLong())
                 }
             }
-        });
+        }
     }
 
     @Test
-    public void test1() throws Exception {
-        migrateAndExecute(postgresContainer, postgres -> {
-            try (Connection conn = postgres.getConnection()) {
-                PreparedStatement stmt = conn.prepareStatement("insert into accounts.organizations (id, name) VALUES (?, ?)");
-
-                stmt.setInt(1, 10);
-                stmt.setString(2, "Organization! !");
-
-                stmt.executeUpdate();
+    @Throws(Exception::class)
+    fun test1() {
+        migrateAndExecute(postgresContainer) { client ->
+            client.connection.use { conn ->
+                val stmt = conn.prepareStatement("select * from accounts.organizations order by id asc")
+                val res = stmt.executeQuery()
+                if (res.next()) {
+                    Assert.assertEquals(1, res.getInt("id").toLong())
+                }
             }
-        });
+        }
     }
-
 }

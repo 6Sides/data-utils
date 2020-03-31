@@ -5,7 +5,6 @@ import com.esotericsoftware.kryo.io.Input
 import com.esotericsoftware.kryo.io.Output
 import com.google.common.io.ByteStreams
 import com.google.inject.Inject
-import net.dashflight.data.caching.Computable.DataFetchException
 import net.dashflight.data.config.RuntimeEnvironment
 import net.dashflight.data.redis.RedisClient
 import net.dashflight.data.serialize.KryoPool
@@ -27,10 +26,12 @@ import java.util.concurrent.Executors
  */
 abstract class CachedFetcher<K, V> @Inject protected constructor(protected val redis: RedisClient) {
 
-    private val memoizer: Memoizer<K, CacheableResult<V?>>
+    val memoizer: Memoizer<K, CacheableResult<V?>>
+
+    protected abstract val calculateResult: (key: K) -> CacheableResult<V?>
 
     init {
-        memoizer = Memoizer { this.fetchResult(it) }
+        memoizer = Memoizer { this.calculateResult(it) }
     }
 
     /**
@@ -66,7 +67,7 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(protected val r
     @Throws(DataFetchException::class)
     operator fun get(input: K): CacheableResult<V?> {
         return try {
-            memoizer.compute(input)!!
+            fetchResult(input)
         } catch (ex: InterruptedException) {
             ex.printStackTrace()
             throw DataFetchException(ex.message!!)

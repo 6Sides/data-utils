@@ -1,7 +1,6 @@
 package net.dashflight.data.caching
 
 import com.google.inject.Inject
-import net.dashflight.data.caching.Computable.DataFetchException
 import net.dashflight.data.redis.RedisClient
 import redis.clients.jedis.JedisPool
 import java.util.concurrent.Executors
@@ -38,7 +37,7 @@ abstract class RefreshAheadCachedFetcher<K, V> @Inject protected constructor(red
 
         // Refetch result and cache it
         if (result == null) {
-            result = fetchResult(input)
+            result = calculateResult(input)
             cacheResult(input, result)
         }
 

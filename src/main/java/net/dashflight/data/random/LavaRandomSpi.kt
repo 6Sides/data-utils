@@ -10,6 +10,7 @@ import java.util.concurrent.ArrayBlockingQueue
 import javax.xml.bind.DatatypeConverter
 
 internal class LavaRandomSpi : SecureRandomSpi() {
+
     private val backupRandom = SecureRandom()
 
     companion object {
@@ -19,7 +20,7 @@ internal class LavaRandomSpi : SecureRandomSpi() {
 
         init {
             val t = Thread(producer)
-            t.setDaemon(true)
+            t.isDaemon = true
             t.start()
         }
     }
@@ -56,11 +57,11 @@ internal class LavaRandomSpi : SecureRandomSpi() {
         override fun run() {
             while (true) {
                 try {
-                    val res: Map<String?, String?>? = mapper.readValue(URL(ENDPOINT), object : TypeReference<Map<String?, String?>?>() {})
+                    val res: Map<String, String> = mapper.readValue(URL(ENDPOINT), object : TypeReference<Map<String, String>>() {})
 
                     // Prevents bug in random service where it returns odd length hex string
-                    var bytes = res?.get("value")
-                    if (bytes!!.length % 2 == 1) {
+                    var bytes = res.getOrDefault("value", "")
+                    if (bytes.length % 2 == 1) {
                         bytes = bytes.substring(1)
                     }
                     synchronized(BUFFER) {

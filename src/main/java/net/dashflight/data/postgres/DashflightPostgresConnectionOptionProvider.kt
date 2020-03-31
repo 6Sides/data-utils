@@ -6,7 +6,12 @@ import net.dashflight.data.config.Configurable
 /**
  * Pulls the required postgres connection options from s3
  */
-class DashflightPostgresConnectionOptionProvider @JvmOverloads constructor(applicationName: String? = DEFAULT_APP_NAME) : PostgresConnectionOptionProvider, Configurable {
+class DashflightPostgresConnectionOptionProvider @JvmOverloads constructor(applicationName: String = DEFAULT_APP_NAME) : PostgresConnectionOptionProvider, Configurable {
+
+    init {
+        registerWith(applicationName)
+    }
+
     @ConfigValue("pg_host")
     private val host: String? = null
 
@@ -34,9 +39,5 @@ class DashflightPostgresConnectionOptionProvider @JvmOverloads constructor(appli
 
     companion object {
         private const val DEFAULT_APP_NAME = "java-postgres"
-    }
-
-    init {
-        registerWith(applicationName)
     }
 }

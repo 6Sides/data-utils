@@ -13,7 +13,7 @@ class CacheableResult<V> private constructor(val result: V?, val ttl: Int) {
      */
 
     /**
-     * The ttl the key was set with. Note this is NOT the remaining ttl of the key.
+     * The last time the result was calculated.
      */
 
     val lastUpdated = OffsetDateTime.now()

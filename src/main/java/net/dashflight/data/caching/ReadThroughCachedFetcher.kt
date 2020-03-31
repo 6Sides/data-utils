@@ -1,7 +1,6 @@
 package net.dashflight.data.caching
 
 import com.google.inject.Inject
-import net.dashflight.data.caching.Computable.DataFetchException
 import net.dashflight.data.redis.RedisClient
 
 /**
@@ -16,7 +15,7 @@ abstract class ReadThroughCachedFetcher<K, V> @Inject protected constructor(redi
 
         // Refetch result and cache it if it was not found
         if (result == null) {
-            result = fetchResult(input)
+            result = calculateResult(input)
             cacheResult(input, result)
         }
 

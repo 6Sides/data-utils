@@ -6,7 +6,7 @@ import java.util.*
 /**
  * Basic implementation of an mfa service.
  */
-internal class BasicMfaService @Inject constructor(private val mfaDataProvider: MfaDataProvider, private val uriDataProvider: MfaUriDataProvider) : MfaService {
+class BasicMfaService @Inject constructor(private val mfaDataProvider: MfaDataProvider, private val uriDataProvider: MfaUriDataProvider) : MfaService {
 
     /**
      * Returns user's temporary password

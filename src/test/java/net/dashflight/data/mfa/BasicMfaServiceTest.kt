@@ -1,60 +1,54 @@
-package net.dashflight.data.mfa;
+package net.dashflight.data.mfa
 
-import java.util.UUID;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
+import java.util.*
 
-public class BasicMfaServiceTest {
+class BasicMfaServiceTest {
 
-    final UUID USER_ID = UUID.fromString("b107f4cc-6df9-11ea-bc55-0242ac130003");
-
-    BasicMfaService service;
+    val USER_ID = UUID.fromString("b107f4cc-6df9-11ea-bc55-0242ac130003")
+    lateinit var service: BasicMfaService
 
     @Before
-    public void setup() {
-        service = new BasicMfaService(
-                new MfaDataProvider() {
-                    @Override
-                    public String getTOTPCode(UUID userId) {
-                        return "12345";
+    fun setup() {
+        service = BasicMfaService(
+                object : MfaDataProvider {
+                    override fun getTOTPCode(userId: UUID): String? {
+                        return "12345"
                     }
 
-                    @Override
-                    public String getUserSecret(UUID userId) {
-                        return "54321";
+                    override fun getUserSecret(userId: UUID): String? {
+                        return "54321"
                     }
 
-                    @Override
-                    public String getAuthenticatorURI(BasicUserData data) {
-                        return String.format("test://%s:%s:%s", data.getUserId(), data.getUserSecret(), data.getEmail());
+                    override fun getAuthenticatorURI(data: BasicUserData?): String {
+                        return String.format("test://%s:%s:%s", data!!.userId, data.userSecret, data.email)
                     }
 
-                    @Override
-                    public String generateOneTimePassword() {
-                        return "1";
+                    override fun generateOneTimePassword(): String? {
+                        return "1"
                     }
                 },
-                userId -> {
-                    BasicUserData data = new BasicUserData();
-                    data.setEmail("test@email.com");
-                    return data;
+                object : MfaUriDataProvider {
+                    override fun getData(userId: UUID): BasicUserData {
+                        val data = BasicUserData()
+                        data.email = "test@email.com"
+                        return data
+                    }
                 }
-        );
+        )
     }
 
     @Test
-    public void getTOTPCode() {
-        Assert.assertEquals("12345", service.getTOTPCode(USER_ID));
-    }
+    fun testTOTPCode() = Assert.assertEquals("12345", service.getTOTPCode(USER_ID))
+
 
     @Test
-    public void getUserSecret() {
-        Assert.assertEquals("54321", service.getUserSecret(USER_ID));
-    }
+    fun testUserSecret() = Assert.assertEquals("54321", service.getUserSecret(USER_ID))
+
 
     @Test
-    public void getAuthenticatorURI() {
-        Assert.assertEquals("test://b107f4cc-6df9-11ea-bc55-0242ac130003:54321:test@email.com", service.getAuthenticatorURI(USER_ID));
-    }
+    fun testAuthenticatorURI() = Assert.assertEquals("test://b107f4cc-6df9-11ea-bc55-0242ac130003:54321:test@email.com", service.getAuthenticatorURI(USER_ID))
+
 }

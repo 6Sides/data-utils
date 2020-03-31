@@ -1,26 +1,19 @@
-package net.dashflight.data.passwords;
+package net.dashflight.data.passwords
 
-import static org.junit.Assert.*;
+import org.junit.Assert
+import org.junit.Test
+import java.nio.charset.StandardCharsets
 
-import java.nio.charset.StandardCharsets;
-import org.junit.Test;
-
-public class PasswordServiceTest {
-
+class PasswordServiceTest {
     @Test
-    public void testPasswordHashAndVerify() {
-        PasswordService pwd = new PasswordService();
-
-        byte[] password = "testPassword".getBytes(StandardCharsets.UTF_8);
-
-        byte[] passwordCopy = new byte[password.length];
-
-        for (int i = 0; i < password.length; i++) {
-            passwordCopy[i] = password[i];
+    fun testPasswordHashAndVerify() {
+        val pwd = PasswordService()
+        val password = "testPassword".toByteArray(StandardCharsets.UTF_8)
+        val passwordCopy = ByteArray(password.size)
+        for (i in password.indices) {
+            passwordCopy[i] = password[i]
         }
-
-        byte[] passwordHash = pwd.hashPassword(password);
-
-        assertTrue(pwd.verifyPassword(passwordCopy, passwordHash));
+        val passwordHash = pwd.hashPassword(password)
+        Assert.assertTrue(pwd.verifyPassword(passwordCopy, passwordHash))
     }
 }

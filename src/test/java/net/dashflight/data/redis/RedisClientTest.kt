@@ -1,35 +1,29 @@
-package net.dashflight.data.redis;
+package net.dashflight.data.redis
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.testcontainers.containers.GenericContainer;
-import redis.clients.jedis.Jedis;
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import redis.clients.jedis.Jedis
 
-public class RedisClientTest {
+class RedisClientTest {
 
-    @Rule
-    public GenericContainer redisContainer = new GenericContainer<>("redis:5.0.3-alpine").withExposedPorts(6379);
-
-    Jedis redis;
+    @get:Rule
+    var redisContainer = RedisContainer()
+    lateinit var redis: Jedis
 
     @Before
-    public void setup() {
-        String address = redisContainer.getContainerIpAddress();
-        Integer port = redisContainer.getFirstMappedPort();
-
-        redis = new Jedis(address, port);
+    fun setup() {
+        val address = redisContainer.containerIpAddress
+        val port = redisContainer.firstMappedPort
+        redis = Jedis(address, port)
     }
 
     @Test
-    public void testSetAndGet() {
-        String key = "testKey", value = "testValue";
-
-        redis.set(key, value);
-
-        Assert.assertEquals(value, redis.get(key));
+    fun testSetAndGet() {
+        val key = "testKey"
+        val value = "testValue"
+        redis[key] = value
+        Assert.assertEquals(value, redis[key])
     }
-
-
 }

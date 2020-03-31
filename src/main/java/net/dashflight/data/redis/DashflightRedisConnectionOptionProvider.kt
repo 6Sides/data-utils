@@ -7,6 +7,11 @@ import net.dashflight.data.config.Configurable
  * Pulls the required redis connection options from s3
  */
 class DashflightRedisConnectionOptionProvider : RedisConnectionOptionProvider, Configurable {
+
+    init {
+        registerWith(APP_NAME)
+    }
+
     @ConfigValue("redis_host")
     private val host: String? = null
 
@@ -22,9 +27,5 @@ class DashflightRedisConnectionOptionProvider : RedisConnectionOptionProvider, C
 
     companion object {
         private const val APP_NAME = "redis"
-    }
-
-    init {
-        registerWith(APP_NAME)
     }
 }

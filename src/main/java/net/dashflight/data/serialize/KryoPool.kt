@@ -4,6 +4,7 @@ import com.esotericsoftware.kryo.Kryo
 import com.esotericsoftware.kryo.Serializer
 import com.esotericsoftware.kryo.util.Pool
 import java.util.*
+import kotlin.math.abs
 
 /**
  * Based on https://github.com/EsotericSoftware/kryo#pooling
@@ -19,9 +20,9 @@ object KryoPool {
             synchronized(registeredClasses) {
                 registeredClasses.forEach { (clazz: Class<*>, serializer: Serializer<*>?) ->
                     if (serializer == null) {
-                        kryo.register(clazz, Math.abs(clazz.hashCode()) + 12)
+                        kryo.register(clazz, abs(clazz.hashCode()) + 12)
                     } else {
-                        kryo.register(clazz, serializer, Math.abs(clazz.hashCode()) + 12)
+                        kryo.register(clazz, serializer, abs(clazz.hashCode()) + 12)
                     }
                 }
             }

@@ -24,9 +24,11 @@ interface Configurable {
         hash += options.applicationName.hashCode()
         hash += options.environment.hashCode()
         hash += if (options.additionalProperties != null) options.additionalProperties.hashCode() else 0
+
         if (!cache.containsKey(hash)) {
             cache[hash] = options.configurationSource.getConfig(options.applicationName, options.environment, options.additionalProperties)
         }
+
         ValueInjector.inject(this, cache[hash])
     }
 
