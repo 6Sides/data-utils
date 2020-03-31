@@ -24,28 +24,14 @@ import java.util.concurrent.Executors
  *
  * @param <K> The data type required to make the query (The `key`)
  * @param <V> The result type (The `value`)
-</V></K> */
-abstract class CachedFetcher<K, V> protected constructor() {
-    @Inject
-    protected var redis: RedisClient? = null
-
-    companion object {
-        // Use cached thread pool since caching tasks are short lived
-        private val threadPool = Executors.newCachedThreadPool()
-        protected val kryoPool = KryoPool.pool
-        private val currentEnvironment: RuntimeEnvironment = RuntimeEnvironment.currentEnvironment
-
-        init {
-            KryoPool.registerClass(CacheableResult::class.java)
-            KryoPool.registerClass(OffsetDateTime::class.java)
-            KryoPool.registerClass(UUID::class.java, UUIDSerializer())
-        }
-    }
+ */
+abstract class CachedFetcher<K, V> @Inject protected constructor(protected val redis: RedisClient) {
 
     private val memoizer: Memoizer<K, CacheableResult<V?>>
 
-    @Throws(DataFetchException::class)
-    protected abstract fun memoizedGet(input: K): CacheableResult<V?>
+    init {
+        memoizer = Memoizer { this.fetchResult(it) }
+    }
 
     /**
      * Fetches and returns the result based on the input
@@ -59,14 +45,14 @@ abstract class CachedFetcher<K, V> protected constructor() {
      * Invalidates the result associated with the specified object
      */
     fun invalidate(input: K) {
-        redis!!.del(generateHash(input))
+        redis.del(generateHash(input))
     }
 
     /**
      * Returns the remaining ttl of the input,value pair associated with the specified object
      */
     fun getKeyTTL(input: K): Long {
-        return redis!!.getTTL(generateHash(input))
+        return redis.getTTL(generateHash(input)) ?: 0
     }
 
     /**
@@ -92,24 +78,25 @@ abstract class CachedFetcher<K, V> protected constructor() {
      *
      * @return A CacheableResult containing the computed result, or null if none is found.
      */
-    protected fun getValueFromCache(input: K): CacheableResult<V>? {
-        val blob = redis!![generateHash(input)]
+    protected fun getValueFromCache(input: K): CacheableResult<V?>? {
+        val blob = redis.get(generateHash(input))
 
         // Key exists, attempt to deserialize and return it's associated value.
-        if (blob != null) {
-            try {
-                val kryo = kryoPool!!.obtain()
+        return blob?.let {
+            return try {
+                val kryo = kryoPool.obtain()
                 val bytes = Base64.decode(blob.toByteArray())
-                val result = kryo!!.readClassAndObject(Input(ByteArrayInputStream(bytes))) as CacheableResult<V>
-                kryoPool!!.free(kryo)
-                return result
+                val result = kryo?.readClassAndObject(Input(ByteArrayInputStream(bytes))) as? CacheableResult<V?>
+
+                kryoPool.free(kryo)
+                result
             } catch (e: Exception) {
                 // Key is in invalid format, delete it.
-                redis!!.del(generateHash(input))
+                redis.del(generateHash(input))
                 e.printStackTrace()
+                null
             }
         }
-        return null
     }
 
     /**
@@ -120,19 +107,21 @@ abstract class CachedFetcher<K, V> protected constructor() {
      */
     protected fun cacheResult(key: K, result: CacheableResult<V>) {
         threadPool.submit {
-            val kryo = kryoPool!!.obtain()
-            val out = Output(1024, -1)
-            kryo!!.writeClassAndObject(out, result)
-            kryoPool!!.free(kryo)
-            out.close()
-            try {
-                Input(out.buffer, 0, out.position()).use { input ->
-                    val bytes = ByteStreams.toByteArray(input)
-                    input.close()
-                    redis!!.setWithExpiry(generateHash(key), result.TTL, Base64.encode(bytes))
+            val kryo = kryoPool.obtain()
+
+            Output(1024, -1).use { output ->
+                kryo?.writeClassAndObject(output, result)
+                kryoPool.free(kryo)
+
+                try {
+                    val resultBytes = Input(output.buffer, 0, output.position()).use { input ->
+                        ByteStreams.toByteArray(input)
+                    }
+
+                    redis.setWithExpiry(generateHash(key), result.ttl, Base64.encode(resultBytes))
+                } catch (ex: IOException) {
+                    ex.printStackTrace()
                 }
-            } catch (ex: IOException) {
-                ex.printStackTrace()
             }
         }
     }
@@ -146,56 +135,16 @@ abstract class CachedFetcher<K, V> protected constructor() {
         return (currentEnvironment.name.hashCode() + javaClass.hashCode() + key.hashCode()).toString() + ""
     }
 
-    /**
-     * Used by clients to return fetched results.
-     *
-     * @param <V> The type of the result being returned.
-    </V> */
-    class CacheableResult<V> {
-        /**
-         * The result of the fetch
-         */
-        var result: V? = null
-            private set
+    companion object {
+        // Use cached thread pool since caching tasks are short lived
+        private val threadPool = Executors.newCachedThreadPool()
+        protected val kryoPool = KryoPool.pool
+        private val currentEnvironment: RuntimeEnvironment = RuntimeEnvironment.currentEnvironment
 
-        /**
-         * The ttl the key was set with. Note this is NOT the remaining ttl of the key.
-         */
-        var TTL = 0
-            private set
-        val lastUpdated = OffsetDateTime.now()
-
-        private constructor(result: V, ttl: Int) {
-            this.result = result
-            TTL = ttl
+        init {
+            KryoPool.registerClass(CacheableResult::class.java)
+            KryoPool.registerClass(OffsetDateTime::class.java)
+            KryoPool.registerClass(UUID::class.java, UUIDSerializer())
         }
-
-        private constructor() {}
-
-        companion object {
-            private const val defaultCacheTTL = 900
-
-            /**
-             * @param result The result of the query.
-             * @param cacheTTL The ttl in seconds.
-             */
-            fun <V> of(result: V, cacheTTL: Int): CacheableResult<V> {
-                return CacheableResult(result, cacheTTL)
-            }
-
-            fun <V> of(result: V): CacheableResult<V> {
-                return CacheableResult(result, defaultCacheTTL)
-            }
-        }
-    }
-
-    init {
-        memoizer = Memoizer(
-            object : Computable<K, CacheableResult<V?>> {
-                override fun compute(key: K): CacheableResult<V?> {
-                    return memoizedGet(key)
-                }
-            }
-        )
     }
 }

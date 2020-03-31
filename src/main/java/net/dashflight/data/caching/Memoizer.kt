@@ -8,18 +8,19 @@ import java.util.concurrent.*
  * If computation is not running, begin and wrap result in a Future for other callers.
  * If computation is running, caller will wait for computation to finish and collect result.
  */
-class Memoizer<K, V>(private val computeFunction: Computable<K, V>) : Computable<K, V?> {
-    private val cache: ConcurrentMap<K, Future<V?>?> = ConcurrentHashMap()
+class Memoizer<K, V>(private val computeFunction: (key: K) -> V?) {
+
+    private val cache: ConcurrentMap<K, Future<V?>> = ConcurrentHashMap()
 
     @Throws(InterruptedException::class)
-    override fun compute(key: K): V? {
+    fun compute(key: K): V? {
         while (true) {
             var startedComputation = false
             var future = cache[key]
 
             // Computation not started
             if (future == null) {
-                val eval = Callable { computeFunction.compute(key) }
+                val eval = Callable { computeFunction(key) }
                 val futureTask = FutureTask(eval)
                 future = cache.putIfAbsent(key, futureTask)
 
@@ -39,6 +40,7 @@ class Memoizer<K, V>(private val computeFunction: Computable<K, V>) : Computable
                 if (startedComputation) {
                     cache.remove(key)
                 }
+
                 return result
             } catch (e: CancellationException) {
                 cache.remove(key, future)
@@ -48,5 +50,4 @@ class Memoizer<K, V>(private val computeFunction: Computable<K, V>) : Computable
             }
         }
     }
-
 }
