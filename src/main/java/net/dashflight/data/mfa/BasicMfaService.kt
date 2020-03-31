@@ -1,52 +1,39 @@
-package net.dashflight.data.mfa;
+package net.dashflight.data.mfa
 
-import com.google.inject.Inject;
-import java.util.UUID;
+import com.google.inject.Inject
+import java.util.*
 
 /**
  * Basic implementation of an mfa service.
  */
-class BasicMfaService implements MfaService {
-
-    private final MfaDataProvider mfaDataProvider;
-    private final MfaUriDataProvider uriDataProvider;
-
-
-    @Inject
-    public BasicMfaService(MfaDataProvider dataProvider, MfaUriDataProvider uriDataProvider) {
-        this.mfaDataProvider = dataProvider;
-        this.uriDataProvider = uriDataProvider;
-    }
-
+internal class BasicMfaService @Inject constructor(private val mfaDataProvider: MfaDataProvider, private val uriDataProvider: MfaUriDataProvider) : MfaService {
 
     /**
      * Returns user's temporary password
      */
-    public String getTOTPCode(UUID userId) {
-        return mfaDataProvider.getTOTPCode(userId);
+    override fun getTOTPCode(userId: UUID): String? {
+        return mfaDataProvider.getTOTPCode(userId)
     }
 
     /**
      * Returns user's secret
      */
-    public String getUserSecret(UUID userId) {
-        return mfaDataProvider.getUserSecret(userId);
+    override fun getUserSecret(userId: UUID): String? {
+        return mfaDataProvider.getUserSecret(userId)
     }
 
     /**
      * Returns URI associated with user
      */
-    public String getAuthenticatorURI(UUID userId) {
-        BasicUserData data = uriDataProvider.getData(userId);
-        data.setUserId(userId);
-        data.setUserSecret(getUserSecret(userId));
-
-        return mfaDataProvider.getAuthenticatorURI(data);
+    override fun getAuthenticatorURI(userId: UUID): String? {
+        val data = uriDataProvider.getData(userId)
+        data.userId = userId
+        data.userSecret = getUserSecret(userId)
+        return mfaDataProvider.getAuthenticatorURI(data)
     }
 
-    @Override
-    public String generateOneTimePassword() {
-        return mfaDataProvider.generateOneTimePassword();
+    override fun generateOneTimePassword(): String? {
+        return mfaDataProvider.generateOneTimePassword()
     }
 
 }

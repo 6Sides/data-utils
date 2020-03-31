@@ -1,52 +1,38 @@
-package net.dashflight.data.config;
+package net.dashflight.data.config
 
-import java.lang.reflect.Field;
-
-public class ValueInjector {
-
-    public static void inject(Object source, ConfigurationData<?> props) {
-        Class<?> clazz = source.getClass().equals(Class.class) ? ((Class<?>) source) : source.getClass();
-
+object ValueInjector {
+    fun inject(source: Any, props: ConfigurationData<*>?) {
+        val clazz = if (source.javaClass == Class::class.java) source as Class<*> else source.javaClass
         try {
-            for (Field field : clazz.getDeclaredFields()) {
-                if (field.isAnnotationPresent(ConfigValue.class)) {
-
-                    String key = field.getAnnotation(ConfigValue.class).value();
-
-                    field.setAccessible(true);
-
-                    Class<?> fieldType = field.getType();
-                    Object value;
-
-                    String configValue = (String) props.get(key);
-
-                    if (configValue == null) {
-                        continue;
-                    }
-
+            for (field in clazz.declaredFields) {
+                if (field.isAnnotationPresent(ConfigValue::class.java)) {
+                    val key: String = field.getAnnotation(ConfigValue::class.java).value
+                    field.isAccessible = true
+                    val fieldType = field.type
+                    var value: Any
+                    val configValue = props!![key] as String ?: continue
                     try {
-                        if (fieldType == Integer.class || fieldType == int.class) {
-                            value = Integer.parseInt(configValue);
-                        } else if (fieldType == Double.class || fieldType == double.class) {
-                            value = Double.parseDouble(configValue);
-                        } else if (fieldType == Float.class || fieldType == float.class) {
-                            value = Float.parseFloat(configValue);
-                        } else if (fieldType == Short.class || fieldType == short.class) {
-                            value = Short.parseShort(configValue);
-                        } else if (fieldType == Boolean.class || fieldType == boolean.class) {
-                            value = Boolean.parseBoolean(configValue);
+                        value = if (fieldType == Int::class.java || fieldType == Int::class.javaPrimitiveType) {
+                            configValue.toInt()
+                        } else if (fieldType == Double::class.java || fieldType == Double::class.javaPrimitiveType) {
+                            configValue.toDouble()
+                        } else if (fieldType == Float::class.java || fieldType == Float::class.javaPrimitiveType) {
+                            configValue.toFloat()
+                        } else if (fieldType == Short::class.java || fieldType == Short::class.javaPrimitiveType) {
+                            configValue.toShort()
+                        } else if (fieldType == Boolean::class.java || fieldType == Boolean::class.javaPrimitiveType) {
+                            java.lang.Boolean.parseBoolean(configValue)
                         } else {
-                            value = configValue;
+                            configValue
                         }
-
-                        field.set(source, value);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        field[source] = value
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
                 }
             }
-        } catch(Exception e) {
-            e.printStackTrace();
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 }

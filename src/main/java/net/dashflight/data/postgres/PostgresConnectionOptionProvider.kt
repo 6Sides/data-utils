@@ -1,10 +1,8 @@
-package net.dashflight.data.postgres;
+package net.dashflight.data.postgres
 
 /**
  * Creates the connection options used by a Postgres client
  */
-public interface PostgresConnectionOptionProvider {
-
-    PostgresConnectionOptions get();
-
+interface PostgresConnectionOptionProvider {
+    fun get(): PostgresConnectionOptions
 }

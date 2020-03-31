@@ -1,15 +1,12 @@
-package net.dashflight.data.keys;
+package net.dashflight.data.keys
 
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
+import java.security.interfaces.RSAPrivateKey
+import java.security.interfaces.RSAPublicKey
 
 /**
  * Responsible for returning a valid RSA key pair.
  */
-public interface RSAKeyPairProvider {
-
-    RSAPublicKey getPublicKey();
-
-    RSAPrivateKey getPrivateKey();
-
+interface RSAKeyPairProvider {
+    val publicKey: RSAPublicKey?
+    val privateKey: RSAPrivateKey?
 }

@@ -1,10 +1,8 @@
-package net.dashflight.data.email;
+package net.dashflight.data.email
 
 /**
- *  Creates EmailSpecifications for use by EmailClient implementations
+ * Creates EmailSpecifications for use by EmailClient implementations
  */
-public interface EmailSpecificationProvider {
-
-    EmailSpecification create();
-
+interface EmailSpecificationProvider {
+    fun create(): EmailSpecification?
 }

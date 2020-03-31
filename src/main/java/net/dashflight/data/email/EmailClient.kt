@@ -1,10 +1,11 @@
-package net.dashflight.data.email;
+package net.dashflight.data.email
+
+import net.dashflight.data.email.EmailClient.EmailSendException
 
 /**
  * Interface used for clients that send emails.
  */
-public interface EmailClient {
-
+interface EmailClient {
     /**
      * Sends and email.
      *
@@ -12,12 +13,7 @@ public interface EmailClient {
      *
      * @throws EmailSendException If the email couldn't be sent / failed to send.
      */
-    void send(EmailSpecification specification) throws EmailSendException;
-
-
-    class EmailSendException extends Exception {
-        public EmailSendException(String message) {
-            super(message);
-        }
-    }
+    @Throws(EmailSendException::class)
+    fun send(specification: EmailSpecification?)
+    class EmailSendException(message: String?) : Exception(message)
 }

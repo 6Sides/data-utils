@@ -1,162 +1,128 @@
-package net.dashflight.data.postgres;
+package net.dashflight.data.postgres
 
-import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.GetObjectRequest;
-import com.amazonaws.services.s3.model.ObjectListing;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectSummary;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import javax.xml.bind.DatatypeConverter;
-import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
-import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
-import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
-import org.apache.commons.io.FileUtils;
-import org.flywaydb.core.Flyway;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain
+import com.amazonaws.regions.Regions
+import com.amazonaws.services.s3.AmazonS3ClientBuilder
+import com.amazonaws.services.s3.model.GetObjectRequest
+import com.amazonaws.services.s3.model.S3ObjectSummary
+import org.apache.commons.compress.archivers.tar.TarArchiveInputStream
+import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream
+import org.apache.commons.io.FileUtils
+import org.flywaydb.core.Flyway
+import java.io.*
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
+import javax.xml.bind.DatatypeConverter
 
 /**
  * Handles creating a flyway instance with the required configuration.
  *
  * Caches s3 files locally to reduce overhead.
  */
-public class FlywayManager {
+class FlywayManager(postgresClient: PostgresClient) {
+    private val postgresClient: PostgresClient
 
-    private static final String BUCKET = "www.dashflight.net-config";
-
-    private static final AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-            .withRegion(Regions.US_EAST_2)
-            .withCredentials(new DefaultAWSCredentialsProviderChain())
-            .build();
-
-
-    private final PostgresClient postgresClient;
-
-
-    public FlywayManager() throws NoSuchAlgorithmException, IOException {
-        this(new DashflightPostgresConnectionOptionProvider("flyway-migration"));
+    @JvmOverloads
+    constructor(provider: PostgresConnectionOptionProvider = DashflightPostgresConnectionOptionProvider("flyway-migration")) : this(PostgresClient(provider)) {
     }
 
-    public FlywayManager(PostgresConnectionOptionProvider provider) throws IOException, NoSuchAlgorithmException {
-        this(new PostgresClient(provider));
-    }
-
-    public FlywayManager(PostgresClient postgresClient) throws IOException, NoSuchAlgorithmException {
-        if (!new File(Paths.get("flyway", "db").toString()).exists()) {
-            Files.createDirectories(Paths.get("flyway", "db"));
-        }
-
-        ObjectListing listing = s3Client.listObjects(BUCKET, "flyway-migration-definitions/migrations.tar.gz");
-
-        for (S3ObjectSummary obj : listing.getObjectSummaries()) {
-            if (!obj.getKey().equals("flyway-migration-definitions/migrations.tar.gz")) {
-                continue;
-            }
-
-            File sourceFile = new File(Paths.get("flyway", "migrations.tar.gz").toString());
-
-            if (areFilesEqual(sourceFile, obj)) {
-                FileUtils.cleanDirectory(Paths.get("flyway", "db").toFile());
-            } else {
-                writeObjectToFile(obj, sourceFile);
-            }
-
-            untarFile();
-        }
-
-        this.postgresClient = postgresClient;
-    }
-
-    private void untarFile() throws IOException {
-        TarArchiveInputStream tarInput = new TarArchiveInputStream(new GzipCompressorInputStream(new FileInputStream(
-                Paths.get("flyway", "migrations.tar.gz").toString())));
-        TarArchiveEntry currentEntry = tarInput.getNextTarEntry();
-        BufferedReader br;
-
+    @Throws(IOException::class)
+    private fun untarFile() {
+        val tarInput = TarArchiveInputStream(GzipCompressorInputStream(FileInputStream(
+                Paths.get("flyway", "migrations.tar.gz").toString())))
+        var currentEntry = tarInput.nextTarEntry
+        var br: BufferedReader
         while (currentEntry != null) {
-            br = new BufferedReader(new InputStreamReader(tarInput)); // Read directly from tarInput
-
-            File targetFile = Paths.get("flyway", "db", currentEntry.getName()).toFile();
-
-            if (currentEntry.isDirectory()) {
+            br = BufferedReader(InputStreamReader(tarInput)) // Read directly from tarInput
+            val targetFile = Paths.get("flyway", "db", currentEntry.name).toFile()
+            if (currentEntry.isDirectory) {
                 if (!targetFile.exists()) {
-                    targetFile.mkdirs();
+                    targetFile.mkdirs()
                 }
             } else {
                 // Create the file if it doesn't exist
-                targetFile.createNewFile();
-
-                try (FileWriter writer = new FileWriter(targetFile)) {
-                    String line;
-
-                    while ((line = br.readLine()) != null) {
-                        writer.write(line);
-                        writer.write("\n");
+                targetFile.createNewFile()
+                FileWriter(targetFile).use { writer ->
+                    var line: String?
+                    while (br.readLine().also { line = it } != null) {
+                        writer.write(line)
+                        writer.write("\n")
                     }
                 }
             }
-
-            currentEntry = tarInput.getNextTarEntry();
+            currentEntry = tarInput.nextTarEntry
         }
     }
 
-
-    private void writeObjectToFile(S3ObjectSummary obj, File targetFile) throws IOException {
-        try (S3Object versionDef = s3Client.getObject(new GetObjectRequest(BUCKET, obj.getKey()))) {
-            InputStream input = versionDef.getObjectContent();
-            OutputStream outStream = new FileOutputStream(targetFile);
-
-            byte[] buffer = new byte[8 * 1024];
-            int bytesRead;
-            while ((bytesRead = input.read(buffer)) != -1) {
-                outStream.write(buffer, 0, bytesRead);
+    @Throws(IOException::class)
+    private fun writeObjectToFile(obj: S3ObjectSummary, targetFile: File) {
+        s3Client.getObject(GetObjectRequest(BUCKET, obj.key)).use { versionDef ->
+            val input: InputStream = versionDef.objectContent
+            val outStream: OutputStream = FileOutputStream(targetFile)
+            val buffer = ByteArray(8 * 1024)
+            var bytesRead: Int
+            while (input.read(buffer).also { bytesRead = it } != -1) {
+                outStream.write(buffer, 0, bytesRead)
             }
         }
     }
 
-    private boolean areFilesEqual(File localFile, S3ObjectSummary s3Object) throws NoSuchAlgorithmException {
+    @Throws(NoSuchAlgorithmException::class)
+    private fun areFilesEqual(localFile: File, s3Object: S3ObjectSummary): Boolean {
         if (!localFile.exists()) {
-            return false;
+            return false
         }
-
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        byte[] bytes;
-
-        try {
-            bytes = Files.readAllBytes(localFile.toPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
+        val md = MessageDigest.getInstance("MD5")
+        val bytes: ByteArray
+        bytes = try {
+            Files.readAllBytes(localFile.toPath())
+        } catch (e: IOException) {
+            e.printStackTrace()
+            return false
         }
-
-        String localFileHash = DatatypeConverter.printHexBinary(md.digest(bytes));
-
-        boolean lengthsAreEqual = localFile.length() == s3Object.getSize();
-        boolean hashesAreEqual = localFileHash.equals(s3Object.getETag().toUpperCase());
-
-        return lengthsAreEqual && hashesAreEqual;
+        val localFileHash = DatatypeConverter.printHexBinary(md.digest(bytes))
+        val lengthsAreEqual = localFile.length() == s3Object.size
+        val hashesAreEqual = localFileHash == s3Object.eTag.toUpperCase()
+        return lengthsAreEqual && hashesAreEqual
     }
 
-    public Flyway getFlyway() {
-        String location = "filesystem:" + new File(Paths.get("flyway", "db").toString()).getAbsolutePath();
+    val flyway: Flyway
+        get() {
+            val location = "filesystem:" + File(Paths.get("flyway", "db").toString()).absolutePath
+            return Flyway.configure()
+                    .dataSource(postgresClient.dataSource)
+                    .loadDefaultConfigurationFiles()
+                    .locations(location)
+                    .load()
+        }
 
-        return Flyway.configure()
-                .dataSource(postgresClient.getDataSource())
-                .loadDefaultConfigurationFiles()
-                .locations(location)
-                .load();
+    companion object {
+        private const val BUCKET = "www.dashflight.net-config"
+        private val s3Client = AmazonS3ClientBuilder.standard()
+                .withRegion(Regions.US_EAST_2)
+                .withCredentials(DefaultAWSCredentialsProviderChain())
+                .build()
+    }
+
+    init {
+        if (!File(Paths.get("flyway", "db").toString()).exists()) {
+            Files.createDirectories(Paths.get("flyway", "db"))
+        }
+        val listing = s3Client.listObjects(BUCKET, "flyway-migration-definitions/migrations.tar.gz")
+        for (obj in listing.objectSummaries) {
+            if (obj.key != "flyway-migration-definitions/migrations.tar.gz") {
+                continue
+            }
+            val sourceFile = File(Paths.get("flyway", "migrations.tar.gz").toString())
+            if (areFilesEqual(sourceFile, obj)) {
+                FileUtils.cleanDirectory(Paths.get("flyway", "db").toFile())
+            } else {
+                writeObjectToFile(obj, sourceFile)
+            }
+            untarFile()
+        }
+        this.postgresClient = postgresClient
     }
 }

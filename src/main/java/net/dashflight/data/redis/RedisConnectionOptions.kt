@@ -1,29 +1,18 @@
-package net.dashflight.data.redis;
-
-import lombok.Builder;
-import lombok.Data;
+package net.dashflight.data.redis
 
 /**
  * Holds connection data for connecting to Redis instance
  */
-@Data
-@Builder
-public class RedisConnectionOptions {
-
+data class RedisConnectionOptions(val host: String, val port: Int, val maxPoolSize: Int = 4) {
     /**
      * The host address of the redis instance
      */
-    private String host;
 
     /**
      * The port of the redis instance
      */
-    private int port;
 
     /**
      * The maximum size of the connection pool
      */
-    @Builder.Default
-    private int maxPoolSize = 4;
-
 }

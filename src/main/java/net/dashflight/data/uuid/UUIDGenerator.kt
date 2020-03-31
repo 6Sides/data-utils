@@ -1,9 +1,7 @@
-package net.dashflight.data.uuid;
+package net.dashflight.data.uuid
 
-import java.util.UUID;
+import java.util.*
 
-public interface UUIDGenerator {
-
-    UUID next();
-
+interface UUIDGenerator {
+    operator fun next(): UUID?
 }

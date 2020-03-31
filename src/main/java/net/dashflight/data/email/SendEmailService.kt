@@ -1,24 +1,13 @@
-package net.dashflight.data.email;
+package net.dashflight.data.email
 
-import com.google.inject.Inject;
-import net.dashflight.data.email.EmailClient.EmailSendException;
+import com.google.inject.Inject
+import net.dashflight.data.email.EmailClient.EmailSendException
 
-
-public class SendEmailService {
-
-    private EmailClient emailClient;
-    private EmailSpecificationProvider provider;
-
-    @Inject
-    public SendEmailService(EmailClient emailClient, EmailSpecificationProvider provider) {
-        this.emailClient = emailClient;
-        this.provider = provider;
-    }
-
-
-    public void send() throws EmailSendException {
-        EmailSpecification specification = provider.create();
-        emailClient.send(specification);
+class SendEmailService @Inject constructor(private val emailClient: EmailClient, private val provider: EmailSpecificationProvider) {
+    @Throws(EmailSendException::class)
+    fun send() {
+        val specification = provider.create()
+        emailClient.send(specification)
     }
 
 }

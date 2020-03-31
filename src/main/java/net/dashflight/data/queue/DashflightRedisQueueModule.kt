@@ -1,13 +1,10 @@
-package net.dashflight.data.queue;
+package net.dashflight.data.queue
 
-import com.google.inject.AbstractModule;
-import com.google.inject.assistedinject.FactoryModuleBuilder;
+import com.google.inject.AbstractModule
+import com.google.inject.assistedinject.FactoryModuleBuilder
 
-public class DashflightRedisQueueModule extends AbstractModule {
-
-    @Override
-    protected void configure() {
-        install(new FactoryModuleBuilder().build(RedisConsumerNodeFactory.class));
+class DashflightRedisQueueModule : AbstractModule() {
+    override fun configure() {
+        install(FactoryModuleBuilder().build(RedisConsumerNodeFactory::class.java))
     }
-
 }

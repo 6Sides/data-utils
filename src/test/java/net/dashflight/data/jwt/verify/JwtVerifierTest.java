@@ -25,12 +25,7 @@ public class JwtVerifierTest {
     public void setup() {
         RSAKeyPairProvider keyManager = new StaticRSAKeyPairProvider();
 
-        provider = ((token, fingerprint) -> JwtVerificationRequirements.builder()
-                .issuer("test")
-                .token(token)
-                .fingerprint(fingerprint)
-                .publicKey(keyManager.getPublicKey())
-                .build());
+        provider = ((token, fingerprint) -> new JwtVerificationRequirements(token, fingerprint, null, "test", keyManager.getPublicKey()));
     }
 
 

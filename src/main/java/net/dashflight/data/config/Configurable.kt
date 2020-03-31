@@ -1,127 +1,91 @@
-package net.dashflight.data.config;
+package net.dashflight.data.config
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*
 
 /**
  * Provides a configure method which allows classes to register with a configuration source.
  * Default configuration source is s3.
  */
-public interface Configurable {
-
-    /**
-     * Stores properties of fetched configurations to avoid
-     * refetching from configuration source
-     */
-    Map<Integer, ConfigurationData<?>> cache = new HashMap<>();
-
-
-    default void registerWith(String applicationName) {
+interface Configurable {
+    fun registerWith(applicationName: String?) {
         registerWith(
                 RegistrationOptions.builder()
                         .applicationName(applicationName)
-                        .environment(RuntimeEnvironment.getCurrentEnvironment())
+                        .environment(RuntimeEnvironment.currentEnvironment)
                         .additionalProperties(null)
-                        .configurationSource(new S3ConfigFetcher())
+                        .configurationSource(S3ConfigFetcher())
                         .build()
-        );
+        )
     }
 
-    default void registerWith(RegistrationOptions options) {
-        if (options.applicationName == null || options.environment == null) {
-            throw new IllegalArgumentException("Application name and RuntimeEnvironment must both be non-null.");
-        }
-
-        int hash = 0;
-        hash += options.applicationName.hashCode();
-        hash += options.environment.hashCode();
-        hash += options.additionalProperties != null ? options.additionalProperties.hashCode() : 0;
-
+    fun registerWith(options: RegistrationOptions) {
+        require(!(options.applicationName == null || options.environment == null)) { "Application name and RuntimeEnvironment must both be non-null." }
+        var hash = 0
+        hash += options.applicationName.hashCode()
+        hash += options.environment.hashCode()
+        hash += if (options.additionalProperties != null) options.additionalProperties.hashCode() else 0
         if (!cache.containsKey(hash)) {
-            cache.put(hash, options.configurationSource.getConfig(options.applicationName, options.environment, options.additionalProperties));
+            cache[hash] = options.configurationSource.getConfig(options.applicationName, options.environment, options.additionalProperties)
         }
-
-        ValueInjector.inject(this, cache.get(hash));
+        ValueInjector.inject(this, cache[hash])
     }
 
+    class RegistrationOptions(val applicationName: String?,
+                              val environment: RuntimeEnvironment?,
+                              val additionalProperties: Map<String?, Any?>?,
+                              val configurationSource: ConfigurationSource) {
 
-    class RegistrationOptions {
-        private String applicationName;
-        private RuntimeEnvironment environment;
-        private Map<String, Object> additionalProperties;
-        private ConfigurationSource configurationSource;
-
-
-        public RegistrationOptions(String applicationName,
-                RuntimeEnvironment environment,
-                Map<String, Object> additionalProperties,
-                ConfigurationSource configurationSource) {
-            this.applicationName = applicationName;
-            this.environment = environment;
-            this.additionalProperties = additionalProperties;
-            this.configurationSource = configurationSource;
-        }
-
-        public String getApplicationName() {
-            return applicationName;
-        }
-
-        public RuntimeEnvironment getEnvironment() {
-            return environment;
-        }
-
-        public Map<String, Object> getAdditionalProperties() {
-            return additionalProperties;
-        }
-
-        public ConfigurationSource getConfigurationSource() {
-            return configurationSource;
-        }
-
-        public static Builder builder() {
-            return new Builder();
-        }
-
-
-        public static class Builder {
-            private String applicationName;
-            private RuntimeEnvironment environment;
-            private Map<String, Object> additionalProperties;
-            ConfigurationSource configurationSource;
-
-            public Builder applicationName(String applicationName) {
-                this.applicationName = applicationName;
-                return this;
+        class Builder {
+            private var applicationName: String? = null
+            private var environment: RuntimeEnvironment? = null
+            private var additionalProperties: Map<String?, Any?>? = null
+            var configurationSource: ConfigurationSource? = null
+            fun applicationName(applicationName: String?): Builder {
+                this.applicationName = applicationName
+                return this
             }
 
-            public Builder environment(RuntimeEnvironment environment) {
-                this.environment = environment;
-                return this;
+            fun environment(environment: RuntimeEnvironment?): Builder {
+                this.environment = environment
+                return this
             }
 
-            public Builder additionalProperties(
-                    Map<String, Object> additionalProperties) {
-                this.additionalProperties = additionalProperties;
-                return this;
+            fun additionalProperties(
+                    additionalProperties: Map<String?, Any?>?): Builder {
+                this.additionalProperties = additionalProperties
+                return this
             }
 
-            public Builder configurationSource(ConfigurationSource configurationSource) {
-                this.configurationSource = configurationSource;
-                return this;
+            fun configurationSource(configurationSource: ConfigurationSource?): Builder {
+                this.configurationSource = configurationSource
+                return this
             }
 
-            public RegistrationOptions build() {
-                assert (applicationName != null);
-
+            fun build(): RegistrationOptions {
+                assert(applicationName != null)
                 if (environment == null) {
-                    environment = RuntimeEnvironment.getCurrentEnvironment();
+                    environment = RuntimeEnvironment.currentEnvironment
                 }
                 if (configurationSource == null) {
-                    configurationSource = new S3ConfigFetcher();
+                    configurationSource = S3ConfigFetcher()
                 }
-
-                return new RegistrationOptions(applicationName, environment, additionalProperties, configurationSource);
+                return RegistrationOptions(applicationName, environment, additionalProperties, configurationSource!!)
             }
         }
+
+        companion object {
+            fun builder(): Builder {
+                return Builder()
+            }
+        }
+
+    }
+
+    companion object {
+        /**
+         * Stores properties of fetched configurations to avoid
+         * refetching from configuration source
+         */
+        val cache: MutableMap<Int, ConfigurationData<*>?> = HashMap()
     }
 }

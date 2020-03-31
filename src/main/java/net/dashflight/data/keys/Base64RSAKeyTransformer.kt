@@ -1,87 +1,75 @@
-package net.dashflight.data.keys;
+package net.dashflight.data.keys
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.math.BigInteger;
-import java.security.InvalidKeyException;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.RSAPrivateKeySpec;
-import java.security.spec.RSAPublicKeySpec;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
+import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
+import java.io.ByteArrayInputStream
+import java.io.IOException
+import java.math.BigInteger
+import java.security.InvalidKeyException
+import java.security.KeyFactory
+import java.security.NoSuchAlgorithmException
+import java.security.interfaces.RSAPrivateKey
+import java.security.interfaces.RSAPublicKey
+import java.security.spec.InvalidKeySpecException
+import java.security.spec.RSAPrivateKeySpec
+import java.security.spec.RSAPublicKeySpec
+import java.util.*
 
 /**
  * Transforms Base64 json representations of and RSA key pair into java objects
  */
-public class Base64RSAKeyTransformer implements RSAKeyPairTransformer {
+class Base64RSAKeyTransformer : RSAKeyPairTransformer {
+    private var keyFactory: KeyFactory? = null
+    private val mapper = ObjectMapper()
 
-    private KeyFactory keyFactory;
-
-    private final ObjectMapper mapper = new ObjectMapper();
-
-    public Base64RSAKeyTransformer() {
-        try {
-            keyFactory = KeyFactory.getInstance("RSA");
-        } catch (NoSuchAlgorithmException ex) {
-            ex.printStackTrace();
+    @Throws(InvalidKeyException::class)
+    override fun transformPublicKey(rawData: String?): RSAPublicKey {
+        return try {
+            val components = parseData(rawData)
+            val spec = RSAPublicKeySpec(components.modulus, components.exponent)
+            keyFactory!!.generatePublic(spec) as RSAPublicKey
+        } catch (e: IOException) {
+            throw InvalidKeyException(e.message)
+        } catch (e: InvalidKeySpecException) {
+            throw InvalidKeyException(e.message)
         }
     }
 
-
-    @Override
-    public RSAPublicKey transformPublicKey(String rawData) throws InvalidKeyException {
-        try {
-            KeyComponents components = parseData(rawData);
-
-            RSAPublicKeySpec spec = new RSAPublicKeySpec(components.modulus, components.exponent);
-            return (RSAPublicKey) keyFactory.generatePublic(spec);
-        } catch (IOException | InvalidKeySpecException e) {
-            throw new InvalidKeyException(e.getMessage());
+    @Throws(InvalidKeyException::class)
+    override fun transformPrivateKey(rawData: String?): RSAPrivateKey {
+        return try {
+            val components = parseData(rawData)
+            val spec = RSAPrivateKeySpec(components.modulus, components.exponent)
+            keyFactory!!.generatePrivate(spec) as RSAPrivateKey
+        } catch (e: IOException) {
+            throw InvalidKeyException(e.message)
+        } catch (e: InvalidKeySpecException) {
+            throw InvalidKeyException(e.message)
         }
     }
 
-    @Override
-    public RSAPrivateKey transformPrivateKey(String rawData) throws InvalidKeyException {
-        try {
-            KeyComponents components = parseData(rawData);
+    @Throws(IOException::class)
+    private fun parseData(rawData: String?): KeyComponents {
+        ByteArrayInputStream(Base64.getDecoder().decode(rawData)).use { input ->
+            val data: Map<String?, String?>? = mapper.readValue(input, object : TypeReference<HashMap<String?, String?>?>() {})
 
-            RSAPrivateKeySpec spec = new RSAPrivateKeySpec(components.modulus, components.exponent);
-            return (RSAPrivateKey) keyFactory.generatePrivate(spec);
-        } catch (IOException | InvalidKeySpecException e) {
-            throw new InvalidKeyException(e.getMessage());
+            val modulus = BigInteger(Base64.getDecoder().decode(data?.get("n")))
+            val exponent = BigInteger(Base64.getDecoder().decode(data?.get("e")))
+            return KeyComponents(modulus, exponent)
         }
     }
-
-
-    private KeyComponents parseData(String rawData) throws IOException {
-        try (InputStream input = new ByteArrayInputStream(Base64.getDecoder().decode(rawData))) {
-            Map<String, String> data = mapper.readValue(input, new TypeReference<HashMap<String, String>>(){});
-
-            BigInteger modulus = new BigInteger(Base64.getDecoder().decode(data.get("n")));
-            BigInteger exponent = new BigInteger(Base64.getDecoder().decode(data.get("e")));
-
-            return new KeyComponents(modulus, exponent);
-        }
-    }
-
 
     /**
      * Representation of RSA key components
      */
-    private static class KeyComponents {
-        private BigInteger modulus, exponent;
+    private class KeyComponents(val modulus: BigInteger, val exponent: BigInteger)
 
-        public KeyComponents(BigInteger modulus, BigInteger exponent) {
-            this.modulus = modulus;
-            this.exponent = exponent;
+    init {
+        try {
+            keyFactory = KeyFactory.getInstance("RSA")
+        } catch (ex: NoSuchAlgorithmException) {
+            ex.printStackTrace()
         }
     }
 }

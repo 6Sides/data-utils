@@ -1,31 +1,19 @@
-package net.dashflight.data.email;
+package net.dashflight.data.email
 
-import java.util.List;
-import lombok.Builder;
-import lombok.Data;
-
-@Data
-@Builder
-public class EmailSpecification {
-
+data class EmailSpecification(val from: String?, val recipients: List<String>?, val subject: String?, val body: String?) {
     /**
      * The value in the `from` field of the email
      */
-    private String from;
 
     /**
      * The email address of the recipient
      */
-    private List<String> recipients;
 
     /**
      * Subject line of the email
      */
-    private String subject;
 
     /**
      * Contents of the email. Can be plain text or formatted as html
      */
-    private String body;
-
 }

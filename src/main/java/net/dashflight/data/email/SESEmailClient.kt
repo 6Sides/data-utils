@@ -1,57 +1,52 @@
-package net.dashflight.data.email;
+package net.dashflight.data.email
 
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
-import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder;
-import com.amazonaws.services.simpleemail.model.Body;
-import com.amazonaws.services.simpleemail.model.ConfigurationSetDoesNotExistException;
-import com.amazonaws.services.simpleemail.model.Content;
-import com.amazonaws.services.simpleemail.model.Destination;
-import com.amazonaws.services.simpleemail.model.MailFromDomainNotVerifiedException;
-import com.amazonaws.services.simpleemail.model.Message;
-import com.amazonaws.services.simpleemail.model.MessageRejectedException;
-import com.amazonaws.services.simpleemail.model.SendEmailRequest;
-import java.util.List;
+import com.amazonaws.regions.Regions
+import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder
+import com.amazonaws.services.simpleemail.model.*
+import net.dashflight.data.email.EmailClient.EmailSendException
 
 /**
  * Sends emails from AWS SES
  */
-public class SESEmailClient implements EmailClient {
+class SESEmailClient : EmailClient {
+    @Throws(EmailSendException::class)
+    override fun send(specification: EmailSpecification?) {
+        val from = specification?.from
+        val recipients = specification?.recipients
+        val subject = specification?.subject
+        val body = specification?.body
 
-    private static final AmazonSimpleEmailService sesClient = AmazonSimpleEmailServiceClientBuilder.standard()
-                                                                .withRegion(Regions.US_EAST_1).build();
-
-
-    @Override
-    public void send(EmailSpecification specification) throws EmailSendException {
-        String from = specification.getFrom();
-        List<String> recipients = specification.getRecipients();
-        String subject = specification.getSubject();
-        String body = specification.getBody();
-
-        SendEmailRequest request = new SendEmailRequest()
+        val request = SendEmailRequest()
                 .withDestination(getDestination(recipients))
-                .withMessage(new Message()
+                .withMessage(Message()
                         .withSubject(getSubject(subject))
                         .withBody(getBody(body)))
-                .withSource(from);
-
+                .withSource(from)
         try {
-            sesClient.sendEmail(request);
-        } catch (MessageRejectedException | MailFromDomainNotVerifiedException | ConfigurationSetDoesNotExistException e) {
-            throw new EmailSendException(e.getMessage());
+            sesClient.sendEmail(request)
+        } catch (e: MessageRejectedException) {
+            throw EmailSendException(e.message)
+        } catch (e: MailFromDomainNotVerifiedException) {
+            throw EmailSendException(e.message)
+        } catch (e: ConfigurationSetDoesNotExistException) {
+            throw EmailSendException(e.message)
         }
     }
 
-    private Destination getDestination(List<String> addresses) {
-        return new Destination().withToAddresses(addresses);
+    private fun getDestination(addresses: List<String>?): Destination {
+        return Destination().withToAddresses(addresses!!)
     }
 
-    private Content getSubject(String subject) {
-        return new Content().withCharset("UTF-8").withData(subject);
+    private fun getSubject(subject: String?): Content {
+        return Content().withCharset("UTF-8").withData(subject!!)
     }
 
-    private Body getBody(String body) {
-        return new Body().withHtml(new Content().withCharset("UTF-8").withData(body));
+    private fun getBody(body: String?): Body {
+        return Body().withHtml(Content().withCharset("UTF-8").withData(body!!))
+    }
+
+    companion object {
+        private val sesClient = AmazonSimpleEmailServiceClientBuilder.standard()
+                .withRegion(Regions.US_EAST_1).build()
     }
 }

@@ -1,18 +1,14 @@
-package net.dashflight.data.keys;
+package net.dashflight.data.keys
 
-import com.google.inject.AbstractModule;
+import com.google.inject.AbstractModule
 
 /**
  * Provides environment specific implementations used for Dashflight project.
  */
-public class DashflightRSAKeyPairModule extends AbstractModule {
-
-    @Override
-    protected void configure() {
-        bind(RSAKeyPairDataProvider.class).toInstance(new DashflightRSAKeyPairDataProvider());
-        bind(RSAKeyPairTransformer.class).toInstance(new Base64RSAKeyTransformer());
-
-        bind(RSAKeyPairProvider.class).to(DynamicRSAKeyPairProvider.class);
+class DashflightRSAKeyPairModule : AbstractModule() {
+    override fun configure() {
+        bind(RSAKeyPairDataProvider::class.java).toInstance(DashflightRSAKeyPairDataProvider())
+        bind(RSAKeyPairTransformer::class.java).toInstance(Base64RSAKeyTransformer())
+        bind(RSAKeyPairProvider::class.java).to(DynamicRSAKeyPairProvider::class.java)
     }
-
 }

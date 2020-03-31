@@ -1,37 +1,30 @@
-package net.dashflight.data.redis;
+package net.dashflight.data.redis
 
-import net.dashflight.data.config.ConfigValue;
-import net.dashflight.data.config.Configurable;
+import net.dashflight.data.config.ConfigValue
+import net.dashflight.data.config.Configurable
 
 /**
  * Pulls the required redis connection options from s3
  */
-public class DashflightRedisConnectionOptionProvider implements RedisConnectionOptionProvider, Configurable {
-
-    private static final String APP_NAME = "redis";
-
-
+class DashflightRedisConnectionOptionProvider : RedisConnectionOptionProvider, Configurable {
     @ConfigValue("redis_host")
-    private String host;
+    private val host: String? = null
 
     @ConfigValue("redis_port")
-    private int port;
+    private val port = 0
 
     @ConfigValue("max_pool_size")
-    private int maxPoolSize = 4;
+    private val maxPoolSize = 4
 
-
-    public DashflightRedisConnectionOptionProvider() {
-        registerWith(APP_NAME);
+    override fun get(): RedisConnectionOptions {
+        return RedisConnectionOptions(host!!, port, maxPoolSize)
     }
 
+    companion object {
+        private const val APP_NAME = "redis"
+    }
 
-    @Override
-    public RedisConnectionOptions get() {
-        return RedisConnectionOptions.builder()
-                .host(host)
-                .port(port)
-                .maxPoolSize(maxPoolSize)
-                .build();
+    init {
+        registerWith(APP_NAME)
     }
 }

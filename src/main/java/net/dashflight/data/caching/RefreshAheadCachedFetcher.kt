@@ -1,60 +1,48 @@
-package net.dashflight.data.caching;
+package net.dashflight.data.caching
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import net.dashflight.data.caching.Computable.DataFetchException;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
+import net.dashflight.data.caching.Computable.DataFetchException
+import redis.clients.jedis.JedisPool
+import java.util.concurrent.Executors
 
 /**
  * Implementation of the refresh-ahead caching strategy.
  */
-public abstract class RefreshAheadCachedFetcher<K, V> extends CachedFetcher<K, V> {
+abstract class RefreshAheadCachedFetcher<K, V> : CachedFetcher<K, V?>() {
+    private val redisPool: JedisPool?
 
-    // Should be in (0, 1). The higher the value, the longer the value waits to be refreshed.
-    private static final float REFRESH_AHEAD_FACTOR = 0.5f;
-
-    private final JedisPool redisPool;
-    private static final ExecutorService threadPool = Executors.newCachedThreadPool();
-
-
-    // Initializes the redis pool with the parents redis instance
-    public RefreshAheadCachedFetcher() {
-        this.redisPool = super.redis.getPool();
-    }
-
-
-    @Override
-    protected final CacheableResult<V> memoizedGet(K input) throws DataFetchException {
-        boolean needsRefresh;
-        try (Jedis client = redisPool.getResource()) {
-            needsRefresh = !client.exists(this.generateHash(input) + "rac");
-        }
-
+    @Throws(DataFetchException::class)
+    override fun memoizedGet(input: K): CacheableResult<V?> {
+        var needsRefresh: Boolean = false
+        redisPool!!.resource.use { client -> needsRefresh = !client.exists(generateHash(input) + "rac") }
         if (needsRefresh) {
             // Refetch result and cache it asynchronously
-            threadPool.submit(() -> {
+            threadPool.submit {
                 try {
-                    CacheableResult<V> result = fetchResult(input);
-                    this.cacheResult(input, result);
-
-                    redis.setWithExpiry(this.generateHash(input) + "rac", (int) (result.getTTL() * REFRESH_AHEAD_FACTOR), "");
-
-                } catch (DataFetchException e) {
-                    e.printStackTrace();
+                    val result = fetchResult(input)
+                    cacheResult(input, result!!)
+                    redis!!.setWithExpiry(generateHash(input) + "rac", (result.TTL * REFRESH_AHEAD_FACTOR) as Int, "")
+                } catch (e: DataFetchException) {
+                    e.printStackTrace()
                 }
-            });
+            }
         }
-
-
-        CacheableResult<V> result = super.getValueFromCache(input);
-
+        var result = super.getValueFromCache(input)
         if (result == null) {
             // Refetch result and cache it
-            result = this.fetchResult(input);
-            this.cacheResult(input, result);
+            result = fetchResult(input)
+            cacheResult(input, result)
         }
+        return result
+    }
 
-        return result;
+    companion object {
+        // Should be in (0, 1). The higher the value, the longer the value waits to be refreshed.
+        private const val REFRESH_AHEAD_FACTOR = 0.5f
+        private val threadPool = Executors.newCachedThreadPool()
+    }
+
+    // Initializes the redis pool with the parents redis instance
+    init {
+        redisPool = super.redis?.pool
     }
 }

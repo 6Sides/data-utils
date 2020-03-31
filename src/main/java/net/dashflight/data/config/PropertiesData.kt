@@ -1,23 +1,11 @@
-package net.dashflight.data.config;
+package net.dashflight.data.config
 
-import java.util.Properties;
+import java.util.*
 
-public class PropertiesData implements ConfigurationData<Properties> {
+class PropertiesData(override val data: Properties) : ConfigurationData<Properties> {
 
-    private Properties props;
-
-    public PropertiesData(Properties props) {
-        this.props = props;
+    override fun get(key: String): Any? {
+        return data[key]
     }
 
-
-    @Override
-    public Properties getData() {
-        return this.props;
-    }
-
-    @Override
-    public Object get(String key) {
-        return props.get(key);
-    }
 }

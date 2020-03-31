@@ -1,24 +1,18 @@
-package net.dashflight.data.mfa;
+package net.dashflight.data.mfa
 
-import java.util.UUID;
-import lombok.Data;
+import java.util.*
 
-@Data
-public class BasicUserData {
 
+data class BasicUserData(var userId: UUID? = null, var userSecret: String? = null, var email: String? = null) {
     /**
      * The user's unique id
      */
-    private UUID userId;
 
     /**
      * The unique secret associated with the user
      */
-    private String userSecret;
 
     /**
      * The email address of the user
      */
-    private String email;
-
 }

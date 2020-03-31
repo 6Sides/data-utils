@@ -1,48 +1,38 @@
-package net.dashflight.data.jwt;
+package net.dashflight.data.jwt
 
-import com.google.common.hash.Hashing;
-import com.google.inject.Inject;
-import java.nio.charset.StandardCharsets;
-import java.security.SecureRandom;
-import java.util.Random;
-import javax.xml.bind.DatatypeConverter;
-import net.dashflight.data.random.LavaRandom;
+import com.google.common.hash.Hashing
+import com.google.inject.Inject
+import java.nio.charset.StandardCharsets
+import java.util.*
+import javax.xml.bind.DatatypeConverter
 
 /**
  * Utility for generating token fingerprints to strengthen security of JWTs
  */
-public class FingerprintService {
-
-    private static final int FINGERPRINT_LENGTH = 64;
-
-    private final Random random;
-
-    @Inject
-    public FingerprintService(Random random) {
-        this.random = random;
-    }
+class FingerprintService @Inject constructor(private val random: Random) {
 
     /**
      * Generates a random fingerprint of length FINGERPRINT_LENGTH
      */
-    public String generateRandomFingerprint() {
-        byte[] randomBytes = new byte[FINGERPRINT_LENGTH];
-        random.nextBytes(randomBytes);
-
-        return DatatypeConverter.printHexBinary(randomBytes);
+    fun generateRandomFingerprint(): String {
+        val randomBytes = ByteArray(FINGERPRINT_LENGTH)
+        random.nextBytes(randomBytes)
+        return DatatypeConverter.printHexBinary(randomBytes)
     }
 
     /**
      * Hashes a fingerprint with SHA-256
      */
-    public String hashFingerprint(String fgp) {
+    fun hashFingerprint(fgp: String?): String? {
         if (fgp == null) {
-            return null;
+            return null
         }
+        val fingerprintDigest = Hashing.sha256().hashBytes(fgp.toByteArray(StandardCharsets.UTF_8)).asBytes()
+        return DatatypeConverter.printHexBinary(fingerprintDigest)
+    }
 
-        byte[] fingerprintDigest = Hashing.sha256().hashBytes(fgp.getBytes(StandardCharsets.UTF_8)).asBytes();
-
-        return DatatypeConverter.printHexBinary(fingerprintDigest);
+    companion object {
+        private const val FINGERPRINT_LENGTH = 64
     }
 
 }

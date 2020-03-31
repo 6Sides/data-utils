@@ -1,56 +1,42 @@
-package net.dashflight.data.postgres;
+package net.dashflight.data.postgres
 
-import net.dashflight.data.config.ConfigValue;
-import net.dashflight.data.config.Configurable;
+import net.dashflight.data.config.ConfigValue
+import net.dashflight.data.config.Configurable
 
 /**
  * Pulls the required postgres connection options from s3
  */
-public class DashflightPostgresConnectionOptionProvider implements PostgresConnectionOptionProvider, Configurable {
-
-    private static final String DEFAULT_APP_NAME = "java-postgres";
-
-
+class DashflightPostgresConnectionOptionProvider @JvmOverloads constructor(applicationName: String? = DEFAULT_APP_NAME) : PostgresConnectionOptionProvider, Configurable {
     @ConfigValue("pg_host")
-    private String host;
+    private val host: String? = null
 
     @ConfigValue("pg_port")
-    private int port;
+    private val port = 0
 
     @ConfigValue("pg_dbname")
-    private String dbname;
+    private val dbname: String? = null
 
     @ConfigValue("pg_username")
-    private String username;
+    private val username: String? = null
 
     @ConfigValue("pg_password")
-    private String password;
+    private val password: String? = null
 
     @ConfigValue("application_name")
-    private String applicationName = "Dashflight Java App";
+    private val applicationName = "Dashflight Java App"
 
     @ConfigValue("max_pool_size")
-    private int maxPoolSize;
+    private val maxPoolSize = 0
 
-
-    public DashflightPostgresConnectionOptionProvider(String applicationName) {
-        registerWith(applicationName);
+    override fun get(): PostgresConnectionOptions {
+        return PostgresConnectionOptions(host!!, port, dbname, username, password, applicationName, maxPoolSize)
     }
 
-    public DashflightPostgresConnectionOptionProvider() {
-        this(DEFAULT_APP_NAME);
+    companion object {
+        private const val DEFAULT_APP_NAME = "java-postgres"
     }
 
-    @Override
-    public PostgresConnectionOptions get() {
-        return PostgresConnectionOptions.builder()
-                .host(host)
-                .port(port)
-                .dbname(dbname)
-                .username(username)
-                .password(password)
-                .applicationName(applicationName)
-                .maxPoolSize(maxPoolSize)
-                .build();
+    init {
+        registerWith(applicationName)
     }
 }

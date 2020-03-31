@@ -1,33 +1,18 @@
-package net.dashflight.data.keys;
+package net.dashflight.data.keys
 
-import com.google.inject.Inject;
-import java.security.InvalidKeyException;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
+import com.google.inject.Inject
+import java.security.interfaces.RSAPrivateKey
+import java.security.interfaces.RSAPublicKey
 
 /**
  * Creates an RSA key pair based on the provided data and transformer.
  */
-public class DynamicRSAKeyPairProvider implements RSAKeyPairProvider {
+class DynamicRSAKeyPairProvider @Inject constructor(dataProvider: RSAKeyPairDataProvider, dataTransformer: RSAKeyPairTransformer) : RSAKeyPairProvider {
+    override val publicKey: RSAPublicKey?
+    override val privateKey: RSAPrivateKey?
 
-    private final RSAPublicKey publicKey;
-    private final RSAPrivateKey privateKey;
-
-
-    @Inject
-    public DynamicRSAKeyPairProvider(RSAKeyPairDataProvider dataProvider, RSAKeyPairTransformer dataTransformer) throws InvalidKeyException {
-        publicKey = dataTransformer.transformPublicKey(dataProvider.getPublicKeyData());
-        privateKey = dataTransformer.transformPrivateKey(dataProvider.getPrivateKeyData());
+    init {
+        publicKey = dataTransformer.transformPublicKey(dataProvider.publicKeyData)
+        privateKey = dataTransformer.transformPrivateKey(dataProvider.privateKeyData)
     }
-
-    @Override
-    public RSAPublicKey getPublicKey() {
-        return publicKey;
-    }
-
-    @Override
-    public RSAPrivateKey getPrivateKey() {
-        return privateKey;
-    }
-
 }

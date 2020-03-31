@@ -2,9 +2,161 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47e27f0e-1967-4be3-87d2-25e1f94092c4" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/CachedFetcher.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/Computable.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/Memoizer.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/ReadThroughCachedFetcher.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/RefreshAheadCachedFetcher.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/config/ConfigValue.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/config/Configurable.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/config/ConfigurationData.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/config/ConfigurationSource.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/config/PropertiesData.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/config/RuntimeEnvironment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/config/S3ConfigFetcher.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/config/ValueInjector.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/email/EmailClient.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/email/EmailSpecificationProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/email/SESEmailClient.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/email/SendEmailService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/DashflightJwtUtilModule.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/FingerprintService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/JwtUtil.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/SecuredJwt.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/TokenCipher.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/create/DashflightJwtCreatorModule.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/create/JwtCreator.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/create/request/CreateJwtRequestProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/create/request/DashflightCreateJwtRequestProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/create/request/DashflightCreateJwtRequestProviderModule.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/verify/DashflightJwtVerifierModule.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/verify/JwtVerifier.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/verify/request/DashflightVerifyJwtRequestProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/verify/request/DashflightVerifyJwtRequestProviderModule.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/verify/request/JwtVerificationRequirements.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/verify/request/VerifyJwtRequestProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/Base64RSAKeyTransformer.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/DashflightRSAKeyPairDataProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/DashflightRSAKeyPairModule.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/DynamicRSAKeyPairProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/RSAKeyPairDataProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/RSAKeyPairProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/StaticRSAKeyPairProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/BasicMfaService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/BasicUserData.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/DashflightMfaDataProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/DashflightMfaModule.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/DashflightUriDataProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/passwords/PasswordService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/DashflightPostgresClientModule.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/DashflightPostgresConnectionOptionProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/FlywayManager.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/FlywayMigrator.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresClient.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresConnectionOptionProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresContainer.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/queue/DashflightRedisQueueModule.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/queue/RedisConsumerNode.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/queue/RedisConsumerNodeFactory.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/random/LavaRandom.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/random/LavaRandomProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/random/LavaRandomSpi.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/redis/DashflightRedisClientModule.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/redis/DashflightRedisConnectionOptionProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/redis/RedisClient.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/redis/RedisConnectionOptionProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/serialize/KryoPool.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/serialize/UUIDSerializer.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/uuid/TimeBasedUUIDGenerator.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/uuid/UUIDGenerator.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/uuid/UUIDGeneratorFactory.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/net/dashflight/data/jwt/create/JwtCreatorTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/redis/RedisClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/redis/RedisClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/CachedFetcher.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/Computable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/Memoizer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/ReadThroughCachedFetcher.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/RefreshAheadCachedFetcher.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/config/ConfigValue.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/config/Configurable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/config/ConfigurationData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/config/ConfigurationSource.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/config/PropertiesData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/config/RuntimeEnvironment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/config/S3ConfigFetcher.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/config/ValueInjector.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/email/EmailClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/email/EmailSpecification.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/email/EmailSpecification.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/email/EmailSpecificationProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/email/SESEmailClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/email/SendEmailService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/DashflightJwtUtilModule.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/FingerprintService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/JwtUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/SecuredJwt.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/TokenCipher.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/create/DashflightJwtCreatorModule.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/create/JwtCreator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/create/request/CreateJwtRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/create/request/CreateJwtRequest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/create/request/CreateJwtRequestProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/create/request/DashflightCreateJwtRequestProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/create/request/DashflightCreateJwtRequestProviderModule.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/verify/DashflightJwtVerifierModule.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/verify/JwtVerifier.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/verify/request/DashflightVerifyJwtRequestProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/verify/request/DashflightVerifyJwtRequestProviderModule.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/verify/request/JwtVerificationRequirements.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/verify/request/VerifyJwtRequestProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/Base64RSAKeyTransformer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/DashflightRSAKeyPairDataProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/DashflightRSAKeyPairModule.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/DynamicRSAKeyPairProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/RSAKeyPairDataProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/RSAKeyPairProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/RSAKeyPairTransformer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/RSAKeyPairTransformer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/keys/StaticRSAKeyPairProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/BasicMfaService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/BasicUserData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/DashflightMfaDataProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/DashflightMfaModule.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/DashflightUriDataProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/MfaDataProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/MfaDataProvider.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/MfaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/MfaService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/MfaUriDataProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/MfaUriDataProvider.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/passwords/PasswordService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/DashflightPostgresClientModule.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/DashflightPostgresConnectionOptionProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/FlywayManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/FlywayMigrator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresConnectionOptionProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresConnectionOptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresConnectionOptions.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresContainer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/queue/DashflightRedisQueueModule.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/queue/RedisConsumerNode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/queue/RedisConsumerNodeFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/random/LavaRandom.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/random/LavaRandomProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/random/LavaRandomSpi.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/redis/DashflightRedisClientModule.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/redis/DashflightRedisConnectionOptionProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/redis/RedisClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/redis/RedisConnectionOptionProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/redis/RedisConnectionOptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/redis/RedisConnectionOptions.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/serialize/KryoPool.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/serialize/UUIDSerializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/uuid/TimeBasedUUIDGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/uuid/UUIDGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/uuid/UUIDGeneratorFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/net/dashflight/data/jwt/create/JwtCreatorTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/net/dashflight/data/jwt/verify/JwtVerifierTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/net/dashflight/data/jwt/verify/JwtVerifierTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +216,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="development" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -110,6 +262,12 @@
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/flyway/db" />
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+      <recent name="$PROJECT_DIR$/flyway" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="net.dashflight.data.passwords" />
       <recent name="net.dashflight.redis" />
@@ -119,12 +277,6 @@
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/main/java/net/dashflight/data" />
       <recent name="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/resources/flyway/db" />
-      <recent name="$PROJECT_DIR$/src/main/resources" />
-      <recent name="$PROJECT_DIR$/flyway" />
-      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunManager" selected="Gradle.Tests in 'DataUtils.test'">
@@ -165,6 +317,26 @@
         <option name="vmOptions" />
       </ExternalSystemSettings>
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="JwtCreatorTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;net.dashflight.data.jwt.create.JwtCreatorTest&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":cleanTest" />
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
     <configuration name="PostgresClientTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -227,22 +399,13 @@
       <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
-      <deployment type="dockerfile">
-        <settings>
-          <option name="buildOnly" value="true" />
-          <option name="sourceFilePath" value="Dockerfile" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.Tests in 'DataUtils.test'" />
+        <item itemvalue="Gradle.JwtCreatorTest" />
         <item itemvalue="Gradle.PostgresClientTest" />
         <item itemvalue="Gradle.PostgresClientTest.test" />
         <item itemvalue="Gradle.DataUtils [test]" />
-        <item itemvalue="Docker.Dockerfile" />
       </list>
     </recent_temporary>
   </component>
@@ -294,14 +457,9 @@
       <workItem from="1585141326153" duration="59662000" />
       <workItem from="1585493687370" duration="56000" />
       <workItem from="1585495170167" duration="67000" />
-      <workItem from="1585499838892" duration="2495000" />
-    </task>
-    <task id="LOCAL-00070" summary="Added debug">
-      <created>1584641996051</created>
-      <option name="number" value="00070" />
-      <option name="presentableId" value="LOCAL-00070" />
-      <option name="project" value="LOCAL" />
-      <updated>1584641996051</updated>
+      <workItem from="1585499838892" duration="4066000" />
+      <workItem from="1585613036673" duration="595000" />
+      <workItem from="1585659079714" duration="6946000" />
     </task>
     <task id="LOCAL-00071" summary="Added debug">
       <created>1584642199135</created>
@@ -639,14 +797,20 @@
       <option name="project" value="LOCAL" />
       <updated>1585575873015</updated>
     </task>
-    <option name="localTasksCounter" value="119" />
+    <task id="LOCAL-00119" summary="Made data source clients singletons">
+      <created>1585607624352</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1585607624352</updated>
+    </task>
+    <option name="localTasksCounter" value="120" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Refactored mfa package and added tests" />
     <MESSAGE value="Added Guice module for dashflight mfa" />
     <MESSAGE value="Refactored jwt package" />
     <MESSAGE value="Refactored create/verify jwt to guice modules" />
@@ -671,13 +835,14 @@
     <MESSAGE value="Added generation for otp to mfa" />
     <MESSAGE value="Updated guice module" />
     <MESSAGE value="Updated jwt claim name" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated jwt claim name" />
+    <MESSAGE value="Made data source clients singletons" />
+    <option name="LAST_COMMIT_MESSAGE" value="Made data source clients singletons" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="560" y="205" key="#Project_Structure" timestamp="1585170012804">
+    <state x="560" y="205" key="#Project_Structure" timestamp="1585666774524">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="560" y="205" key="#Project_Structure/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585170012804" />
+    <state x="560" y="205" key="#Project_Structure/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585666774524" />
     <state x="560" y="205" key="#Project_Structure/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585082092890" />
     <state x="424" y="202" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1584999941499">
       <screen x="0" y="0" width="1920" height="1080" />
@@ -692,11 +857,11 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="701" y="350" key="#com.intellij.fileTypes.FileTypeChooser/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585170006646" />
-    <state x="773" y="256" key="#com.intellij.ide.util.MemberChooser" timestamp="1585593397902">
+    <state x="773" y="256" key="#com.intellij.ide.util.MemberChooser" timestamp="1585670804496">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="773" y="256" key="#com.intellij.ide.util.MemberChooser/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1585143211104" />
-    <state x="773" y="256" key="#com.intellij.ide.util.MemberChooser/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585420963259" />
+    <state x="773" y="256" key="#com.intellij.ide.util.MemberChooser/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585670804496" />
     <state x="773" y="256" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585593397902" />
     <state x="697" y="331" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1582909303889">
       <screen x="0" y="0" width="1920" height="1080" />
@@ -724,11 +889,11 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="705" y="384" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1584896932706" />
-    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1585575872726">
+    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1585607624257">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="492" y="88" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585428576936" />
-    <state x="492" y="88" key="CommitChangelistDialog2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585575872726" />
+    <state x="492" y="88" key="CommitChangelistDialog2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585607624257" />
     <state x="453" y="43" key="DiffContextDialog" timestamp="1585072871185">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -737,36 +902,36 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="560" y="205" key="GrepConsoleSettings/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1584997955755" />
-    <state width="1920" height="285" key="GridCell.Tab.0.bottom" timestamp="1585428563326">
+    <state width="1920" height="335" key="GridCell.Tab.0.bottom" timestamp="1585671491824">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.bottom/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896596" />
-    <state width="1920" height="285" key="GridCell.Tab.0.bottom/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585428563326" />
+    <state width="1920" height="335" key="GridCell.Tab.0.bottom/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585671491824" />
     <state width="1792" height="285" key="GridCell.Tab.0.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1585089279417" />
     <state width="1920" height="285" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1080.-331.1080.1897/1920.832.1792.1097@0.0.1920.1080" timestamp="1584055583905" />
     <state width="1920" height="285" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585339662742" />
-    <state width="1920" height="285" key="GridCell.Tab.0.center" timestamp="1585428563323">
+    <state width="1920" height="335" key="GridCell.Tab.0.center" timestamp="1585671491819">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.center/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896587" />
-    <state width="1920" height="285" key="GridCell.Tab.0.center/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585428563323" />
+    <state width="1920" height="335" key="GridCell.Tab.0.center/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585671491819" />
     <state width="1792" height="285" key="GridCell.Tab.0.center/0.0.1792.1120@0.0.1792.1120" timestamp="1585089279415" />
     <state width="1920" height="285" key="GridCell.Tab.0.center/0.0.1920.1080/-1080.-331.1080.1897/1920.832.1792.1097@0.0.1920.1080" timestamp="1584055583902" />
     <state width="1920" height="285" key="GridCell.Tab.0.center/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585339662740" />
     <state width="1920" height="285" key="GridCell.Tab.0.center/0.0.1920.1080/-1080.-354.1080.1920/1920.832.1792.1097@0.0.1920.1080" timestamp="1584050242172" />
-    <state width="1920" height="285" key="GridCell.Tab.0.left" timestamp="1585428563322">
+    <state width="1920" height="335" key="GridCell.Tab.0.left" timestamp="1585671491817">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.left/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896584" />
-    <state width="1920" height="285" key="GridCell.Tab.0.left/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585428563322" />
+    <state width="1920" height="335" key="GridCell.Tab.0.left/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585671491817" />
     <state width="1792" height="285" key="GridCell.Tab.0.left/0.0.1792.1120@0.0.1792.1120" timestamp="1585089279414" />
     <state width="1920" height="285" key="GridCell.Tab.0.left/0.0.1920.1080/-1080.-331.1080.1897/1920.832.1792.1097@0.0.1920.1080" timestamp="1584055583897" />
     <state width="1920" height="285" key="GridCell.Tab.0.left/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585339662739" />
-    <state width="1920" height="285" key="GridCell.Tab.0.right" timestamp="1585428563325">
+    <state width="1920" height="335" key="GridCell.Tab.0.right" timestamp="1585671491821">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.right/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896589" />
-    <state width="1920" height="285" key="GridCell.Tab.0.right/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585428563325" />
+    <state width="1920" height="335" key="GridCell.Tab.0.right/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585671491821" />
     <state width="1792" height="285" key="GridCell.Tab.0.right/0.0.1792.1120@0.0.1792.1120" timestamp="1585089279416" />
     <state width="1920" height="285" key="GridCell.Tab.0.right/0.0.1920.1080/-1080.-331.1080.1897/1920.832.1792.1097@0.0.1920.1080" timestamp="1584055583904" />
     <state width="1920" height="285" key="GridCell.Tab.0.right/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585339662741" />
@@ -800,11 +965,11 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="461" y="179" key="SettingsEditor/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585169493843" />
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1585575874063">
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1585607625450">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585428578531" />
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585575874063" />
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585607625450" />
     <state x="200" y="200" width="1720" height="880" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1585092487588">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -843,10 +1008,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="420" y="154" key="new project wizard/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585170320986" />
-    <state x="625" y="241" width="670" height="676" key="search.everywhere.popup" timestamp="1585428491091">
+    <state x="625" y="241" width="670" height="676" key="search.everywhere.popup" timestamp="1585668276682">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="625" y="241" width="670" height="676" key="search.everywhere.popup/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585428491091" />
+    <state x="625" y="241" width="670" height="676" key="search.everywhere.popup/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585668276682" />
     <state x="625" y="241" width="670" height="676" key="search.everywhere.popup/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585330456775" />
   </component>
 </project>

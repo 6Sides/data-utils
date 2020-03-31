@@ -1,68 +1,49 @@
-package net.dashflight.data.keys;
+package net.dashflight.data.keys
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
-import java.security.interfaces.RSAKey;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
-import net.dashflight.data.config.ConfigValue;
-import net.dashflight.data.config.Configurable;
-import net.dashflight.data.config.RuntimeEnvironment;
+import com.fasterxml.jackson.databind.ObjectMapper
+import net.dashflight.data.config.ConfigValue
+import net.dashflight.data.config.Configurable
+import java.io.IOException
+import java.security.interfaces.RSAKey
+import java.security.interfaces.RSAPrivateKey
+import java.security.interfaces.RSAPublicKey
+import java.util.*
 
+class DashflightRSAKeyPairDataProvider internal constructor() : RSAKeyPairDataProvider, Configurable {
 
-public class DashflightRSAKeyPairDataProvider implements RSAKeyPairDataProvider, Configurable {
+    companion object {
+        private const val APP_NAME = "rsa-keypair"
 
-    private static final String APP_NAME = "rsa-keypair";
+        fun keyToJson(key: RSAKey, kid: String): String? {
+            val data: MutableMap<String, String> = HashMap()
+            data["kty"] = "RSA"
+            data["alg"] = "RS512"
+            data["use"] = "sig"
+            data["kid"] = kid
+            data["n"] = String(Base64.getEncoder().encode(key.modulus.toByteArray()))
+            if (key is RSAPublicKey) {
+                data["e"] = String(Base64.getEncoder().encode(key.publicExponent.toByteArray()))
+            } else if (key is RSAPrivateKey) {
+                data["e"] = String(Base64.getEncoder().encode(key.privateExponent.toByteArray()))
+            }
+            try {
+                return ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(data)
+            } catch (e: IOException) {
+                // This should never happen
+                e.printStackTrace()
+            }
+            return null
+        }
+    }
+
+    init {
+        registerWith(APP_NAME)
+    }
 
     @ConfigValue("public_key")
-    private static String publicKey;
+    override lateinit var publicKeyData: String; private set
 
     @ConfigValue("private_key")
-    private static String privateKey;
+    override lateinit var privateKeyData: String; private set
 
-
-    DashflightRSAKeyPairDataProvider() {
-        registerWith(APP_NAME);
-    }
-
-    @Override
-    public String getPublicKeyData() {
-        return publicKey;
-    }
-
-    @Override
-    public String getPrivateKeyData() {
-        return privateKey;
-    }
-
-
-    public static String keyToJson(RSAKey key, String kid) {
-        Map<String, String> data = new HashMap<>();
-
-        data.put("kty", "RSA");
-        data.put("alg", "RS512");
-        data.put("use", "sig");
-        data.put("kid", kid);
-        data.put("n", new String(Base64.getEncoder().encode(key.getModulus().toByteArray())));
-
-        if (key instanceof RSAPublicKey) {
-            RSAPublicKey pubKey = ((RSAPublicKey) key);
-            data.put("e", new String(Base64.getEncoder().encode(pubKey.getPublicExponent().toByteArray())));
-
-        } else if (key instanceof RSAPrivateKey) {
-            RSAPrivateKey privKey = ((RSAPrivateKey) key);
-            data.put("e", new String(Base64.getEncoder().encode(privKey.getPrivateExponent().toByteArray())));
-        }
-
-        try {
-            return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(data);
-        } catch(IOException e) {
-            // This should never happen
-            e.printStackTrace();
-        }
-        return null;
-    }
 }

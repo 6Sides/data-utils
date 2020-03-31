@@ -1,14 +1,13 @@
-package net.dashflight.data.keys;
+package net.dashflight.data.keys
 
-import java.security.InvalidKeyException;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
+import java.security.InvalidKeyException
+import java.security.interfaces.RSAPrivateKey
+import java.security.interfaces.RSAPublicKey
 
 /**
  * Transforms the raw key data into public and private RSA keys.
  */
-public interface RSAKeyPairTransformer {
-
+interface RSAKeyPairTransformer {
     /**
      * Transforms raw data into a public key
      *
@@ -16,7 +15,8 @@ public interface RSAKeyPairTransformer {
      * @return
      * @throws InvalidKeyException If the data is unable to be transformed into a key
      */
-    RSAPublicKey transformPublicKey(String rawData) throws InvalidKeyException;
+    @Throws(InvalidKeyException::class)
+    fun transformPublicKey(rawData: String?): RSAPublicKey
 
     /**
      * Transforms raw data into a private key
@@ -25,6 +25,6 @@ public interface RSAKeyPairTransformer {
      * @return
      * @throws InvalidKeyException If the data is unable to be transformed into a key
      */
-    RSAPrivateKey transformPrivateKey(String rawData) throws InvalidKeyException;
-
+    @Throws(InvalidKeyException::class)
+    fun transformPrivateKey(rawData: String?): RSAPrivateKey
 }

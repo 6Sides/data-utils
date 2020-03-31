@@ -1,12 +1,9 @@
-package net.dashflight.data.redis;
+package net.dashflight.data.redis
 
-import com.google.inject.AbstractModule;
+import com.google.inject.AbstractModule
 
-public class DashflightRedisClientModule extends AbstractModule {
-
-    @Override
-    protected void configure() {
-        bind(RedisConnectionOptionProvider.class).to(DashflightRedisConnectionOptionProvider.class);
+class DashflightRedisClientModule : AbstractModule() {
+    override fun configure() {
+        bind(RedisConnectionOptionProvider::class.java).to(DashflightRedisConnectionOptionProvider::class.java)
     }
-
 }

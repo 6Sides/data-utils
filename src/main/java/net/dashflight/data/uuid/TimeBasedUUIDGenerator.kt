@@ -1,17 +1,14 @@
-package net.dashflight.data.uuid;
+package net.dashflight.data.uuid
 
-import com.fasterxml.uuid.Generators;
-import com.fasterxml.uuid.impl.TimeBasedGenerator;
-import java.util.UUID;
+import com.fasterxml.uuid.Generators
+import java.util.*
 
-public class TimeBasedUUIDGenerator implements UUIDGenerator {
+class TimeBasedUUIDGenerator internal constructor() : UUIDGenerator {
+    override fun next(): UUID? {
+        return gen.generate()
+    }
 
-    private static final TimeBasedGenerator gen = Generators.timeBasedGenerator();
-
-    TimeBasedUUIDGenerator() {}
-
-    @Override
-    public UUID next() {
-        return gen.generate();
+    companion object {
+        private val gen = Generators.timeBasedGenerator()
     }
 }

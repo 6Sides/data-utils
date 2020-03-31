@@ -1,11 +1,9 @@
-package net.dashflight.data.jwt.create.request;
+package net.dashflight.data.jwt.create.request
 
-import com.google.inject.AbstractModule;
+import com.google.inject.AbstractModule
 
-public class DashflightCreateJwtRequestProviderModule extends AbstractModule {
-
-    @Override
-    protected void configure() {
-        bind(CreateJwtRequestProvider.class).to(DashflightCreateJwtRequestProvider.class);
+class DashflightCreateJwtRequestProviderModule : AbstractModule() {
+    override fun configure() {
+        bind(CreateJwtRequestProvider::class.java).to(DashflightCreateJwtRequestProvider::class.java)
     }
 }

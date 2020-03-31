@@ -1,29 +1,21 @@
-package net.dashflight.data.jwt;
+package net.dashflight.data.jwt
 
-import com.auth0.jwt.exceptions.JWTCreationException;
-import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.interfaces.DecodedJWT;
-import com.google.inject.Inject;
-import net.dashflight.data.jwt.create.JwtCreator;
-import net.dashflight.data.jwt.verify.JwtVerifier;
+import com.auth0.jwt.exceptions.JWTCreationException
+import com.auth0.jwt.exceptions.JWTVerificationException
+import com.auth0.jwt.interfaces.DecodedJWT
+import com.google.inject.Inject
+import net.dashflight.data.jwt.create.JwtCreator
+import net.dashflight.data.jwt.verify.JwtVerifier
 
-public class JwtUtil {
-
-    private final JwtCreator creator;
-    private final JwtVerifier verifier;
-
-    @Inject
-    public JwtUtil(JwtCreator creator, JwtVerifier verifier) {
-        this.creator = creator;
-        this.verifier = verifier;
+class JwtUtil @Inject constructor(private val creator: JwtCreator, private val verifier: JwtVerifier) {
+    @Throws(JWTCreationException::class)
+    fun generateFor(userId: String?): SecuredJwt? {
+        return creator.generateFor(userId)
     }
 
-
-    public SecuredJwt generateFor(String userId) throws JWTCreationException {
-        return creator.generateFor(userId);
+    @Throws(JWTVerificationException::class)
+    fun verifyToken(token: String?, fingerprint: String?): DecodedJWT? {
+        return verifier.verifyToken(token, fingerprint)
     }
 
-    public DecodedJWT verifyToken(String token, String fingerprint) throws JWTVerificationException {
-        return verifier.verifyToken(token, fingerprint);
-    }
 }

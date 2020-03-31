@@ -1,97 +1,78 @@
-package net.dashflight.data.postgres;
+package net.dashflight.data.postgres
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import javax.sql.DataSource;
-import net.dashflight.data.config.Configurable;
-import org.jdbi.v3.core.Jdbi;
-import org.jdbi.v3.guava.GuavaPlugin;
-import org.jdbi.v3.jodatime2.JodaTimePlugin;
-import org.jdbi.v3.postgres.PostgresPlugin;
-import org.jdbi.v3.sqlobject.SqlObjectPlugin;
+import com.google.inject.Inject
+import com.google.inject.Singleton
+import com.zaxxer.hikari.HikariConfig
+import com.zaxxer.hikari.HikariDataSource
+import org.jdbi.v3.core.Jdbi
+import java.net.URI
+import java.net.URISyntaxException
+import java.sql.Connection
+import java.sql.SQLException
+import javax.sql.DataSource
 
 /**
  * Creates a pool of Postgres connections
  */
 @Singleton
-public class PostgresClient implements AutoCloseable {
+class PostgresClient @Inject internal constructor(optionProvider: PostgresConnectionOptionProvider) : AutoCloseable {
+    private val config = HikariConfig()
 
-    private HikariConfig config = new HikariConfig();
-    private HikariDataSource connectionPool;
+    private var connectionPool: HikariDataSource? = null
 
-    private Jdbi jdbi;
+    var jdbi: Jdbi? = null
 
-    private final PostgresConnectionOptions options;
+    private val options: PostgresConnectionOptions = optionProvider.get()
 
-    @Inject
-    PostgresClient(PostgresConnectionOptionProvider optionProvider) {
-        this.options = optionProvider.get();
-        init();
-    }
-
-    private void init() {
-        String dbUrl = String.format("jdbc:postgresql://%s:%s/%s?user=%s&password=%s",
-                options.getHost(),
-                options.getPort(),
-                options.getDbname(),
-                options.getUsername(),
-                options.getPassword()
-        );
-
-        URI dbUri = null;
+    private fun init() {
+        val dbUrl = String.format("jdbc:postgresql://%s:%s/%s?user=%s&password=%s",
+                options.host,
+                options.port,
+                options.dbname,
+                options.username,
+                options.password
+        )
+        var dbUri: URI? = null
         try {
-            dbUri = new URI(dbUrl);
-        } catch (URISyntaxException e) {
+            dbUri = URI(dbUrl)
+        } catch (e: URISyntaxException) {
             // Kill the program
-            System.exit(1);
+            System.exit(1)
         }
-
-        if (dbUri.getUserInfo() != null) {
-            config.setUsername(dbUri.getUserInfo().split(":")[0]);
-            config.setPassword(dbUri.getUserInfo().split(":")[1]);
+        if (dbUri!!.userInfo != null) {
+            config.username = dbUri.userInfo.split(":").toTypedArray()[0]
+            config.password = dbUri.userInfo.split(":").toTypedArray()[1]
         }
+        config.jdbcUrl = dbUrl
+        config.poolName = options.applicationName
+        config.maximumPoolSize = options.maxPoolSize
+        config.addDataSourceProperty("cachePrepStmts", "true")
+        config.addDataSourceProperty("prepStmtCacheSize", "250")
+        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048")
+        config.addDataSourceProperty("ApplicationName", options.applicationName)
 
-        config.setJdbcUrl(dbUrl);
-        config.setPoolName(options.getApplicationName());
-        config.setMaximumPoolSize(options.getMaxPoolSize());
-        config.addDataSourceProperty("cachePrepStmts", "true");
-        config.addDataSourceProperty("prepStmtCacheSize", "250");
-        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-        config.addDataSourceProperty("ApplicationName", options.getApplicationName());
-        connectionPool = new HikariDataSource(config);
+        connectionPool = HikariDataSource(config)
 
         // Close the pool on shutdown
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> connectionPool.close()));
+        Runtime.getRuntime().addShutdownHook(Thread(Runnable { connectionPool!!.close() }))
+        jdbi = Jdbi.create(connectionPool)
 
-
-        jdbi = Jdbi.create(connectionPool);
-        jdbi.installPlugin(new SqlObjectPlugin());
-        jdbi.installPlugin(new PostgresPlugin());
-        jdbi.installPlugin(new GuavaPlugin());
-        jdbi.installPlugin(new JodaTimePlugin());
+        // Installs all jdbi plugins found in classpath
+        jdbi?.installPlugins()
     }
 
-    public Connection getConnection() throws SQLException {
-        return connectionPool.getConnection();
+    @get:Throws(SQLException::class)
+    val connection: Connection
+        get() = connectionPool!!.connection
+
+    val dataSource: DataSource?
+        get() = connectionPool
+
+    override fun close() {
+        connectionPool!!.close()
     }
 
-    public DataSource getDataSource() {
-        return connectionPool;
-    }
-
-    public Jdbi getJdbi() {
-        return jdbi;
-    }
-
-
-    @Override
-    public void close() {
-        connectionPool.close();
+    init {
+        init()
     }
 }

@@ -1,23 +1,21 @@
-package net.dashflight.data.caching;
+package net.dashflight.data.caching
 
-import net.dashflight.data.caching.Computable.DataFetchException;
+import net.dashflight.data.caching.Computable.DataFetchException
 
 /**
  * Basic read-through cache implementation. Attempts to read a value from the
  * cache and if it's absent the result is recomputed and cached.
  */
-public abstract class ReadThroughCachedFetcher<K, V> extends CachedFetcher<K, V> {
+abstract class ReadThroughCachedFetcher<K, V> : CachedFetcher<K, V?>() {
 
-    @Override
-    protected final CacheableResult<V> memoizedGet(K input) throws DataFetchException {
-        CacheableResult<V> result = super.getValueFromCache(input);
-
+    @Throws(DataFetchException::class)
+    override fun memoizedGet(input: K): CacheableResult<V?> {
+        var result = super.getValueFromCache(input)
         if (result == null) {
             // Refetch result and cache it
-            result = this.fetchResult(input);
-            this.cacheResult(input, result);
+            result = fetchResult(input)
+            cacheResult(input, result)
         }
-
-        return result;
+        return result
     }
 }

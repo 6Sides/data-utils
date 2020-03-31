@@ -1,24 +1,22 @@
-package net.dashflight.data.serialize;
+package net.dashflight.data.serialize
 
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.Serializer;
-import com.esotericsoftware.kryo.io.Input;
-import com.esotericsoftware.kryo.io.Output;
-import java.util.UUID;
+import com.esotericsoftware.kryo.Kryo
+import com.esotericsoftware.kryo.Serializer
+import com.esotericsoftware.kryo.io.Input
+import com.esotericsoftware.kryo.io.Output
+import java.util.*
 
-public class UUIDSerializer extends Serializer<UUID> {
-
-    public UUIDSerializer() {
-        setImmutable(true);
+class UUIDSerializer : Serializer<UUID>() {
+    override fun write(kryo: Kryo, output: Output, uuid: UUID) {
+        output.writeLong(uuid.mostSignificantBits)
+        output.writeLong(uuid.leastSignificantBits)
     }
 
-    @Override
-    public void write(final Kryo kryo, final Output output, final UUID uuid) {
-        output.writeLong(uuid.getMostSignificantBits());
-        output.writeLong(uuid.getLeastSignificantBits());
+    override fun read(kryo: Kryo, input: Input, uuidClass: Class<out UUID>): UUID {
+        return UUID(input.readLong(), input.readLong())
     }
 
-    @Override public UUID read(final Kryo kryo, final Input input, final Class<? extends UUID> uuidClass) {
-        return new UUID(input.readLong(), input.readLong());
+    init {
+        isImmutable = true
     }
 }
