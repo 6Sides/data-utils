@@ -2,7 +2,6 @@ package net.dashflight.data.keys
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import java.io.ByteArrayInputStream
 import java.io.IOException
 import java.math.BigInteger
@@ -20,11 +19,12 @@ import java.util.*
  * Transforms Base64 json representations of and RSA key pair into java objects
  */
 class Base64RSAKeyTransformer : RSAKeyPairTransformer {
+
     private var keyFactory: KeyFactory? = null
     private val mapper = ObjectMapper()
 
     @Throws(InvalidKeyException::class)
-    override fun transformPublicKey(rawData: String?): RSAPublicKey {
+    override fun transformPublicKey(rawData: String): RSAPublicKey {
         return try {
             val components = parseData(rawData)
             val spec = RSAPublicKeySpec(components.modulus, components.exponent)
@@ -37,7 +37,7 @@ class Base64RSAKeyTransformer : RSAKeyPairTransformer {
     }
 
     @Throws(InvalidKeyException::class)
-    override fun transformPrivateKey(rawData: String?): RSAPrivateKey {
+    override fun transformPrivateKey(rawData: String): RSAPrivateKey {
         return try {
             val components = parseData(rawData)
             val spec = RSAPrivateKeySpec(components.modulus, components.exponent)

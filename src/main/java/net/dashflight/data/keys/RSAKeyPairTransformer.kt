@@ -16,7 +16,7 @@ interface RSAKeyPairTransformer {
      * @throws InvalidKeyException If the data is unable to be transformed into a key
      */
     @Throws(InvalidKeyException::class)
-    fun transformPublicKey(rawData: String?): RSAPublicKey
+    fun transformPublicKey(rawData: String): RSAPublicKey
 
     /**
      * Transforms raw data into a private key
@@ -26,5 +26,5 @@ interface RSAKeyPairTransformer {
      * @throws InvalidKeyException If the data is unable to be transformed into a key
      */
     @Throws(InvalidKeyException::class)
-    fun transformPrivateKey(rawData: String?): RSAPrivateKey
+    fun transformPrivateKey(rawData: String): RSAPrivateKey
 }

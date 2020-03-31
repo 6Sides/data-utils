@@ -7,6 +7,6 @@ import java.security.interfaces.RSAPublicKey
  * Responsible for returning a valid RSA key pair.
  */
 interface RSAKeyPairProvider {
-    val publicKey: RSAPublicKey?
-    val privateKey: RSAPrivateKey?
+    val publicKey: RSAPublicKey
+    val privateKey: RSAPrivateKey
 }

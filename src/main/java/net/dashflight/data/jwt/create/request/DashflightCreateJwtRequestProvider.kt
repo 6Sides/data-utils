@@ -11,9 +11,14 @@ import java.util.*
 /**
  * Used to generate jwts for authentication with dashflight
  */
-internal class DashflightCreateJwtRequestProvider @Inject constructor(fingerprintService: FingerprintService, keyPairProvider: RSAKeyPairProvider) : CreateJwtRequestProvider, Configurable {
-    private val fingerprintService: FingerprintService
-    private val keyManager: RSAKeyPairProvider
+internal class DashflightCreateJwtRequestProvider @Inject constructor(
+        private val keyManager: RSAKeyPairProvider
+) : CreateJwtRequestProvider, Configurable {
+
+    init {
+        registerWith("jwt-utils")
+    }
+
     override fun create(userId: String): CreateJwtRequest {
         val claims: MutableMap<String, String> = HashMap()
         claims["user_id"] = userId
@@ -23,15 +28,9 @@ internal class DashflightCreateJwtRequestProvider @Inject constructor(fingerprin
 
     companion object {
         @ConfigValue("issuer")
-        private val ISSUER: String? = null
+        private lateinit var ISSUER: String
 
         @ConfigValue("access_token_ttl")
-        private val TOKEN_TTL = 0
-    }
-
-    init {
-        registerWith("jwt-utils")
-        this.fingerprintService = fingerprintService
-        keyManager = keyPairProvider
+        private var TOKEN_TTL: Int = 0
     }
 }

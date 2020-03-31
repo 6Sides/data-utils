@@ -8,13 +8,14 @@ import net.dashflight.data.jwt.create.JwtCreator
 import net.dashflight.data.jwt.verify.JwtVerifier
 
 class JwtUtil @Inject constructor(private val creator: JwtCreator, private val verifier: JwtVerifier) {
+
     @Throws(JWTCreationException::class)
-    fun generateFor(userId: String?): SecuredJwt? {
+    fun generateFor(userId: String): SecuredJwt? {
         return creator.generateFor(userId)
     }
 
     @Throws(JWTVerificationException::class)
-    fun verifyToken(token: String?, fingerprint: String?): DecodedJWT? {
+    fun verifyToken(token: String, fingerprint: String): DecodedJWT? {
         return verifier.verifyToken(token, fingerprint)
     }
 

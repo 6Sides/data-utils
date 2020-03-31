@@ -25,15 +25,14 @@ class JwtVerifier @Inject constructor(private val provider: VerifyJwtRequestProv
      * @throws JWTVerificationException if token is unable to be decoded or verified
      */
     @Throws(JWTVerificationException::class)
-    fun verifyToken(token: String?, fingerprint: String?): DecodedJWT {
+    fun verifyToken(token: String, fingerprint: String): DecodedJWT {
         val request = provider.create(token, fingerprint)
-        if (request.token == null || request.fingerprint == null) {
-            throw JWTVerificationException("The token and fingerprint must both be non-null.")
-        }
+
         val jwtVerifier: JWTVerifier = JWT.require(Algorithm.RSA512(request.publicKey, null))
                 .withIssuer(request.issuer)
                 .withClaim("fgp", request.fingerprintHash)
                 .build()
+
         return jwtVerifier.verify(request.token)
     }
 

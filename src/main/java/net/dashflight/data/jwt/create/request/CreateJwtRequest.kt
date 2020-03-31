@@ -6,24 +6,30 @@ import java.time.Instant
 /**
  * A data object containing the necessary information to create a jwt
  */
-data class CreateJwtRequest(val issuer: String?, val issuedAt: Instant?, val ttl: Int = 0, val claims: Map<String, String> = emptyMap(), val privateKey: RSAPrivateKey?) {
-    /**
-     * The name of the service that issued the token
-     */
 
-    /**
-     * The time the token was issued
-     */
+/**
+ * The name of the service that issued the token
+ */
 
-    /**
-     * How long the token should live for (in seconds)
-     */
+/**
+ * The time the token was issued
+ */
 
-    /**
-     * Claims to be added to the jwt payload. Defaults to empty Map.
-     */
+/**
+ * How long the token should live for (in seconds)
+ */
 
-    /**
-     * The private key used to sign the token
-     */
-}
+/**
+ * Claims to be added to the jwt payload. Defaults to empty Map.
+ */
+
+/**
+ * The private key used to sign the token
+ */
+data class CreateJwtRequest(
+        val issuer: String?,
+        val issuedAt: Instant?,
+        val ttl: Int?,
+        val claims: Map<String, String>?,
+        val privateKey: RSAPrivateKey?
+)

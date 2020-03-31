@@ -6,22 +6,21 @@ import net.dashflight.data.config.Configurable
 import net.dashflight.data.jwt.FingerprintService
 import net.dashflight.data.keys.RSAKeyPairProvider
 
-class DashflightVerifyJwtRequestProvider @Inject constructor(fingerprintService: FingerprintService, keyPairProvider: RSAKeyPairProvider) : VerifyJwtRequestProvider, Configurable {
-    private val fingerprintService: FingerprintService
-    private val keyManager: RSAKeyPairProvider
+class DashflightVerifyJwtRequestProvider @Inject constructor(
+        private val fingerprintService: FingerprintService,
+        private val keyManager: RSAKeyPairProvider
+) : VerifyJwtRequestProvider, Configurable {
 
-    override fun create(token: String?, fingerprint: String?): JwtVerificationRequirements {
+    init {
+        registerWith("jwt-utils")
+    }
+
+    override fun create(token: String, fingerprint: String): JwtVerificationRequirements {
         return JwtVerificationRequirements(ISSUER, token, fingerprint, fingerprintService.hashFingerprint(fingerprint), keyManager.publicKey)
     }
 
     companion object {
         @ConfigValue("issuer")
-        private val ISSUER: String? = null
-    }
-
-    init {
-        registerWith("jwt-utils")
-        this.fingerprintService = fingerprintService
-        keyManager = keyPairProvider
+        private lateinit var ISSUER: String
     }
 }

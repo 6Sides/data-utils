@@ -11,8 +11,8 @@ import java.security.spec.RSAPublicKeySpec
  * Always returns the same hardcoded RSA keys. Used for testing.
  */
 class StaticRSAKeyPairProvider : RSAKeyPairProvider {
-    override var publicKey: RSAPublicKey? = null
-    override var privateKey: RSAPrivateKey? = null
+    override lateinit var publicKey: RSAPublicKey
+    override lateinit var privateKey: RSAPrivateKey
 
     init {
         try {
@@ -31,8 +31,7 @@ class StaticRSAKeyPairProvider : RSAKeyPairProvider {
             publicKey = keyFactory.generatePublic(publicKeySpec) as RSAPublicKey
             privateKey = keyFactory.generatePrivate(privateKeySpec) as RSAPrivateKey
         } catch (e: Exception) {
-            publicKey = null
-            privateKey = null
+            e.printStackTrace()
         }
     }
 }

@@ -6,8 +6,10 @@ import net.dashflight.data.random.LavaRandom
 import java.util.*
 
 class DashflightJwtCreatorModule : AbstractModule() {
+
     override fun configure() {
         install(DashflightCreateJwtRequestProviderModule())
+
         bind(JwtCreator::class.java)
         bind(Random::class.java).to(LavaRandom::class.java)
     }

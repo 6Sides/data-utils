@@ -16,6 +16,7 @@ import javax.xml.bind.DatatypeConverter
  * Prevents leaking any internal information stored in the JWT payload.
  */
 internal class TokenCipher {
+
     @Transient
     private var aead: Aead? = null
 

@@ -23,10 +23,7 @@ class FingerprintService @Inject constructor(private val random: Random) {
     /**
      * Hashes a fingerprint with SHA-256
      */
-    fun hashFingerprint(fgp: String?): String? {
-        if (fgp == null) {
-            return null
-        }
+    fun hashFingerprint(fgp: String): String {
         val fingerprintDigest = Hashing.sha256().hashBytes(fgp.toByteArray(StandardCharsets.UTF_8)).asBytes()
         return DatatypeConverter.printHexBinary(fingerprintDigest)
     }
@@ -34,5 +31,4 @@ class FingerprintService @Inject constructor(private val random: Random) {
     companion object {
         private const val FINGERPRINT_LENGTH = 64
     }
-
 }
