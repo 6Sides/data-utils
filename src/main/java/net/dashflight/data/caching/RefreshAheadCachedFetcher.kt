@@ -24,7 +24,7 @@ abstract class RefreshAheadCachedFetcher<K, V> @Inject protected constructor(red
             // Refetch result and cache it asynchronously
             threadPool.submit {
                 try {
-                    val result = fetchResult(input)
+                    val result = calculateResult(input)
                     cacheResult(input, result)
                     redis.setWithExpiry(generateHash(input) + "rac", (result.ttl * REFRESH_AHEAD_FACTOR).toInt(), "")
                 } catch (e: DataFetchException) {

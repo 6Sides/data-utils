@@ -2,16 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47e27f0e-1967-4be3-87d2-25e1f94092c4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/DashflightModules.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/DataFetchException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/redis/RedisContainer.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/net/dashflight/data/jwt/FingerprintServiceTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/net/dashflight/data/jwt/verify/JwtVerifierTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/net/dashflight/data/keys/Base64RSAKeyTransformerTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/net/dashflight/data/mfa/BasicMfaServiceTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/net/dashflight/data/passwords/PasswordServiceTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/net/dashflight/data/postgres/FlywayMigratorTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/net/dashflight/data/redis/RedisClientTest.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -19,42 +9,7 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/CacheableResult.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/CacheableResult.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/CachedFetcher.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/CachedFetcher.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/Computable.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/ReadThroughCachedFetcher.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/ReadThroughCachedFetcher.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/RefreshAheadCachedFetcher.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/RefreshAheadCachedFetcher.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/config/Configurable.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/config/Configurable.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/config/S3ConfigFetcher.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/config/S3ConfigFetcher.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/config/ValueInjector.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/config/ValueInjector.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/email/EmailClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/email/EmailClient.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/email/EmailSpecification.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/email/EmailSpecification.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/email/EmailSpecificationProvider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/email/EmailSpecificationProvider.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/email/SESEmailClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/email/SESEmailClient.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/email/SendEmailService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/email/SendEmailService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/DashflightJwtUtilModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/DashflightJwtUtilModule.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/SecuredJwt.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/SecuredJwt.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/BasicMfaService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/BasicMfaService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/DashflightMfaModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/DashflightMfaModule.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/DashflightUriDataProvider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/DashflightUriDataProvider.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/passwords/PasswordService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/passwords/PasswordService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/DashflightPostgresConnectionOptionProvider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/DashflightPostgresConnectionOptionProvider.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/FlywayMigrator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/FlywayMigrator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresContainer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/postgres/PostgresContainer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/random/LavaRandomProvider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/random/LavaRandomProvider.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/random/LavaRandomSpi.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/random/LavaRandomSpi.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/redis/DashflightRedisConnectionOptionProvider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/redis/DashflightRedisConnectionOptionProvider.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/serialize/KryoPool.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/serialize/KryoPool.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/serialize/UUIDSerializer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/serialize/UUIDSerializer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/uuid/TimeBasedUUIDGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/uuid/TimeBasedUUIDGenerator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/uuid/UUIDGeneratorFactory.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/net/dashflight/data/jwt/FingerprintServiceTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/net/dashflight/data/jwt/create/JwtCreatorTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/net/dashflight/data/jwt/create/JwtCreatorTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/net/dashflight/data/jwt/verify/JwtVerifierTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/net/dashflight/data/keys/Base64RSAKeyTransformerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/net/dashflight/data/mfa/BasicMfaServiceTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/net/dashflight/data/passwords/PasswordServiceTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/net/dashflight/data/postgres/FlywayMigratorTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/net/dashflight/data/redis/RedisClientTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,6 +65,7 @@
         <option value="Class" />
         <option value="Kotlin File" />
         <option value="Kotlin Class" />
+        <option value="Kotlin Interface" />
       </list>
     </option>
   </component>
@@ -360,14 +316,7 @@
       <workItem from="1585495170167" duration="67000" />
       <workItem from="1585499838892" duration="4066000" />
       <workItem from="1585613036673" duration="595000" />
-      <workItem from="1585659079714" duration="20554000" />
-    </task>
-    <task id="LOCAL-00074" summary="Fixed import">
-      <created>1584643352590</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1584643352590</updated>
+      <workItem from="1585659079714" duration="20951000" />
     </task>
     <task id="LOCAL-00075" summary="bug fix">
       <created>1584643804061</created>
@@ -705,14 +654,20 @@
       <option name="project" value="LOCAL" />
       <updated>1585681241193</updated>
     </task>
-    <option name="localTasksCounter" value="123" />
+    <task id="LOCAL-00123" summary="Refactored">
+      <created>1585690587164</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1585690587164</updated>
+    </task>
+    <option name="localTasksCounter" value="124" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Refactored mfa package / updated guice module" />
     <MESSAGE value="Refactored PasswordService and added guice module" />
     <MESSAGE value="Renamed VerifyJwtRequest.java" />
     <MESSAGE value="Removed unnecessary interfaces" />
@@ -737,7 +692,8 @@
     <MESSAGE value="Refactored RedisClient.kt" />
     <MESSAGE value="Refactored CachedFetcher and implementations" />
     <MESSAGE value="Refactored jwt and key packages" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactored jwt and key packages" />
+    <MESSAGE value="Refactored" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored" />
   </component>
   <component name="WindowStateProjectService">
     <state x="560" y="205" key="#Project_Structure" timestamp="1585666774524">
@@ -790,10 +746,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="705" y="384" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1584896932706" />
-    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1585681240648">
+    <state x="492" y="88" key="CommitChangelistDialog2" timestamp="1585690586419">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="492" y="88" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585681240648" />
+    <state x="492" y="88" key="CommitChangelistDialog2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585690586419" />
     <state x="492" y="88" key="CommitChangelistDialog2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585607624257" />
     <state x="453" y="43" key="DiffContextDialog" timestamp="1585072871185">
       <screen x="0" y="0" width="1920" height="1080" />
@@ -803,36 +759,36 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="560" y="205" key="GrepConsoleSettings/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1584997955755" />
-    <state width="1920" height="434" key="GridCell.Tab.0.bottom" timestamp="1585690454245">
+    <state width="1920" height="325" key="GridCell.Tab.0.bottom" timestamp="1585690784427">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.bottom/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896596" />
-    <state width="1920" height="434" key="GridCell.Tab.0.bottom/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585690454245" />
+    <state width="1920" height="325" key="GridCell.Tab.0.bottom/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585690784427" />
     <state width="1792" height="285" key="GridCell.Tab.0.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1585089279417" />
     <state width="1920" height="285" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1080.-331.1080.1897/1920.832.1792.1097@0.0.1920.1080" timestamp="1584055583905" />
     <state width="1920" height="285" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585339662742" />
-    <state width="1920" height="434" key="GridCell.Tab.0.center" timestamp="1585690454242">
+    <state width="1920" height="325" key="GridCell.Tab.0.center" timestamp="1585690784424">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.center/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896587" />
-    <state width="1920" height="434" key="GridCell.Tab.0.center/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585690454242" />
+    <state width="1920" height="325" key="GridCell.Tab.0.center/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585690784424" />
     <state width="1792" height="285" key="GridCell.Tab.0.center/0.0.1792.1120@0.0.1792.1120" timestamp="1585089279415" />
     <state width="1920" height="285" key="GridCell.Tab.0.center/0.0.1920.1080/-1080.-331.1080.1897/1920.832.1792.1097@0.0.1920.1080" timestamp="1584055583902" />
     <state width="1920" height="285" key="GridCell.Tab.0.center/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585339662740" />
     <state width="1920" height="285" key="GridCell.Tab.0.center/0.0.1920.1080/-1080.-354.1080.1920/1920.832.1792.1097@0.0.1920.1080" timestamp="1584050242172" />
-    <state width="1920" height="434" key="GridCell.Tab.0.left" timestamp="1585690454241">
+    <state width="1920" height="325" key="GridCell.Tab.0.left" timestamp="1585690784422">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.left/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896584" />
-    <state width="1920" height="434" key="GridCell.Tab.0.left/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585690454241" />
+    <state width="1920" height="325" key="GridCell.Tab.0.left/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585690784422" />
     <state width="1792" height="285" key="GridCell.Tab.0.left/0.0.1792.1120@0.0.1792.1120" timestamp="1585089279414" />
     <state width="1920" height="285" key="GridCell.Tab.0.left/0.0.1920.1080/-1080.-331.1080.1897/1920.832.1792.1097@0.0.1920.1080" timestamp="1584055583897" />
     <state width="1920" height="285" key="GridCell.Tab.0.left/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585339662739" />
-    <state width="1920" height="434" key="GridCell.Tab.0.right" timestamp="1585690454243">
+    <state width="1920" height="325" key="GridCell.Tab.0.right" timestamp="1585690784425">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.right/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896589" />
-    <state width="1920" height="434" key="GridCell.Tab.0.right/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585690454243" />
+    <state width="1920" height="325" key="GridCell.Tab.0.right/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585690784425" />
     <state width="1792" height="285" key="GridCell.Tab.0.right/0.0.1792.1120@0.0.1792.1120" timestamp="1585089279416" />
     <state width="1920" height="285" key="GridCell.Tab.0.right/0.0.1920.1080/-1080.-331.1080.1897/1920.832.1792.1097@0.0.1920.1080" timestamp="1584055583904" />
     <state width="1920" height="285" key="GridCell.Tab.0.right/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585339662741" />
