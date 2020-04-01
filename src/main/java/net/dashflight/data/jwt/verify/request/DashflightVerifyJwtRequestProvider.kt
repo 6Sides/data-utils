@@ -16,7 +16,13 @@ class DashflightVerifyJwtRequestProvider @Inject constructor(
     }
 
     override fun create(token: String, fingerprint: String): JwtVerificationRequirements {
-        return JwtVerificationRequirements(ISSUER, token, fingerprint, fingerprintService.hashFingerprint(fingerprint), keyManager.publicKey)
+        return JwtVerificationRequirements(
+                issuer = ISSUER,
+                token = token,
+                fingerprint = fingerprint,
+                fingerprintHash = fingerprintService.hashFingerprint(fingerprint),
+                publicKey = keyManager.publicKey
+        )
     }
 
     companion object {
