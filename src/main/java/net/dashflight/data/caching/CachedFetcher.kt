@@ -28,7 +28,7 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(protected val r
 
     val memoizer: Memoizer<K, CacheableResult<V?>>
 
-    protected abstract val calculateResult: (key: K) -> CacheableResult<V?>
+    protected abstract fun calculateResult(key: K): CacheableResult<V?>
 
     init {
         memoizer = Memoizer { this.calculateResult(it) }

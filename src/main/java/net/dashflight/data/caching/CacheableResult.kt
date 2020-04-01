@@ -27,12 +27,8 @@ data class CacheableResult<V> constructor(val result: V? = null, val ttl: Int = 
          * @param result The result of the query.
          * @param cacheTTL The ttl in seconds.
          */
-        fun <V> of(result: V?, cacheTTL: Int): CacheableResult<V> {
+        fun <V> of(result: V?, cacheTTL: Int = defaultCacheTtl): CacheableResult<V> {
             return CacheableResult(result, cacheTTL)
-        }
-
-        fun <V> of(result: V?): CacheableResult<V> {
-            return CacheableResult(result, defaultCacheTtl)
         }
     }
 }
