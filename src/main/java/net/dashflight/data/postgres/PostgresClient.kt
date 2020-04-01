@@ -20,7 +20,7 @@ class PostgresClient @Inject internal constructor(optionProvider: PostgresConnec
 
     private var connectionPool: HikariDataSource? = null
 
-    var jdbi: Jdbi? = null
+    lateinit var jdbi: Jdbi
 
     private val options: PostgresConnectionOptions = optionProvider.get()
 
@@ -58,7 +58,7 @@ class PostgresClient @Inject internal constructor(optionProvider: PostgresConnec
         jdbi = Jdbi.create(connectionPool)
 
         // Installs all jdbi plugins found in classpath
-        jdbi?.installPlugins()
+        jdbi.installPlugins()
     }
 
     @get:Throws(SQLException::class)
