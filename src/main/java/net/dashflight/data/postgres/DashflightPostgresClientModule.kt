@@ -2,8 +2,9 @@ package net.dashflight.data.postgres
 
 import com.google.inject.AbstractModule
 
-class DashflightPostgresClientModule : AbstractModule() {
+class DashflightPostgresClientModule constructor(private val applicationName: String? = null): AbstractModule() {
+
     override fun configure() {
-        bind(PostgresConnectionOptionProvider::class.java).to(DashflightPostgresConnectionOptionProvider::class.java)
+        bind(PostgresConnectionOptionProvider::class.java).toInstance(DashflightPostgresConnectionOptionProvider(applicationName))
     }
 }
