@@ -64,10 +64,8 @@ internal class DashflightMfaDataProvider @Inject constructor(random: Random) : C
         return DatatypeConverter.printHexBinary(randomBytes)
     }
 
-    companion object {
-        @ConfigValue("issuer")
-        private val ISSUER: String? = null
-    }
+    @ConfigValue("issuer")
+    private var ISSUER: String? = null
 
     init {
         registerWith("multi-factor")
