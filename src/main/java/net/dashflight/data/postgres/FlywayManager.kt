@@ -47,7 +47,7 @@ class FlywayManager(postgresClient: PostgresClient) {
                 FileWriter(targetFile).use { writer ->
                     var line: String?
                     while (br.readLine().also { line = it } != null) {
-                        writer.write(line)
+                        writer.write(line!!)
                         writer.write("\n")
                     }
                 }
