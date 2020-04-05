@@ -10,6 +10,7 @@ import java.net.URISyntaxException
 import java.sql.Connection
 import java.sql.SQLException
 import javax.sql.DataSource
+import kotlin.system.exitProcess
 
 /**
  * Creates a pool of Postgres connections
@@ -32,17 +33,19 @@ class PostgresClient @Inject internal constructor(optionProvider: PostgresConnec
                 options.username,
                 options.password
         )
-        var dbUri: URI? = null
-        try {
-            dbUri = URI(dbUrl)
+
+        val dbUri: URI = try {
+            URI(dbUrl)
         } catch (e: URISyntaxException) {
             // Kill the program
-            System.exit(1)
+            exitProcess(1)
         }
-        if (dbUri!!.userInfo != null) {
+
+        if (dbUri.userInfo != null) {
             config.username = dbUri.userInfo.split(":").toTypedArray()[0]
             config.password = dbUri.userInfo.split(":").toTypedArray()[1]
         }
+
         config.jdbcUrl = dbUrl
         config.poolName = options.applicationName
         config.maximumPoolSize = options.maxPoolSize
