@@ -21,7 +21,7 @@ import javax.xml.bind.DatatypeConverter
  *
  * Caches s3 files locally to reduce overhead.
  */
-class FlywayManager(postgresClient: PostgresClient) {
+class FlywayManager(postgresClient: PostgresClient, private val parentDir: String? = null) {
     private val postgresClient: PostgresClient
 
     @JvmOverloads
@@ -30,13 +30,19 @@ class FlywayManager(postgresClient: PostgresClient) {
 
     @Throws(IOException::class)
     private fun untarFile() {
-        val tarInput = TarArchiveInputStream(GzipCompressorInputStream(FileInputStream(
-                Paths.get("flyway", "migrations.tar.gz").toString())))
+        val path = parentDir?.let {
+            Paths.get(parentDir,"flyway", "migrations.tar.gz").toString()
+        } ?: Paths.get("flyway", "migrations.tar.gz").toString()
+
+        val tarInput = TarArchiveInputStream(GzipCompressorInputStream(FileInputStream(path)))
         var currentEntry = tarInput.nextTarEntry
         var br: BufferedReader
         while (currentEntry != null) {
             br = BufferedReader(InputStreamReader(tarInput)) // Read directly from tarInput
-            val targetFile = Paths.get("flyway", "db", currentEntry.name).toFile()
+            val targetFile = parentDir?.let {
+                Paths.get(parentDir,"flyway", "db", currentEntry.name).toFile()
+            } ?: Paths.get("flyway", "db", currentEntry.name).toFile()
+
             if (currentEntry.isDirectory) {
                 if (!targetFile.exists()) {
                     targetFile.mkdirs()
@@ -90,7 +96,11 @@ class FlywayManager(postgresClient: PostgresClient) {
 
     val flyway: Flyway
         get() {
-            val location = "filesystem:" + File(Paths.get("flyway", "db").toString()).absolutePath
+            val path = parentDir?.let {
+                Paths.get(parentDir,"flyway", "db").toString()
+            } ?: Paths.get("flyway", "db").toString()
+
+            val location = "filesystem:" + File(path).absolutePath
             return Flyway.configure()
                     .dataSource(postgresClient.dataSource)
                     .loadDefaultConfigurationFiles()
@@ -107,17 +117,26 @@ class FlywayManager(postgresClient: PostgresClient) {
     }
 
     init {
-        if (!File(Paths.get("flyway", "db").toString()).exists()) {
-            Files.createDirectories(Paths.get("flyway", "db"))
+        val path = parentDir?.let {
+            Paths.get(parentDir,"flyway", "db")
+        } ?: Paths.get("flyway", "db")
+
+        val migrationPath = parentDir?.let {
+            Paths.get(parentDir,"flyway", "migrations.tar.gz")
+        } ?: Paths.get("flyway", "migrations.tar.gz")
+
+        if (!File(path.toString()).exists()) {
+            Files.createDirectories(path)
         }
+
         val listing = s3Client.listObjects(BUCKET, "flyway-migration-definitions/migrations.tar.gz")
         for (obj in listing.objectSummaries) {
             if (obj.key != "flyway-migration-definitions/migrations.tar.gz") {
                 continue
             }
-            val sourceFile = File(Paths.get("flyway", "migrations.tar.gz").toString())
+            val sourceFile = File(migrationPath.toString())
             if (areFilesEqual(sourceFile, obj)) {
-                FileUtils.cleanDirectory(Paths.get("flyway", "db").toFile())
+                FileUtils.cleanDirectory(migrationPath.toFile())
             } else {
                 writeObjectToFile(obj, sourceFile)
             }
