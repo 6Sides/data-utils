@@ -8,11 +8,14 @@ import net.dashflight.data.mfa.DashflightMfaModule
 import net.dashflight.data.postgres.DashflightPostgresClientModule
 import net.dashflight.data.queue.DashflightRedisQueueModule
 import net.dashflight.data.redis.DashflightRedisClientModule
+import kotlin.reflect.KClass
 
 /**
  * Convenience class to obtain all dashflight related Guice modules
  */
-object DashflightModuleConfigurator {
+class DashflightModuleConfigurator(
+    f: (DashflightModuleConfigurator.() -> Unit)? = null
+) {
 
     private val baseModules = mutableSetOf(
             DashflightJwtUtilModule(),
@@ -23,14 +26,18 @@ object DashflightModuleConfigurator {
             DashflightRedisQueueModule()
     )
 
-    fun override(module: AbstractModule, with: AbstractModule) {
+    init {
+        f?.invoke(this)
+    }
+
+    fun override(module: KClass<out AbstractModule>, with: AbstractModule) {
         val itr = baseModules.iterator()
         var found = false
 
         while (itr.hasNext()) {
             val next = itr.next()
 
-            if (module::class == next::class) {
+            if (module == next::class) {
                 itr.remove()
                 found = true
                 break
