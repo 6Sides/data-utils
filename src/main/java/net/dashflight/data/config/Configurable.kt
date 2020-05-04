@@ -8,7 +8,6 @@ import java.util.*
  */
 interface Configurable {
 
-    @JvmDefault
     fun registerWith(applicationName: String?) {
         registerWith(
                 RegistrationOptions.builder()
@@ -20,7 +19,6 @@ interface Configurable {
         )
     }
 
-    @JvmDefault
     fun registerWith(options: RegistrationOptions) {
         require(!(options.applicationName == null || options.environment == null)) { "Application name and RuntimeEnvironment must both be non-null." }
         var hash = 0
