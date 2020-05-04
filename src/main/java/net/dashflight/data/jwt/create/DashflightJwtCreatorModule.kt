@@ -12,6 +12,5 @@ class DashflightJwtCreatorModule : AbstractModule() {
         install(DashflightCreateJwtRequestProviderModule())
 
         bind(JwtCreator::class.java)
-        bind(Random::class.java).to(SecureRandom::class.java)
     }
 }
