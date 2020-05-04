@@ -135,7 +135,7 @@ class FlywayManager(postgresClient: PostgresClient, private val parentDir: Strin
                 continue
             }
             val sourceFile = File(migrationPath.toString())
-            if (areFilesEqual(sourceFile, obj)) {
+            if (areFilesEqual(sourceFile, obj) && migrationPath.toFile().isDirectory) {
                 FileUtils.cleanDirectory(migrationPath.toFile())
             } else {
                 writeObjectToFile(obj, sourceFile)
