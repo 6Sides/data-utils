@@ -51,6 +51,11 @@ class DashflightModuleConfigurator(
 
     fun addModule(module: AbstractModule) = baseModules.add(module)
 
+    fun addModule(block: () -> AbstractModule) {
+        addModule(block.invoke())
+    }
+
+
     fun createInjector() = Guice.createInjector(baseModules)
 
 }
