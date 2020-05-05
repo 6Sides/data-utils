@@ -5,6 +5,12 @@ import com.google.inject.Singleton
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.jdbi.v3.core.Jdbi
+import org.jdbi.v3.core.kotlin.KotlinPlugin
+import org.jdbi.v3.guava.GuavaPlugin
+import org.jdbi.v3.jodatime2.JodaTimePlugin
+import org.jdbi.v3.postgres.PostgresPlugin
+import org.jdbi.v3.sqlobject.SqlObjectPlugin
+import org.jdbi.v3.sqlobject.kotlin.KotlinSqlObjectPlugin
 import java.net.URI
 import java.net.URISyntaxException
 import java.sql.Connection
@@ -60,8 +66,13 @@ class PostgresClient @Inject internal constructor(optionProvider: PostgresConnec
         Runtime.getRuntime().addShutdownHook(Thread(Runnable { connectionPool!!.close() }))
         jdbi = Jdbi.create(connectionPool)
 
-        // Installs all jdbi plugins found in classpath
-        jdbi.installPlugins()
+        // Install plugins
+        jdbi.installPlugin(PostgresPlugin())
+        jdbi.installPlugin(SqlObjectPlugin())
+        jdbi.installPlugin(KotlinSqlObjectPlugin())
+        jdbi.installPlugin(KotlinPlugin())
+        jdbi.installPlugin(JodaTimePlugin())
+        jdbi.installPlugin(GuavaPlugin())
     }
 
     @get:Throws(SQLException::class)
