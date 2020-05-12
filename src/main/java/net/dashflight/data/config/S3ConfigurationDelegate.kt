@@ -10,7 +10,6 @@ class S3ConfigurationDelegate(
 ) {
 
     private val data: ConfigurationData<Properties> = cache.computeIfAbsent(application) {
-        println("computing data")
         configFetcher.getConfig(application, runtimeEnvironment, null)
     }
 
