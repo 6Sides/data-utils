@@ -1,9 +1,7 @@
 package net.dashflight.data.random
 
-import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import java.io.IOException
-import java.net.URL
 import java.security.SecureRandom
 import java.security.SecureRandomSpi
 import java.util.concurrent.ArrayBlockingQueue
@@ -60,7 +58,7 @@ internal class LavaRandomSpi : SecureRandomSpi() {
         override fun run() {
             while (true) {
                 try {
-                    val res: Map<String, String> = mapper.readValue(URL(ENDPOINT), object : TypeReference<Map<String, String>>() {})
+                    val res: Map<String, String> = mapOf("value" to "10") /*mapper.readValue(URL(ENDPOINT), object : TypeReference<Map<String, String>>() {})*/
 
                     // Prevents bug in random service where it returns odd length hex string
                     var bytes = res.getOrDefault("value", "")
