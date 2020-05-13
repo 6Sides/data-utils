@@ -1,7 +1,7 @@
 package net.dashflight.data.postgres
 
-import net.dashflight.data.config.ConfigValue
 import net.dashflight.data.config.Configurable
+import net.dashflight.data.config.S3ConfigurationDelegate
 
 /**
  * Pulls the required postgres connection options from s3
@@ -12,29 +12,22 @@ class DashflightPostgresConnectionOptionProvider @JvmOverloads constructor(appli
         registerWith(applicationName ?: DEFAULT_APP_NAME)
     }
 
-    @ConfigValue("pg_host")
-    private val host: String? = null
+    private val host: String? by S3ConfigurationDelegate(DEFAULT_APP_NAME, "pg_host")
 
-    @ConfigValue("pg_port")
-    private val port = 0
+    private val port: Int by S3ConfigurationDelegate(DEFAULT_APP_NAME, "pg_port")
 
-    @ConfigValue("pg_dbname")
-    private val dbname: String? = null
+    private val dbname: String? by S3ConfigurationDelegate(DEFAULT_APP_NAME, "pg_dbname")
 
-    @ConfigValue("pg_username")
-    private val username: String? = null
+    private val username: String? by S3ConfigurationDelegate(DEFAULT_APP_NAME, "pg_username")
 
-    @ConfigValue("pg_password")
-    private val password: String? = null
+    private val password: String? by S3ConfigurationDelegate(DEFAULT_APP_NAME, "pg_password")
 
-    @ConfigValue("application_name")
-    private val applicationName = "Dashflight Java App"
+    private val applicationName: String? by S3ConfigurationDelegate(DEFAULT_APP_NAME, "application_name")
 
-    @ConfigValue("max_pool_size")
-    private val maxPoolSize = 0
+    private val maxPoolSize: Int by S3ConfigurationDelegate(DEFAULT_APP_NAME, "max_pool_size")
 
     override fun get(): PostgresConnectionOptions {
-        return PostgresConnectionOptions(host!!, port, dbname, username, password, applicationName, maxPoolSize)
+        return PostgresConnectionOptions(host!!, port, dbname, username, password, applicationName ?: "Dashflight Java App", maxPoolSize)
     }
 
     companion object {

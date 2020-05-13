@@ -19,9 +19,12 @@ internal class LavaRandomSpi : SecureRandomSpi() {
         private val producer: Runnable = LavaRandomGenerator()
 
         init {
+            // TODO: FIX
+            /*
             val t = Thread(producer)
             t.isDaemon = true
             t.start()
+             */
         }
     }
 

@@ -27,7 +27,7 @@ class PostgresClient @Inject internal constructor(optionProvider: PostgresConnec
 
     private var connectionPool: HikariDataSource? = null
 
-    lateinit var jdbi: Jdbi
+    private lateinit var jdbi: Jdbi
 
     private val options: PostgresConnectionOptions = optionProvider.get()
 
