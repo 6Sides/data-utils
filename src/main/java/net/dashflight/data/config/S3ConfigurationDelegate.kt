@@ -32,10 +32,6 @@ class S3ConfigurationDelegate(
         }
     }
 
-    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: String) {
-        error("Cannot set the value of a configuration value!")
-    }
-
     companion object {
         private val configFetcher = S3ConfigFetcher()
 
