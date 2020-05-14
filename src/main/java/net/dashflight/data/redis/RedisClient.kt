@@ -22,6 +22,7 @@ class RedisClient @Inject internal constructor(optionProvider: RedisConnectionOp
 
         val config = GenericObjectPoolConfig().apply {
             maxTotal = options.maxPoolSize
+            testOnBorrow = true
         }
 
         pool = JedisPool(
