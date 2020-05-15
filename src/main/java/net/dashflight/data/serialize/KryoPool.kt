@@ -22,16 +22,20 @@ object KryoPool {
             val kryo = Kryo()
             synchronized(registeredClasses) {
                 registeredClasses.forEach { (clazz: Class<*>, serializer: Serializer<*>?) ->
-                    LOG.debug { "Registering class ${clazz.simpleName} with id ${abs(clazz.hashCode()) + 12}" }
+                    LOG.debug { "Registering class ${clazz.simpleName} with id ${getClassId(clazz)}" }
                     if (serializer == null) {
-                        kryo.register(clazz, abs(clazz.hashCode()) + 12)
+                        kryo.register(clazz, getClassId(clazz))
                     } else {
-                        kryo.register(clazz, serializer, abs(clazz.hashCode()) + 12)
+                        kryo.register(clazz, serializer, getClassId(clazz))
                     }
                 }
             }
             return kryo
         }
+    }
+
+    private fun getClassId(clazz: Class<*>): Int {
+        return abs(clazz.name.hashCode()) + 12
     }
 
     /**
