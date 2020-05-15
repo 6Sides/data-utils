@@ -6,11 +6,11 @@ import com.esotericsoftware.kryo.io.Output
 import com.google.common.io.ByteStreams
 import com.google.inject.Inject
 import net.dashflight.data.config.RuntimeEnvironment
+import net.dashflight.data.logging.logger
 import net.dashflight.data.redis.RedisClient
 import net.dashflight.data.serialize.KryoPool
 import net.dashflight.data.serialize.UUIDSerializer
 import java.io.ByteArrayInputStream
-import java.io.IOException
 import java.time.OffsetDateTime
 import java.util.*
 import java.util.concurrent.Executors
@@ -26,13 +26,24 @@ import java.util.concurrent.Executors
  */
 abstract class CachedFetcher<K, V> @Inject protected constructor(protected val redis: RedisClient) {
 
-    val memoizer: Memoizer<K, CacheableResult<V?>>
+    companion object {
+        private val LOG by logger()
+
+        // Use cached thread pool since caching tasks are short lived
+        private val threadPool = Executors.newCachedThreadPool()
+        protected val kryoPool = KryoPool.pool
+        private val currentEnvironment: RuntimeEnvironment = RuntimeEnvironment.currentEnvironment
+
+        init {
+            KryoPool.registerClass(CacheableResult::class.java)
+            KryoPool.registerClass(OffsetDateTime::class.java)
+            KryoPool.registerClass(UUID::class.java, UUIDSerializer())
+        }
+    }
+
+    private val memoizer: Memoizer<K, CacheableResult<V?>> = Memoizer { this.calculateResult(it) }
 
     protected abstract fun calculateResult(key: K): CacheableResult<V?>
-
-    init {
-        memoizer = Memoizer { this.calculateResult(it) }
-    }
 
     /**
      * Fetches and returns the result based on the input
@@ -91,10 +102,10 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(protected val r
 
                 kryoPool.free(kryo)
                 result
-            } catch (e: Exception) {
+            } catch (ex: Exception) {
                 // Key is in invalid format, delete it.
                 redis.del(generateHash(input))
-                e.printStackTrace()
+                LOG.error { ex.message }
                 null
             }
         }
@@ -107,21 +118,23 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(protected val r
      * @param result The object to serialize and store.
      */
     protected fun cacheResult(key: K, result: CacheableResult<V>) {
+        LOG.debug { "Caching key $key -> $result" }
+
         threadPool.submit {
             val kryo = kryoPool.obtain()
 
             Output(1024, -1).use { output ->
-                kryo?.writeClassAndObject(output, result)
-                kryoPool.free(kryo)
-
                 try {
+                    kryo?.writeClassAndObject(output, result)
+                    kryoPool.free(kryo)
+
                     val resultBytes = Input(output.buffer, 0, output.position()).use { input ->
                         ByteStreams.toByteArray(input)
                     }
 
                     redis.setWithExpiry(generateHash(key), result.ttl, Base64.encode(resultBytes))
-                } catch (ex: IOException) {
-                    ex.printStackTrace()
+                } catch (ex: Exception) {
+                    LOG.warn { ex.message }
                 }
             }
         }
@@ -134,18 +147,5 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(protected val r
      */
     protected fun generateHash(key: K): String {
         return (currentEnvironment.name.hashCode() + javaClass.hashCode() + key.hashCode()).toString() + ""
-    }
-
-    companion object {
-        // Use cached thread pool since caching tasks are short lived
-        private val threadPool = Executors.newCachedThreadPool()
-        protected val kryoPool = KryoPool.pool
-        private val currentEnvironment: RuntimeEnvironment = RuntimeEnvironment.currentEnvironment
-
-        init {
-            KryoPool.registerClass(CacheableResult::class.java)
-            KryoPool.registerClass(OffsetDateTime::class.java)
-            KryoPool.registerClass(UUID::class.java, UUIDSerializer())
-        }
     }
 }
