@@ -3,6 +3,7 @@ package net.dashflight.data.config
 enum class RuntimeEnvironment(val description: String) {
 
     DEVELOPMENT("development"),
+    DOCKER("docker"),
     STAGING("staging"),
     PRODUCTION("production");
 
