@@ -3,6 +3,7 @@ package net.dashflight.data.serialize
 import com.esotericsoftware.kryo.Kryo
 import com.esotericsoftware.kryo.Serializer
 import com.esotericsoftware.kryo.util.Pool
+import net.dashflight.data.logging.logger
 import java.util.*
 import kotlin.math.abs
 
@@ -10,6 +11,8 @@ import kotlin.math.abs
  * Based on https://github.com/EsotericSoftware/kryo#pooling
  */
 object KryoPool {
+
+    private val LOG by logger()
 
     // Stores classes Kryo needs to register on creation
     private val registeredClasses: MutableMap<Class<*>, Serializer<*>?> = HashMap()
@@ -19,6 +22,7 @@ object KryoPool {
             val kryo = Kryo()
             synchronized(registeredClasses) {
                 registeredClasses.forEach { (clazz: Class<*>, serializer: Serializer<*>?) ->
+                    LOG.debug { "Registering class ${clazz.simpleName} with id ${abs(clazz.hashCode()) + 12}" }
                     if (serializer == null) {
                         kryo.register(clazz, abs(clazz.hashCode()) + 12)
                     } else {
