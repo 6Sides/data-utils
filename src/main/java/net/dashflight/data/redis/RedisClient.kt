@@ -2,6 +2,7 @@ package net.dashflight.data.redis
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
+import net.dashflight.data.caching.CacheStore
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig
 import redis.clients.jedis.JedisPool
 
@@ -10,7 +11,7 @@ import redis.clients.jedis.JedisPool
  * interface with database 0.
  */
 @Singleton
-class RedisClient @Inject internal constructor(optionProvider: RedisConnectionOptionProvider) {
+class RedisClient @Inject internal constructor(optionProvider: RedisConnectionOptionProvider): CacheStore {
 
     /**
      * Redis connection pool
@@ -38,14 +39,14 @@ class RedisClient @Inject internal constructor(optionProvider: RedisConnectionOp
     /**
      * Sets a key, value pair in the cache
      */
-    fun set(key: String, value: String): Boolean {
+    override fun set(key: String, value: String): Boolean {
         pool.resource.use { client -> return client.set(key, value) == "OK" }
     }
 
     /**
      * Sets a key, value pair in the cache with a specified expiry length (in seconds).
      */
-    fun setWithExpiry(key: String, seconds: Int, value: String): Boolean {
+    override fun setWithExpiry(key: String, seconds: Int, value: String): Boolean {
         pool.resource.use { client -> return client.setex(key, seconds, value) == "OK" }
     }
 
@@ -63,7 +64,7 @@ class RedisClient @Inject internal constructor(optionProvider: RedisConnectionOp
     /**
      * Query for a value with a key
      */
-    fun get(key: String): String? {
+    override fun get(key: String): String? {
         pool.resource.use { client -> return client[key] }
     }
 
@@ -71,7 +72,7 @@ class RedisClient @Inject internal constructor(optionProvider: RedisConnectionOp
      * Attempts to delete a key from the cache.
      * `this.client.del` returns number of keys removed.
      */
-    fun del(key: String): Boolean {
+    override fun del(key: String): Boolean {
         pool.resource.use { client -> return client.del(key) > 0 }
     }
 

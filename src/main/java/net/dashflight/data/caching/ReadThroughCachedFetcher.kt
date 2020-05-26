@@ -8,7 +8,7 @@ import net.dashflight.data.redis.RedisClient
  * Basic read-through cache implementation. Attempts to read a value from the
  * cache and if it's absent the result is recomputed and cached.
  */
-abstract class ReadThroughCachedFetcher<K, V> @Inject protected constructor(redisClient: RedisClient) : CachedFetcher<K, V?>(redisClient) {
+abstract class ReadThroughCachedFetcher<K, V> @Inject protected constructor(redisClient: CacheStore) : CachedFetcher<K, V?>(redisClient) {
 
     companion object {
         private val LOG by logger()

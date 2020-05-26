@@ -11,6 +11,7 @@ import net.dashflight.data.redis.RedisClient
 import net.dashflight.data.serialize.KryoPool
 import net.dashflight.data.serialize.UUIDSerializer
 import java.io.ByteArrayInputStream
+import java.nio.charset.Charset
 import java.time.OffsetDateTime
 import java.util.*
 import java.util.concurrent.Executors
@@ -24,7 +25,7 @@ import java.util.concurrent.Executors
  * @param <K> The data type required to make the query (The `key`)
  * @param <V> The result type (The `value`)
  */
-abstract class CachedFetcher<K, V> @Inject protected constructor(protected val redis: RedisClient) {
+abstract class CachedFetcher<K, V> @Inject protected constructor(protected val redis: CacheStore) {
 
     companion object {
         private val LOG by logger()
@@ -63,9 +64,9 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(protected val r
     /**
      * Returns the remaining ttl of the input,value pair associated with the specified object
      */
-    fun getKeyTTL(input: K): Long {
+    /*fun getKeyTTL(input: K): Long {
         return redis.getTTL(generateHash(input)) ?: 0
-    }
+    }*/
 
     /**
      * Fetches data based on the specified key.
@@ -91,7 +92,8 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(protected val r
      * @return A CacheableResult containing the computed result, or null if none is found.
      */
     protected fun getValueFromCache(input: K): CacheableResult<V?>? {
-        val blob = redis.get(generateHash(input))
+        val objectHash = generateHash(input)
+        val blob = redis.get(objectHash)
 
         // Key exists, attempt to deserialize and return it's associated value.
         return blob?.let {
@@ -104,7 +106,7 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(protected val r
                 result
             } catch (ex: Exception) {
                 // Key is in invalid format, delete it.
-                redis.del(generateHash(input))
+                redis.del(objectHash)
                 LOG.error { ex.message }
                 null
             }
@@ -132,7 +134,7 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(protected val r
                         ByteStreams.toByteArray(input)
                     }
 
-                    redis.setWithExpiry(generateHash(key), result.ttl, Base64.encode(resultBytes))
+                    redis.setWithExpiry(generateHash(key), result.ttl, Base64.encode(resultBytes).toString(Charset.defaultCharset()))
                 } catch (ex: Exception) {
                     LOG.warn { ex.message }
                 }
