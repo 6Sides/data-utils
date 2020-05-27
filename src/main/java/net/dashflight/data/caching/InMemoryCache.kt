@@ -1,19 +1,25 @@
 package net.dashflight.data.caching
 
+import net.dashflight.data.logging.logger
+
+
 class InMemoryCache: CacheStore {
 
-    private val cache = mutableMapOf<String, ByteArray>()
+    companion object {
+        private val LOG by logger()
+    }
 
+    private val cache = ConcurrentExpiryHashMap<String, ByteArray>()
 
     override fun set(key: String, value: ByteArray): Boolean {
-        println("Setting $key -> $value")
-        cache[key] = value
+        LOG.debug { "Caching $key -> $value" }
+        cache.put(key, value)
         return true
     }
 
-    override fun setWithExpiry(key: String, value: ByteArray, seconds: Int): Boolean {
-        set(key, value)
-        // TODO("Not yet implemented")
+    override fun setWithExpiry(key: String, value: ByteArray, seconds: Long): Boolean {
+        LOG.debug { "Caching $key -> $value (Expires in $seconds seconds)" }
+        cache.put(key, value, seconds)
         return true
     }
 
@@ -22,7 +28,7 @@ class InMemoryCache: CacheStore {
     }
 
     override fun del(key: String): Boolean {
-        cache -= key
+        cache.remove(key)
         return true
     }
 

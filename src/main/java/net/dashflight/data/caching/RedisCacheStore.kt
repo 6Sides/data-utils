@@ -10,8 +10,8 @@ class RedisCacheStore @Inject constructor(private val redis: RedisClient): Cache
         return redis.set(key, Base64.encode(value))
     }
 
-    override fun setWithExpiry(key: String, value: ByteArray, seconds: Int): Boolean {
-        return redis.setWithExpiry(key, seconds, Base64.encode(value))
+    override fun setWithExpiry(key: String, value: ByteArray, seconds: Long): Boolean {
+        return redis.setWithExpiry(key, seconds.toInt(), Base64.encode(value))
     }
 
     override fun get(key: String): ByteArray? {

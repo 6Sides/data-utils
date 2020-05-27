@@ -6,9 +6,12 @@ import java.time.OffsetDateTime
  * Used by clients to return fetched results.
  * Sets default values so serialization library has default constructor to work with.
  *
+ * TODO: Remove no arg constructor if/when kryo fixes this
+ * THE CLASS MUST HAVE A NO ARGS CONSTRUCTOR OR KRYO WONT BE ABLE TO DESERIALIZE!!!
+ *
  * @param <V> The type of the result being returned.
  */
-data class CacheableResult<V> constructor(val result: V, val ttl: Int = 0) {
+data class CacheableResult<V> constructor(val result: V? = null, val ttl: Int = 0) {
     /**
      * The result of the fetch
      */

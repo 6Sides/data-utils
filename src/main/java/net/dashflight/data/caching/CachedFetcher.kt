@@ -1,6 +1,5 @@
 package net.dashflight.data.caching
 
-import com.amazonaws.util.Base64
 import com.google.inject.Inject
 import net.dashflight.data.config.RuntimeEnvironment
 import net.dashflight.data.logging.logger
@@ -8,7 +7,6 @@ import net.dashflight.data.serialize.KryoPool
 import net.dashflight.data.serialize.KryoSerializer
 import net.dashflight.data.serialize.Serializer
 import net.dashflight.data.serialize.UUIDSerializer
-import java.nio.charset.Charset
 import java.time.OffsetDateTime
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -88,7 +86,7 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(private val cac
 
         // Key exists, attempt to deserialize and return it's associated value.
         return blob?.let {
-            return serializer.readObject(Base64.decode(blob)) as? CacheableResult<V>
+            return serializer.readObject(blob) as? CacheableResult<V>
         } ?: collisionCache[key]
     }
 
@@ -107,7 +105,7 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(private val cac
         if (res == null) {
             threadPool.submit {
                 val resultBytes = serializer.writeObject(result)
-                cache.setWithExpiry(generateHash(key), Base64.encode(resultBytes), result.ttl)
+                cache.setWithExpiry(generateHash(key), resultBytes, result.ttl.toLong())
                 collisionCache -= key
             }
         }

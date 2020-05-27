@@ -19,16 +19,14 @@ abstract class RefreshAheadCachedFetcher<K, V> @Inject protected constructor(pri
     }
 
     override fun fetchResult(input: K): CacheableResult<V> {
-        var needsRefresh = false
-
-        needsRefresh = !redisClient.exists(generateHash(input) + "rac")
+        val needsRefresh: Boolean = !redisClient.exists(generateHash(input) + "rac")
 
         if (needsRefresh) {
             // Refetch result and cache it asynchronously
             threadPool.submit {
                 val result = calculateResult(input)
                 cacheResult(input, result)
-                redisClient.setWithExpiry(generateHash(input) + "rac", byteArrayOf(), (result.ttl * REFRESH_AHEAD_FACTOR).toInt())
+                redisClient.setWithExpiry(generateHash(input) + "rac", byteArrayOf(), (result.ttl * REFRESH_AHEAD_FACTOR).toLong())
             }
         }
 

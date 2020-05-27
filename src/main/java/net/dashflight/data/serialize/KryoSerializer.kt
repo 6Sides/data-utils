@@ -23,8 +23,7 @@ class KryoSerializer: Serializer {
     override fun readObject(data: ByteArray): Any? {
         return try {
             val kryo = kryoPool.obtain()
-            val bytes = Base64.decode(data)
-            val result = kryo?.readClassAndObject(Input(ByteArrayInputStream(bytes)))
+            val result = kryo?.readClassAndObject(Input(ByteArrayInputStream(data)))
 
             kryoPool.free(kryo)
             result
@@ -34,22 +33,16 @@ class KryoSerializer: Serializer {
         }
     }
 
-    override fun writeObject(data: Any?): ByteArray? {
+    override fun writeObject(data: Any?): ByteArray {
         val kryo = kryoPool.obtain()
 
         Output(1024, -1).use { output ->
-            try {
-                kryo?.writeClassAndObject(output, data)
-                kryoPool.free(kryo)
+            kryo?.writeClassAndObject(output, data)
+            kryoPool.free(kryo)
 
-                return Input(output.buffer, 0, output.position()).use { input ->
-                    ByteStreams.toByteArray(input)
-                }
-            } catch (ex: Exception) {
-                LOG.warn { ex.message }
+            return Input(output.buffer, 0, output.position()).use { input ->
+                ByteStreams.toByteArray(input)
             }
         }
-
-        return null
     }
 }
