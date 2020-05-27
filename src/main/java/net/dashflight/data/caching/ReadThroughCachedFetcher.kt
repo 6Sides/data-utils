@@ -10,9 +10,9 @@ import net.dashflight.data.serialize.Serializer
  * cache and if it's absent the result is recomputed and cached.
  */
 abstract class ReadThroughCachedFetcher<K, V> @Inject protected constructor(
-        redisClient: CacheStore,
-        serializer: Serializer
-) : CachedFetcher<K, V>(redisClient, serializer) {
+    cache: CacheStore,
+    serializer: Serializer
+) : CachedFetcher<K, V>(cache, serializer) {
 
     companion object {
         private val LOG by logger()

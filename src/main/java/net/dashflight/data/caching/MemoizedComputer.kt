@@ -12,11 +12,10 @@ import java.util.concurrent.*
  * If computation is not running, begin and wrap result in a Future for other callers.
  * If computation is running, caller will wait for computation to finish and collect result.
  */
-class Memoizer<K, V>(private val computeFunction: (key: K) -> V?) {
+class MemoizedComputer<K, V>(private val computeFunction: (key: K) -> V) {
 
     private val cache: ConcurrentMap<K, Deferred<V?>> = ConcurrentHashMap()
 
-    @Throws(InterruptedException::class)
     fun compute(key: K): V? {
         var startedComputation = false
         var future = cache[key]

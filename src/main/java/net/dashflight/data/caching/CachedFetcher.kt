@@ -3,7 +3,6 @@ package net.dashflight.data.caching
 import com.google.inject.Inject
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import net.dashflight.data.config.RuntimeEnvironment
 import net.dashflight.data.logging.logger
 import net.dashflight.data.serialize.Serializer
 import java.util.concurrent.ConcurrentHashMap
@@ -19,18 +18,16 @@ import java.util.concurrent.ConcurrentMap
  * @param <V> The result type (The `value`)
  */
 abstract class CachedFetcher<K, V> @Inject protected constructor(
-        private val cache: CacheStore,
-        private val serializer: Serializer
+    private val cache: CacheStore,
+    private val serializer: Serializer
 ) {
 
     companion object {
         private val LOG by logger()
-
-        private val currentEnvironment: RuntimeEnvironment = RuntimeEnvironment.currentEnvironment
     }
 
     private val collisionCache: ConcurrentMap<K, CacheableResult<V>> = ConcurrentHashMap()
-    private val memoizer: Memoizer<K, CacheableResult<V>> = Memoizer { this.calculateResult(it) }
+    private val memo: MemoizedComputer<K, CacheableResult<V>> = MemoizedComputer { this.calculateResult(it) }
 
     protected abstract fun calculateResult(key: K): CacheableResult<V>
 
@@ -69,7 +66,7 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(
      * @return A CacheableResult containing the computed result, or null if none is found.
      */
     protected fun getValueFromCache(key: K): CacheableResult<V>? {
-        val objectHash = generateHash(key)
+        val objectHash = generateHash(key).toString()
         val blob = cache.get(objectHash)
 
         // Key exists, attempt to deserialize and return it's associated value.
@@ -93,7 +90,7 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(
         if (res == null) {
             GlobalScope.launch {
                 val resultBytes = serializer.writeObject(result)
-                cache.setWithExpiry(generateHash(key), resultBytes, result.ttl.toLong())
+                cache.setWithExpiry(generateHash(key).toString(), resultBytes, result.ttl.toLong())
                 collisionCache -= key
             }
         }
@@ -102,9 +99,10 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(
     /**
      * Generates the key to be used in the key,value pair inserted in the cache.
      * @param key The key to hash.
-     * @return A hash of the key mixed with any other desired data (e.g. environment)
+     *
+     * @return A unique hash of the key
      */
-    protected open fun generateHash(key: K): String {
-        return (currentEnvironment.name.hashCode() + javaClass.hashCode() + key.hashCode()).toString() + ""
+    protected open fun generateHash(key: K): Int {
+        return key.hashCode()
     }
 }

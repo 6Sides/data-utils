@@ -17,14 +17,6 @@ data class CacheableResult<V> constructor(
         val ttl: Int = 0,
         val lastUpdated: LocalDateTime = LocalDateTime.now()
 ) {
-    /**
-     * The result of the fetch
-     */
-
-    /**
-     * The last time the result was calculated.
-     */
-
 
     companion object {
         private const val defaultCacheTtl = 900
