@@ -1,13 +1,13 @@
 package net.dashflight.data.caching
 
 import com.google.inject.Inject
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import net.dashflight.data.config.RuntimeEnvironment
 import net.dashflight.data.logging.logger
-import net.dashflight.data.serialize.KryoSerializer
 import net.dashflight.data.serialize.Serializer
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
-import java.util.concurrent.Executors
 
 /**
  * Handles caching of results. Should be used for computationally expensive queries.
@@ -18,20 +18,18 @@ import java.util.concurrent.Executors
  * @param <K> The data type required to make the query (The `key`)
  * @param <V> The result type (The `value`)
  */
-abstract class CachedFetcher<K, V> @Inject protected constructor(private val cache: CacheStore) {
+abstract class CachedFetcher<K, V> @Inject protected constructor(
+        private val cache: CacheStore,
+        private val serializer: Serializer
+) {
 
     companion object {
         private val LOG by logger()
 
-        // Use cached thread pool since caching tasks are short lived
-        private val threadPool = Executors.newCachedThreadPool()
         private val currentEnvironment: RuntimeEnvironment = RuntimeEnvironment.currentEnvironment
     }
 
-    private val serializer: Serializer = KryoSerializer()
-
     private val collisionCache: ConcurrentMap<K, CacheableResult<V>> = ConcurrentHashMap()
-
     private val memoizer: Memoizer<K, CacheableResult<V>> = Memoizer { this.calculateResult(it) }
 
     protected abstract fun calculateResult(key: K): CacheableResult<V>
@@ -39,7 +37,7 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(private val cac
     /**
      * Fetches and returns the result based on the input
      */
-    protected abstract fun fetchResult(input: K): CacheableResult<V>
+    protected abstract fun fetchResult(input: K): CacheableResult<V>?
 
     /**
      * Invalidates the result associated with the specified object
@@ -87,13 +85,13 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(private val cac
      * @param result The object to serialize and store.
      */
     protected fun cacheResult(key: K, result: CacheableResult<V>) {
-        LOG.debug { "Caching key $key -> $result" }
+        LOG.debug { "Caching $key -> ${result.result} (Expires in ${result.ttl} seconds)" }
 
         val res = collisionCache.putIfAbsent(key, result)
 
         // If cache doesn't contain value begin process of caching it
         if (res == null) {
-            threadPool.submit {
+            GlobalScope.launch {
                 val resultBytes = serializer.writeObject(result)
                 cache.setWithExpiry(generateHash(key), resultBytes, result.ttl.toLong())
                 collisionCache -= key

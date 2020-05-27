@@ -1,6 +1,8 @@
 package net.dashflight.data.caching
 
-
+/**
+ * Represents a local or remote cache location
+ */
 interface CacheStore {
 
     fun set(key: String, value: ByteArray): Boolean

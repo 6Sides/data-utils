@@ -2,14 +2,17 @@ package net.dashflight.data.caching
 
 import com.google.inject.Inject
 import net.dashflight.data.logging.logger
-import net.dashflight.data.redis.RedisClient
-import redis.clients.jedis.JedisPool
 import java.util.concurrent.Executors
+import net.dashflight.data.serialize.Serializer
+
 
 /**
  * Implementation of the refresh-ahead caching strategy.
  */
-abstract class RefreshAheadCachedFetcher<K, V> @Inject protected constructor(private val redisClient: CacheStore): CachedFetcher<K, V>(redisClient) {
+abstract class RefreshAheadCachedFetcher<K, V> @Inject protected constructor(
+        private val redisClient: CacheStore,
+        serializer: Serializer
+): CachedFetcher<K, V>(redisClient, serializer) {
 
     companion object {
         private val LOG by logger()
@@ -18,7 +21,7 @@ abstract class RefreshAheadCachedFetcher<K, V> @Inject protected constructor(pri
         private val threadPool = Executors.newCachedThreadPool()
     }
 
-    override fun fetchResult(input: K): CacheableResult<V> {
+    override fun fetchResult(input: K): CacheableResult<V>? {
         val needsRefresh: Boolean = !redisClient.exists(generateHash(input) + "rac")
 
         if (needsRefresh) {
