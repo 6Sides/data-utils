@@ -7,6 +7,7 @@ import com.google.common.io.ByteStreams
 import net.dashflight.data.caching.CacheableResult
 import net.dashflight.data.logging.logger
 import java.io.ByteArrayInputStream
+import java.time.LocalDateTime
 
 class KryoSerializer: Serializer {
 
@@ -17,6 +18,7 @@ class KryoSerializer: Serializer {
 
         init {
             KryoPool.registerClass(CacheableResult::class.java)
+            KryoPool.registerClass(LocalDateTime::class.java)
         }
     }
 

@@ -3,12 +3,8 @@ package net.dashflight.data.caching
 import com.google.inject.Inject
 import net.dashflight.data.config.RuntimeEnvironment
 import net.dashflight.data.logging.logger
-import net.dashflight.data.serialize.KryoPool
 import net.dashflight.data.serialize.KryoSerializer
 import net.dashflight.data.serialize.Serializer
-import net.dashflight.data.serialize.UUIDSerializer
-import java.time.OffsetDateTime
-import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 import java.util.concurrent.Executors
@@ -30,12 +26,6 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(private val cac
         // Use cached thread pool since caching tasks are short lived
         private val threadPool = Executors.newCachedThreadPool()
         private val currentEnvironment: RuntimeEnvironment = RuntimeEnvironment.currentEnvironment
-
-        init {
-            KryoPool.registerClass(CacheableResult::class.java)
-            KryoPool.registerClass(OffsetDateTime::class.java)
-            KryoPool.registerClass(UUID::class.java, UUIDSerializer())
-        }
     }
 
     private val serializer: Serializer = KryoSerializer()

@@ -1,6 +1,7 @@
 package net.dashflight.data.caching
 
-import java.time.OffsetDateTime
+import java.time.LocalDateTime
+
 
 /**
  * Used by clients to return fetched results.
@@ -11,7 +12,11 @@ import java.time.OffsetDateTime
  *
  * @param <V> The type of the result being returned.
  */
-data class CacheableResult<V> constructor(val result: V? = null, val ttl: Int = 0) {
+data class CacheableResult<V> constructor(
+        val result: V? = null,
+        val ttl: Int = 0,
+        val lastUpdated: LocalDateTime = LocalDateTime.now()
+) {
     /**
      * The result of the fetch
      */
@@ -19,8 +24,6 @@ data class CacheableResult<V> constructor(val result: V? = null, val ttl: Int = 
     /**
      * The last time the result was calculated.
      */
-
-    val lastUpdated = OffsetDateTime.now()
 
 
     companion object {
