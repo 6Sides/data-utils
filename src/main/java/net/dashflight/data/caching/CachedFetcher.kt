@@ -24,7 +24,7 @@ import java.util.concurrent.Executors
  * @param <K> The data type required to make the query (The `key`)
  * @param <V> The result type (The `value`)
  */
-abstract class CachedFetcher<K, V> @Inject protected constructor(protected val cache: CacheStore) {
+abstract class CachedFetcher<K, V> @Inject protected constructor(private val cache: CacheStore) {
 
     companion object {
         private val LOG by logger()
@@ -50,10 +50,7 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(protected val c
 
     /**
      * Fetches and returns the result based on the input
-     *
-     * @throws DataFetchException If a result is unable to be obtained
      */
-    @Throws(DataFetchException::class)
     protected abstract fun fetchResult(input: K): CacheableResult<V>
 
     /**
@@ -75,17 +72,9 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(protected val c
      *
      * @param key The data being used to make the query
      * @return The value associated with the specified key (can be null)
-     *
-     * @throws DataFetchException when a result couldn't be obtained
      */
-    @Throws(DataFetchException::class)
-    operator fun get(key: K): CacheableResult<V> {
-        return try {
-            fetchResult(key)
-        } catch (ex: InterruptedException) {
-            ex.printStackTrace()
-            throw DataFetchException(ex.message!!)
-        }
+    operator fun get(key: K): CacheableResult<V>? {
+        return fetchResult(key)
     }
 
     /**

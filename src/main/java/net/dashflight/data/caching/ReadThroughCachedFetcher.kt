@@ -14,7 +14,6 @@ abstract class ReadThroughCachedFetcher<K, V> @Inject protected constructor(redi
         private val LOG by logger()
     }
 
-    @Throws(DataFetchException::class)
     override fun fetchResult(input: K): CacheableResult<V> {
         var result = super.getValueFromCache(input)
 
