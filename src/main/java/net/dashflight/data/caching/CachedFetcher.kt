@@ -60,9 +60,9 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(protected val r
     /**
      * Invalidates the result associated with the specified object
      */
-    fun invalidate(key: K) {
+    /*fun invalidate(key: K) {
         redis.del(generateHash(key))
-    }
+    }*/
 
     /**
      * Returns the remaining ttl of the input,value pair associated with the specified object
@@ -127,6 +127,7 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(protected val r
 
         val res = cache.putIfAbsent(key, result)
 
+        // If cache doesn't contain value begin process of caching it
         if (res == null) {
             threadPool.submit {
                 val kryo = kryoPool.obtain()

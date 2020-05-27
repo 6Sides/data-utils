@@ -1,0 +1,55 @@
+package net.dashflight.data.serialize
+
+import com.amazonaws.util.Base64
+import com.esotericsoftware.kryo.io.Input
+import com.esotericsoftware.kryo.io.Output
+import com.google.common.io.ByteStreams
+import net.dashflight.data.caching.CacheableResult
+import net.dashflight.data.logging.logger
+import java.io.ByteArrayInputStream
+
+class KryoSerializer: Serializer {
+
+    companion object {
+        private val LOG by logger()
+
+        private val kryoPool = KryoPool.pool
+
+        init {
+            KryoPool.registerClass(CacheableResult::class.java)
+        }
+    }
+
+    override fun readObject(data: ByteArray): Any? {
+        return try {
+            val kryo = kryoPool.obtain()
+            val bytes = Base64.decode(data)
+            val result = kryo?.readClassAndObject(Input(ByteArrayInputStream(bytes)))
+
+            kryoPool.free(kryo)
+            result
+        } catch (ex: Exception) {
+            LOG.error { ex.message }
+            null
+        }
+    }
+
+    override fun writeObject(data: Any?): ByteArray? {
+        val kryo = kryoPool.obtain()
+
+        Output(1024, -1).use { output ->
+            try {
+                kryo?.writeClassAndObject(output, data)
+                kryoPool.free(kryo)
+
+                return Input(output.buffer, 0, output.position()).use { input ->
+                    ByteStreams.toByteArray(input)
+                }
+            } catch (ex: Exception) {
+                LOG.warn { ex.message }
+            }
+        }
+
+        return null
+    }
+}
