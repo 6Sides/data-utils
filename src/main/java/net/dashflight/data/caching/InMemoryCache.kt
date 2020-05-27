@@ -21,7 +21,7 @@ class InMemoryCache: CacheStore {
     }
 
     override fun del(key: String): Boolean {
-        cache.remove(key)
+        cache -= key
         return true
     }
 }

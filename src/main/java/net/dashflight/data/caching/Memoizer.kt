@@ -1,5 +1,9 @@
 package net.dashflight.data.caching
 
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import java.util.concurrent.*
 
 /**
@@ -10,43 +14,36 @@ import java.util.concurrent.*
  */
 class Memoizer<K, V>(private val computeFunction: (key: K) -> V?) {
 
-    private val cache: ConcurrentMap<K, Future<V?>> = ConcurrentHashMap()
+    private val cache: ConcurrentMap<K, Deferred<V?>> = ConcurrentHashMap()
 
     @Throws(InterruptedException::class)
     fun compute(key: K): V? {
-        while (true) {
-            var startedComputation = false
-            var future = cache[key]
+        var startedComputation = false
+        var future = cache[key]
 
-            // Computation not started
-            if (future == null) {
-                val eval = Callable { computeFunction(key) }
-                val futureTask = FutureTask(eval)
-                future = cache.putIfAbsent(key, futureTask)
-
-                // Start computation if it's not started in the meantime
-                if (future == null) {
-                    future = futureTask
-                    futureTask.run()
-                    startedComputation = true
-                }
+        // If computation not started
+        if (future == null) {
+            val futureTask = GlobalScope.async {
+                computeFunction(key)
             }
 
-            // Get result if ready, otherwise block and wait
-            try {
-                val result = future.get()
+            future = cache.putIfAbsent(key, futureTask)
 
-                // Remove future from map to prevent caching value forever
+            // Start computation if it hasn't been started in the meantime
+            if (future == null) {
+                future = futureTask
+                startedComputation = true
+            }
+        }
+
+        // Get result if ready, otherwise block and wait
+        return runBlocking {
+            future.await().also {
+                // If this coroutine started the computation
+                // remove it from the cache upon completion
                 if (startedComputation) {
-                    cache.remove(key)
+                    cache -= key
                 }
-
-                return result
-            } catch (e: CancellationException) {
-                cache.remove(key, future)
-            } catch (e: ExecutionException) {
-                e.printStackTrace()
-                throw RuntimeException(e.cause)
             }
         }
     }
