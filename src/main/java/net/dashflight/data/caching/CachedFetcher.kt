@@ -7,13 +7,14 @@ import com.google.common.io.ByteStreams
 import com.google.inject.Inject
 import net.dashflight.data.config.RuntimeEnvironment
 import net.dashflight.data.logging.logger
-import net.dashflight.data.redis.RedisClient
 import net.dashflight.data.serialize.KryoPool
 import net.dashflight.data.serialize.UUIDSerializer
 import java.io.ByteArrayInputStream
 import java.nio.charset.Charset
 import java.time.OffsetDateTime
 import java.util.*
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentMap
 import java.util.concurrent.Executors
 
 /**
@@ -42,6 +43,8 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(protected val r
         }
     }
 
+    private val cache: ConcurrentMap<K, CacheableResult<V>> = ConcurrentHashMap()
+
     private val memoizer: Memoizer<K, CacheableResult<V?>> = Memoizer { this.calculateResult(it) }
 
     protected abstract fun calculateResult(key: K): CacheableResult<V?>
@@ -57,8 +60,8 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(protected val r
     /**
      * Invalidates the result associated with the specified object
      */
-    fun invalidate(input: K) {
-        redis.del(generateHash(input))
+    fun invalidate(key: K) {
+        redis.del(generateHash(key))
     }
 
     /**
@@ -71,15 +74,15 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(protected val r
     /**
      * Fetches data based on the specified key.
      *
-     * @param input The data being used to make the query
+     * @param key The data being used to make the query
      * @return The value associated with the specified key (can be null)
      *
      * @throws DataFetchException when a result couldn't be obtained
      */
     @Throws(DataFetchException::class)
-    operator fun get(input: K): CacheableResult<V?> {
+    operator fun get(key: K): CacheableResult<V?> {
         return try {
-            fetchResult(input)
+            fetchResult(key)
         } catch (ex: InterruptedException) {
             ex.printStackTrace()
             throw DataFetchException(ex.message!!)
@@ -91,8 +94,8 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(protected val r
      *
      * @return A CacheableResult containing the computed result, or null if none is found.
      */
-    protected fun getValueFromCache(input: K): CacheableResult<V?>? {
-        val objectHash = generateHash(input)
+    protected fun getValueFromCache(key: K): CacheableResult<V>? {
+        val objectHash = generateHash(key)
         val blob = redis.get(objectHash)
 
         // Key exists, attempt to deserialize and return it's associated value.
@@ -100,7 +103,7 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(protected val r
             return try {
                 val kryo = kryoPool.obtain()
                 val bytes = Base64.decode(blob.toByteArray())
-                val result = kryo?.readClassAndObject(Input(ByteArrayInputStream(bytes))) as? CacheableResult<V?>
+                val result = kryo?.readClassAndObject(Input(ByteArrayInputStream(bytes))) as? CacheableResult<V>
 
                 kryoPool.free(kryo)
                 result
@@ -110,7 +113,7 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(protected val r
                 LOG.error { ex.message }
                 null
             }
-        }
+        } ?: cache[key]
     }
 
     /**
@@ -122,22 +125,28 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(protected val r
     protected fun cacheResult(key: K, result: CacheableResult<V>) {
         LOG.debug { "Caching key $key -> $result" }
 
-        threadPool.submit {
-            val kryo = kryoPool.obtain()
+        val res = cache.putIfAbsent(key, result)
 
-            Output(1024, -1).use { output ->
-                try {
-                    kryo?.writeClassAndObject(output, result)
-                    kryoPool.free(kryo)
+        if (res == null) {
+            threadPool.submit {
+                val kryo = kryoPool.obtain()
 
-                    val resultBytes = Input(output.buffer, 0, output.position()).use { input ->
-                        ByteStreams.toByteArray(input)
+                Output(1024, -1).use { output ->
+                    try {
+                        kryo?.writeClassAndObject(output, result)
+                        kryoPool.free(kryo)
+
+                        val resultBytes = Input(output.buffer, 0, output.position()).use { input ->
+                            ByteStreams.toByteArray(input)
+                        }
+
+                        redis.setWithExpiry(generateHash(key), result.ttl, Base64.encode(resultBytes).toString(Charset.defaultCharset()))
+                    } catch (ex: Exception) {
+                        LOG.warn { ex.message }
                     }
-
-                    redis.setWithExpiry(generateHash(key), result.ttl, Base64.encode(resultBytes).toString(Charset.defaultCharset()))
-                } catch (ex: Exception) {
-                    LOG.warn { ex.message }
                 }
+
+                cache -= key
             }
         }
     }
@@ -147,7 +156,7 @@ abstract class CachedFetcher<K, V> @Inject protected constructor(protected val r
      * @param key The key to hash.
      * @return A hash of the key mixed with any other desired data (e.g. environment)
      */
-    protected fun generateHash(key: K): String {
+    protected open fun generateHash(key: K): String {
         return (currentEnvironment.name.hashCode() + javaClass.hashCode() + key.hashCode()).toString() + ""
     }
 }

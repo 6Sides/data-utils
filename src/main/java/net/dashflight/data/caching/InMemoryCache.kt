@@ -13,7 +13,8 @@ class InMemoryCache: CacheStore {
 
     override fun setWithExpiry(key: String, seconds: Int, value: String): Boolean {
         set(key, value)
-        TODO("Not yet implemented")
+        // TODO("Not yet implemented")
+        return true
     }
 
     override fun get(key: String): String? {
