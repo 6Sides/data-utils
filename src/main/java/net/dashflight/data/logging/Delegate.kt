@@ -4,7 +4,6 @@ import mu.KLogger
 import mu.KotlinLogging
 import kotlin.reflect.KClass
 import kotlin.reflect.full.companionObject
-import kotlin.reflect.jvm.jvmName
 
 
 // Obtain a logger for the given class

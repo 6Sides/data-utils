@@ -19,14 +19,18 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47e27f0e-1967-4be3-87d2-25e1f94092c4" name="Default Changelist" comment="Added logging to kryo">
+    <list default="true" id="47e27f0e-1967-4be3-87d2-25e1f94092c4" name="Default Changelist" comment="More code cleanup">
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/serialize/KryoPool.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/serialize/KryoPool.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/CacheableResult.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/CacheableResult.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/CachedFetcher.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/CachedFetcher.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/Memoizer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/MemoizedComputer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/ReadThroughCachedFetcher.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/ReadThroughCachedFetcher.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/RefreshAheadCachedFetcher.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/caching/RefreshAheadCachedFetcher.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,8 +84,9 @@
         <option value="Interface" />
         <option value="JUnit4 Test Class" />
         <option value="Class" />
-        <option value="Kotlin Class" />
+        <option value="Kotlin Interface" />
         <option value="Kotlin File" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -150,7 +155,7 @@
       <recent name="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.DataUtils [test]">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application">
       <envs>
         <env name="environment" value="development" />
@@ -331,77 +336,16 @@
       <workItem from="1589554359818" duration="26000" />
       <workItem from="1589554651501" duration="37000" />
       <workItem from="1589554732024" duration="65000" />
-      <workItem from="1589554823534" duration="8287000" />
-    </task>
-    <task id="LOCAL-00093" summary="Refactored mfa package">
-      <created>1585071880086</created>
-      <option name="number" value="00093" />
-      <option name="presentableId" value="LOCAL-00093" />
-      <option name="project" value="LOCAL" />
-      <updated>1585071880086</updated>
-    </task>
-    <task id="LOCAL-00094" summary="Refactored mfa package and added tests">
-      <created>1585073421279</created>
-      <option name="number" value="00094" />
-      <option name="presentableId" value="LOCAL-00094" />
-      <option name="project" value="LOCAL" />
-      <updated>1585073421279</updated>
-    </task>
-    <task id="LOCAL-00095" summary="Added Guice module for dashflight mfa">
-      <created>1585073773697</created>
-      <option name="number" value="00095" />
-      <option name="presentableId" value="LOCAL-00095" />
-      <option name="project" value="LOCAL" />
-      <updated>1585073773697</updated>
-    </task>
-    <task id="LOCAL-00096" summary="Refactored jwt package">
-      <created>1585077309255</created>
-      <option name="number" value="00096" />
-      <option name="presentableId" value="LOCAL-00096" />
-      <option name="project" value="LOCAL" />
-      <updated>1585077309255</updated>
-    </task>
-    <task id="LOCAL-00097" summary="Refactored create/verify jwt to guice modules">
-      <created>1585081650252</created>
-      <option name="number" value="00097" />
-      <option name="presentableId" value="LOCAL-00097" />
-      <option name="project" value="LOCAL" />
-      <updated>1585081650252</updated>
-    </task>
-    <task id="LOCAL-00098" summary="Further refactored jwt/key packages to guice modules">
-      <created>1585084183283</created>
-      <option name="number" value="00098" />
-      <option name="presentableId" value="LOCAL-00098" />
-      <option name="project" value="LOCAL" />
-      <updated>1585084183283</updated>
-    </task>
-    <task id="LOCAL-00099" summary="Refactored mfa package / updated guice module">
-      <created>1585084728700</created>
-      <option name="number" value="00099" />
-      <option name="presentableId" value="LOCAL-00099" />
-      <option name="project" value="LOCAL" />
-      <updated>1585084728700</updated>
-    </task>
-    <task id="LOCAL-00100" summary="Refactored PasswordService and added guice module">
-      <created>1585085243322</created>
-      <option name="number" value="00100" />
-      <option name="presentableId" value="LOCAL-00100" />
-      <option name="project" value="LOCAL" />
-      <updated>1585085243322</updated>
-    </task>
-    <task id="LOCAL-00101" summary="Renamed VerifyJwtRequest.java">
-      <created>1585092657608</created>
-      <option name="number" value="00101" />
-      <option name="presentableId" value="LOCAL-00101" />
-      <option name="project" value="LOCAL" />
-      <updated>1585092657608</updated>
-    </task>
-    <task id="LOCAL-00102" summary="Removed unnecessary interfaces">
-      <created>1585141910327</created>
-      <option name="number" value="00102" />
-      <option name="presentableId" value="LOCAL-00102" />
-      <option name="project" value="LOCAL" />
-      <updated>1585141910327</updated>
+      <workItem from="1589554823534" duration="9376000" />
+      <workItem from="1589753306423" duration="263000" />
+      <workItem from="1589806955174" duration="406000" />
+      <workItem from="1590066611341" duration="598000" />
+      <workItem from="1590083728064" duration="598000" />
+      <workItem from="1590108991632" duration="526000" />
+      <workItem from="1590269080928" duration="726000" />
+      <workItem from="1590329463457" duration="5729000" />
+      <workItem from="1590522089497" duration="49000" />
+      <workItem from="1590522156907" duration="19881000" />
     </task>
     <task id="LOCAL-00103" summary="refactored jwt guice modules">
       <created>1585142486226</created>
@@ -676,7 +620,77 @@
       <option name="project" value="LOCAL" />
       <updated>1589566944104</updated>
     </task>
-    <option name="localTasksCounter" value="142" />
+    <task id="LOCAL-00142" summary="Modified kryo id calculation">
+      <created>1589567743371</created>
+      <option name="number" value="00142" />
+      <option name="presentableId" value="LOCAL-00142" />
+      <option name="project" value="LOCAL" />
+      <updated>1589567743371</updated>
+    </task>
+    <task id="LOCAL-00143" summary="Lifted interface from CachedFetcher.kt">
+      <created>1590525331749</created>
+      <option name="number" value="00143" />
+      <option name="presentableId" value="LOCAL-00143" />
+      <option name="project" value="LOCAL" />
+      <updated>1590525331750</updated>
+    </task>
+    <task id="LOCAL-00144" summary="Refactored Memoizer.kt">
+      <created>1590586059060</created>
+      <option name="number" value="00144" />
+      <option name="presentableId" value="LOCAL-00144" />
+      <option name="project" value="LOCAL" />
+      <updated>1590586059060</updated>
+    </task>
+    <task id="LOCAL-00145" summary="Fixed concurrency bug in CachedFetcher.kt">
+      <created>1590587278378</created>
+      <option name="number" value="00145" />
+      <option name="presentableId" value="LOCAL-00145" />
+      <option name="project" value="LOCAL" />
+      <updated>1590587278378</updated>
+    </task>
+    <task id="LOCAL-00146" summary="Added Serialization iface and kryo impl">
+      <created>1590588092671</created>
+      <option name="number" value="00146" />
+      <option name="presentableId" value="LOCAL-00146" />
+      <option name="project" value="LOCAL" />
+      <updated>1590588092672</updated>
+    </task>
+    <task id="LOCAL-00147" summary="CacheableResult now doesnt default to nullable result types">
+      <created>1590590204980</created>
+      <option name="number" value="00147" />
+      <option name="presentableId" value="LOCAL-00147" />
+      <option name="project" value="LOCAL" />
+      <updated>1590590204980</updated>
+    </task>
+    <task id="LOCAL-00148" summary="replaced cache exceptions with nullable types">
+      <created>1590590402797</created>
+      <option name="number" value="00148" />
+      <option name="presentableId" value="LOCAL-00148" />
+      <option name="project" value="LOCAL" />
+      <updated>1590590402797</updated>
+    </task>
+    <task id="LOCAL-00149" summary="Refactored serializers to not use Base64">
+      <created>1590593007013</created>
+      <option name="number" value="00149" />
+      <option name="presentableId" value="LOCAL-00149" />
+      <option name="project" value="LOCAL" />
+      <updated>1590593007013</updated>
+    </task>
+    <task id="LOCAL-00150" summary="More refactoring">
+      <created>1590593750092</created>
+      <option name="number" value="00150" />
+      <option name="presentableId" value="LOCAL-00150" />
+      <option name="project" value="LOCAL" />
+      <updated>1590593750092</updated>
+    </task>
+    <task id="LOCAL-00151" summary="More code cleanup">
+      <created>1590594447924</created>
+      <option name="number" value="00151" />
+      <option name="presentableId" value="LOCAL-00151" />
+      <option name="project" value="LOCAL" />
+      <updated>1590594447924</updated>
+    </task>
+    <option name="localTasksCounter" value="152" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -692,18 +706,9 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added generation for otp to mfa" />
-    <MESSAGE value="Updated guice module" />
-    <MESSAGE value="Updated jwt claim name" />
-    <MESSAGE value="Updated jwt verifier to not use exceptions" />
-    <MESSAGE value="Fixed jwt verification bug" />
-    <MESSAGE value="Modified CachedFetcher api" />
-    <MESSAGE value="Added ability to specify app name for postgres module" />
-    <MESSAGE value="Fixed bug with MfaService config injection points" />
-    <MESSAGE value="FlywayManager now accepts parent dir" />
-    <MESSAGE value="Updated random module" />
     <MESSAGE value="Fixed bug with file paths" />
     <MESSAGE value="Removed @JvmDefault Annotations" />
     <MESSAGE value="Removed random module" />
@@ -719,7 +724,17 @@
     <MESSAGE value="Added new runtime environment" />
     <MESSAGE value="Added logging" />
     <MESSAGE value="Added logging to kryo" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added logging to kryo" />
+    <MESSAGE value="Modified kryo id calculation" />
+    <MESSAGE value="Lifted interface from CachedFetcher.kt" />
+    <MESSAGE value="Refactored Memoizer.kt" />
+    <MESSAGE value="Fixed concurrency bug in CachedFetcher.kt" />
+    <MESSAGE value="Added Serialization iface and kryo impl" />
+    <MESSAGE value="CacheableResult now doesnt default to nullable result types" />
+    <MESSAGE value="replaced cache exceptions with nullable types" />
+    <MESSAGE value="Refactored serializers to not use Base64" />
+    <MESSAGE value="More refactoring" />
+    <MESSAGE value="More code cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="More code cleanup" />
   </component>
   <component name="WindowStateProjectService">
     <state x="560" y="205" key="#Project_Structure" timestamp="1585170012804">
@@ -727,10 +742,10 @@
     </state>
     <state x="560" y="205" key="#Project_Structure/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585170012804" />
     <state x="560" y="205" key="#Project_Structure/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585082092890" />
-    <state x="424" y="202" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589470880558">
+    <state x="424" y="202" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590537926236">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="424" y="202" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1584999941499" />
+    <state x="424" y="202" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1590537926236" />
     <state x="424" y="202" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.809.1792.1120/0.0.1920.1080/-1080.-354.1080.1920@0.0.1920.1080" timestamp="1589470880558" />
     <state x="100" y="100" width="1720" height="880" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1585077255796">
       <screen x="0" y="0" width="1920" height="1080" />
@@ -742,12 +757,12 @@
     </state>
     <state x="701" y="350" key="#com.intellij.fileTypes.FileTypeChooser/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585170006646" />
     <state x="701" y="350" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585925545618" />
-    <state x="773" y="256" key="#com.intellij.ide.util.MemberChooser" timestamp="1585773282943">
+    <state x="773" y="256" key="#com.intellij.ide.util.MemberChooser" timestamp="1590599860360">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="773" y="256" key="#com.intellij.ide.util.MemberChooser/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1585143211104" />
     <state x="773" y="256" key="#com.intellij.ide.util.MemberChooser/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585420963259" />
-    <state x="773" y="256" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585773282943" />
+    <state x="773" y="256" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1590599860360" />
     <state x="697" y="331" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1582909303889">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -769,11 +784,11 @@
     </state>
     <state x="0" y="0" width="986" height="1080" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585142654528" />
     <state x="0" y="0" width="622" height="1080" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585081154701" />
-    <state x="698" y="294" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1585326300890">
+    <state x="698" y="294" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1590590275729">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="698" y="294" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585144043784" />
-    <state x="698" y="294" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585326300890" />
+    <state x="698" y="294" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1590590275729" />
     <state x="705" y="384" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1584896932706">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -793,48 +808,48 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="560" y="205" key="GrepConsoleSettings/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1584997955755" />
-    <state width="1920" height="588" key="GridCell.Tab.0.bottom" timestamp="1589567701154">
+    <state width="1920" height="355" key="GridCell.Tab.0.bottom" timestamp="1590601195339">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.bottom/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896596" />
-    <state width="1920" height="285" key="GridCell.Tab.0.bottom/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585428563326" />
+    <state width="1920" height="245" key="GridCell.Tab.0.bottom/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1590539910940" />
     <state width="1792" height="285" key="GridCell.Tab.0.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1585089279417" />
     <state width="1920" height="320" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1080.-331.1080.1897/1920.832.1792.1097@0.0.1920.1080" timestamp="1588605206217" />
-    <state width="1920" height="588" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1589567701154" />
+    <state width="1920" height="355" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1590601195339" />
     <state width="1920" height="327" key="GridCell.Tab.0.bottom/0.23.1920.1057/-1080.-331.1080.1897/1920.832.1792.1097@0.23.1920.1057" timestamp="1585955077384" />
     <state width="1920" height="402" key="GridCell.Tab.0.bottom/1920.809.1792.1120/0.0.1920.1080/-1080.-354.1080.1920@0.0.1920.1080" timestamp="1589471225710" />
     <state width="1920" height="274" key="GridCell.Tab.0.bottom/1920.832.1792.1097/0.0.1920.1080/-1080.-331.1080.1897@0.0.1920.1080" timestamp="1589291039803" />
-    <state width="1920" height="588" key="GridCell.Tab.0.center" timestamp="1589567701152">
+    <state width="1920" height="355" key="GridCell.Tab.0.center" timestamp="1590601195337">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.center/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896587" />
-    <state width="1920" height="285" key="GridCell.Tab.0.center/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585428563323" />
+    <state width="1920" height="245" key="GridCell.Tab.0.center/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1590539910938" />
     <state width="1792" height="285" key="GridCell.Tab.0.center/0.0.1792.1120@0.0.1792.1120" timestamp="1585089279415" />
     <state width="1920" height="320" key="GridCell.Tab.0.center/0.0.1920.1080/-1080.-331.1080.1897/1920.832.1792.1097@0.0.1920.1080" timestamp="1588605206213" />
-    <state width="1920" height="588" key="GridCell.Tab.0.center/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1589567701152" />
+    <state width="1920" height="355" key="GridCell.Tab.0.center/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1590601195337" />
     <state width="1920" height="285" key="GridCell.Tab.0.center/0.0.1920.1080/-1080.-354.1080.1920/1920.832.1792.1097@0.0.1920.1080" timestamp="1584050242172" />
     <state width="1920" height="327" key="GridCell.Tab.0.center/0.23.1920.1057/-1080.-331.1080.1897/1920.832.1792.1097@0.23.1920.1057" timestamp="1585955077353" />
     <state width="1920" height="402" key="GridCell.Tab.0.center/1920.809.1792.1120/0.0.1920.1080/-1080.-354.1080.1920@0.0.1920.1080" timestamp="1589471225706" />
     <state width="1920" height="274" key="GridCell.Tab.0.center/1920.832.1792.1097/0.0.1920.1080/-1080.-331.1080.1897@0.0.1920.1080" timestamp="1589291039799" />
-    <state width="1920" height="588" key="GridCell.Tab.0.left" timestamp="1589567701151">
+    <state width="1920" height="355" key="GridCell.Tab.0.left" timestamp="1590601195336">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.left/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896584" />
-    <state width="1920" height="285" key="GridCell.Tab.0.left/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585428563322" />
+    <state width="1920" height="245" key="GridCell.Tab.0.left/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1590539910936" />
     <state width="1792" height="285" key="GridCell.Tab.0.left/0.0.1792.1120@0.0.1792.1120" timestamp="1585089279414" />
     <state width="1920" height="320" key="GridCell.Tab.0.left/0.0.1920.1080/-1080.-331.1080.1897/1920.832.1792.1097@0.0.1920.1080" timestamp="1588605206211" />
-    <state width="1920" height="588" key="GridCell.Tab.0.left/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1589567701151" />
+    <state width="1920" height="355" key="GridCell.Tab.0.left/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1590601195336" />
     <state width="1920" height="327" key="GridCell.Tab.0.left/0.23.1920.1057/-1080.-331.1080.1897/1920.832.1792.1097@0.23.1920.1057" timestamp="1585955077351" />
     <state width="1920" height="402" key="GridCell.Tab.0.left/1920.809.1792.1120/0.0.1920.1080/-1080.-354.1080.1920@0.0.1920.1080" timestamp="1589471225703" />
     <state width="1920" height="274" key="GridCell.Tab.0.left/1920.832.1792.1097/0.0.1920.1080/-1080.-331.1080.1897@0.0.1920.1080" timestamp="1589291039797" />
-    <state width="1920" height="588" key="GridCell.Tab.0.right" timestamp="1589567701153">
+    <state width="1920" height="355" key="GridCell.Tab.0.right" timestamp="1590601195338">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1920" height="311" key="GridCell.Tab.0.right/-1080.-331.1080.1897/1920.832.1792.1097/0.0.1920.1080@0.0.1920.1080" timestamp="1583243896589" />
-    <state width="1920" height="285" key="GridCell.Tab.0.right/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585428563325" />
+    <state width="1920" height="245" key="GridCell.Tab.0.right/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1590539910939" />
     <state width="1792" height="285" key="GridCell.Tab.0.right/0.0.1792.1120@0.0.1792.1120" timestamp="1585089279416" />
     <state width="1920" height="320" key="GridCell.Tab.0.right/0.0.1920.1080/-1080.-331.1080.1897/1920.832.1792.1097@0.0.1920.1080" timestamp="1588605206215" />
-    <state width="1920" height="588" key="GridCell.Tab.0.right/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1589567701153" />
+    <state width="1920" height="355" key="GridCell.Tab.0.right/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1590601195338" />
     <state width="1920" height="327" key="GridCell.Tab.0.right/0.23.1920.1057/-1080.-331.1080.1897/1920.832.1792.1097@0.23.1920.1057" timestamp="1585955077381" />
     <state width="1920" height="402" key="GridCell.Tab.0.right/1920.809.1792.1120/0.0.1920.1080/-1080.-354.1080.1920@0.0.1920.1080" timestamp="1589471225708" />
     <state width="1920" height="274" key="GridCell.Tab.0.right/1920.832.1792.1097/0.0.1920.1080/-1080.-331.1080.1897@0.0.1920.1080" timestamp="1589291039801" />
@@ -876,12 +891,12 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="461" y="179" key="SettingsEditor/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585169493843" />
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1589566945130">
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1590594770838">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1588700676063" />
     <state x="560" y="280" key="Vcs.Push.Dialog.v2/0.0.1920.1080/-1080.-331.1080.1897/1920.832.1792.1097@0.0.1920.1080" timestamp="1588605224176" />
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1589566945130" />
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1590594770838" />
     <state x="560" y="280" key="Vcs.Push.Dialog.v2/1920.809.1792.1120/0.0.1920.1080/-1080.-354.1080.1920@0.0.1920.1080" timestamp="1589460866021" />
     <state x="200" y="200" width="1720" height="880" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1585092487588">
       <screen x="0" y="0" width="1920" height="1080" />
@@ -918,10 +933,11 @@
     </state>
     <state x="618" y="297" width="837" height="550" key="find.popup/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585169997223" />
     <state x="618" y="297" width="683" height="486" key="find.popup/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585061997633" />
-    <state x="420" y="154" key="new project wizard" timestamp="1589300845612">
+    <state x="420" y="154" key="new project wizard" timestamp="1590601395543">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="420" y="154" key="new project wizard/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1585170320986" />
+    <state x="420" y="154" key="new project wizard/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1590601395543" />
     <state x="420" y="154" key="new project wizard/1920.809.1792.1120/0.0.1920.1080/-1080.-354.1080.1920@0.0.1920.1080" timestamp="1589300845612" />
     <state x="886" y="237" width="670" height="676" key="search.everywhere.popup" timestamp="1589567217605">
       <screen x="0" y="0" width="1920" height="1080" />

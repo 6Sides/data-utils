@@ -2,6 +2,7 @@ package net.dashflight.data.redis
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
+import net.dashflight.data.caching.CacheStore
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig
 import redis.clients.jedis.JedisPool
 
