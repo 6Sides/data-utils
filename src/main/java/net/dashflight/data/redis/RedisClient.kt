@@ -11,7 +11,7 @@ import redis.clients.jedis.JedisPool
  * interface with database 0.
  */
 @Singleton
-class RedisClient @Inject internal constructor(optionProvider: RedisConnectionOptionProvider): CacheStore {
+class RedisClient @Inject internal constructor(optionProvider: RedisConnectionOptionProvider) {
 
     /**
      * Redis connection pool
@@ -39,14 +39,14 @@ class RedisClient @Inject internal constructor(optionProvider: RedisConnectionOp
     /**
      * Sets a key, value pair in the cache
      */
-    override fun set(key: String, value: String): Boolean {
+    fun set(key: String, value: String): Boolean {
         pool.resource.use { client -> return client.set(key, value) == "OK" }
     }
 
     /**
      * Sets a key, value pair in the cache with a specified expiry length (in seconds).
      */
-    override fun setWithExpiry(key: String, seconds: Int, value: String): Boolean {
+    fun setWithExpiry(key: String, seconds: Int, value: String): Boolean {
         pool.resource.use { client -> return client.setex(key, seconds, value) == "OK" }
     }
 
@@ -64,7 +64,7 @@ class RedisClient @Inject internal constructor(optionProvider: RedisConnectionOp
     /**
      * Query for a value with a key
      */
-    override fun get(key: String): String? {
+    fun get(key: String): String? {
         pool.resource.use { client -> return client[key] }
     }
 
@@ -72,7 +72,7 @@ class RedisClient @Inject internal constructor(optionProvider: RedisConnectionOp
      * Attempts to delete a key from the cache.
      * `this.client.del` returns number of keys removed.
      */
-    override fun del(key: String): Boolean {
+    fun del(key: String): Boolean {
         pool.resource.use { client -> return client.del(key) > 0 }
     }
 

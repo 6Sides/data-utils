@@ -8,7 +8,7 @@ import java.time.OffsetDateTime
  *
  * @param <V> The type of the result being returned.
  */
-data class CacheableResult<V> constructor(val result: V? = null, val ttl: Int = 0) {
+data class CacheableResult<V> constructor(val result: V, val ttl: Int = 0) {
     /**
      * The result of the fetch
      */
@@ -27,7 +27,7 @@ data class CacheableResult<V> constructor(val result: V? = null, val ttl: Int = 
          * @param result The result of the query.
          * @param cacheTTL The ttl in seconds.
          */
-        fun <V> of(result: V?, cacheTTL: Int = defaultCacheTtl): CacheableResult<V> {
+        fun <V> of(result: V, cacheTTL: Int = defaultCacheTtl): CacheableResult<V> {
             return CacheableResult(result, cacheTTL)
         }
     }

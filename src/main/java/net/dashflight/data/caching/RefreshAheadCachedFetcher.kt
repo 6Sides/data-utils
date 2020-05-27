@@ -9,7 +9,7 @@ import java.util.concurrent.Executors
 /**
  * Implementation of the refresh-ahead caching strategy.
  */
-abstract class RefreshAheadCachedFetcher<K, V> @Inject protected constructor(redisClient: RedisClient): CachedFetcher<K, V?>(redisClient) {
+abstract class RefreshAheadCachedFetcher<K, V> @Inject protected constructor(private val redisClient: CacheStore): CachedFetcher<K, V>(redisClient) {
 
     companion object {
         private val LOG by logger()
@@ -18,15 +18,16 @@ abstract class RefreshAheadCachedFetcher<K, V> @Inject protected constructor(red
         private val threadPool = Executors.newCachedThreadPool()
     }
 
-    private val redisPool: JedisPool = redisClient.pool
+    // private val redisPool: JedisPool = redisClient.pool
 
     @Throws(DataFetchException::class)
-    override fun fetchResult(input: K): CacheableResult<V?> {
+    override fun fetchResult(input: K): CacheableResult<V> {
         var needsRefresh = false
 
-        redisPool.resource.use { client ->
+        /*redisPool.resource.use { client ->
             needsRefresh = !client.exists(generateHash(input) + "rac")
-        }
+        }*/
+        needsRefresh = !redisClient.exists(generateHash(input) + "rac")
 
         if (needsRefresh) {
             // Refetch result and cache it asynchronously
@@ -34,7 +35,7 @@ abstract class RefreshAheadCachedFetcher<K, V> @Inject protected constructor(red
                 try {
                     val result = calculateResult(input)
                     cacheResult(input, result)
-                    redis.setWithExpiry(generateHash(input) + "rac", (result.ttl * REFRESH_AHEAD_FACTOR).toInt(), "")
+                    redisClient.setWithExpiry(generateHash(input) + "rac", byteArrayOf(), (result.ttl * REFRESH_AHEAD_FACTOR).toInt())
                 } catch (e: DataFetchException) {
                     e.printStackTrace()
                 }
