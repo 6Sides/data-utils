@@ -15,7 +15,9 @@ class RedisCacheStore @Inject constructor(private val redis: RedisClient): Cache
     }
 
     override fun get(key: String): ByteArray? {
-        return Base64.decode(redis.get(key))
+        return redis.get(key)?.let {
+            Base64.decode(it)
+        }
     }
 
     override fun del(key: String): Boolean {
