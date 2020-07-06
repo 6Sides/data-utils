@@ -2,8 +2,7 @@ package net.dashflight.data.mfa
 
 import com.google.inject.Inject
 import de.taimos.totp.TOTP
-import net.dashflight.data.config.ConfigValue
-import net.dashflight.data.config.Configurable
+import hydro.engine.Hydro.hydrate
 import org.apache.commons.codec.binary.Base32
 import org.apache.commons.codec.binary.Hex
 import java.io.UnsupportedEncodingException
@@ -15,9 +14,13 @@ import javax.xml.bind.DatatypeConverter
 /**
  * Service for handling google authenticator 2FA for Dashflight
  */
-internal class DashflightMfaDataProvider @Inject constructor(random: Random) : Configurable, MfaDataProvider {
+internal class DashflightMfaDataProvider @Inject constructor(
+        private val random: Random
+) : MfaDataProvider {
+
+    private val ISSUER: String by hydrate("issuer")
+    
     private val base32 = Base32()
-    private val random: Random
 
     /**
      * Gets the current TOTP code associated with the specified user
@@ -64,11 +67,4 @@ internal class DashflightMfaDataProvider @Inject constructor(random: Random) : C
         return DatatypeConverter.printHexBinary(randomBytes)
     }
 
-    @ConfigValue("issuer")
-    private var ISSUER: String? = null
-
-    init {
-        registerWith("multi-factor")
-        this.random = random
-    }
 }
