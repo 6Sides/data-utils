@@ -1,19 +1,16 @@
 package net.dashflight.data.keys
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import net.dashflight.data.config.ConfigValue
-import net.dashflight.data.config.Configurable
+import hydro.engine.Hydro.hydrate
 import java.io.IOException
 import java.security.interfaces.RSAKey
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
 import java.util.*
 
-class DashflightRSAKeyPairDataProvider internal constructor() : RSAKeyPairDataProvider, Configurable {
+class DashflightRSAKeyPairDataProvider internal constructor() : RSAKeyPairDataProvider {
 
     companion object {
-        private const val APP_NAME = "rsa-keypair"
-
         fun keyToJson(key: RSAKey, kid: String): String? {
             val data: MutableMap<String, String> = HashMap()
             data["kty"] = "RSA"
@@ -36,14 +33,8 @@ class DashflightRSAKeyPairDataProvider internal constructor() : RSAKeyPairDataPr
         }
     }
 
-    init {
-        registerWith(APP_NAME)
-    }
+    override val publicKeyData: String by hydrate("public_key")
 
-    @ConfigValue("public_key")
-    override lateinit var publicKeyData: String; private set
-
-    @ConfigValue("private_key")
-    override lateinit var privateKeyData: String; private set
+    override val privateKeyData: String by hydrate("private_key")
 
 }
