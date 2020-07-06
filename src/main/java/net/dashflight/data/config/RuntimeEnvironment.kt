@@ -8,6 +8,9 @@ enum class RuntimeEnvironment(val description: String) {
     PRODUCTION("production");
 
     companion object {
+
+        var _currentEnvironment: RuntimeEnvironment? = null
+
         fun fromString(name: String): RuntimeEnvironment {
             for (entry in values()) {
                 if (entry.description.equals(name, ignoreCase = true)) {
@@ -19,7 +22,7 @@ enum class RuntimeEnvironment(val description: String) {
 
         val currentEnvironment: RuntimeEnvironment
             get() = try {
-                fromString(System.getenv("environment"))
+                _currentEnvironment ?: fromString(System.getenv("environment"))
             } catch (ex: IllegalArgumentException) {
                 throw IllegalStateException("The application is not running with a valid environment specified."
                         + "Try running it again with an environment variable specifying the current environment. E.g. environment=staging")

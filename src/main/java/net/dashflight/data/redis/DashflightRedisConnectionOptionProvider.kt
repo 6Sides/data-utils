@@ -1,31 +1,19 @@
 package net.dashflight.data.redis
 
-import net.dashflight.data.config.ConfigValue
-import net.dashflight.data.config.Configurable
+import hydro.engine.Hydro.hydrate
 
 /**
  * Pulls the required redis connection options from s3
  */
-class DashflightRedisConnectionOptionProvider : RedisConnectionOptionProvider, Configurable {
+class DashflightRedisConnectionOptionProvider : RedisConnectionOptionProvider {
 
-    init {
-        registerWith(APP_NAME)
-    }
+    private val host: String by hydrate("redis_host")
 
-    @ConfigValue("redis_host")
-    private val host: String? = null
+    private val port: Int by hydrate("redis_port")
 
-    @ConfigValue("redis_port")
-    private val port = 0
-
-    @ConfigValue("max_pool_size")
-    private val maxPoolSize = 4
+    private val maxPoolSize: Int by hydrate("max_pool_size", 4)
 
     override fun get(): RedisConnectionOptions {
-        return RedisConnectionOptions(host!!, port, maxPoolSize)
-    }
-
-    companion object {
-        private const val APP_NAME = "redis"
+        return RedisConnectionOptions(host, port, maxPoolSize)
     }
 }
