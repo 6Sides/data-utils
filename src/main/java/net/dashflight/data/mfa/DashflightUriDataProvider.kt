@@ -9,7 +9,7 @@ import java.util.*
 /**
  * Retrieves the necessary data associated with a user to construct an MFA URI
  */
-internal class DashflightUriDataProvider @Inject constructor(private val postgresClient: PostgresClient) : MfaUriDataProvider {
+class DashflightUriDataProvider @Inject constructor(private val postgresClient: PostgresClient) : MfaUriDataProvider {
 
     override fun getData(userId: UUID): BasicUserData {
         var email = getUserEmail(userId)
