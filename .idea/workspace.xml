@@ -19,10 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47e27f0e-1967-4be3-87d2-25e1f94092c4" name="Default Changelist" comment="Refactored all modules to use hydro">
+    <list default="true" id="47e27f0e-1967-4be3-87d2-25e1f94092c4" name="Default Changelist" comment="Removed internal modifier for some classes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/create/request/DashflightCreateJwtRequestProvider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/jwt/create/request/DashflightCreateJwtRequestProvider.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/DashflightUriDataProvider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/DashflightUriDataProvider.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/DashflightMfaDataProvider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dashflight/data/mfa/DashflightMfaDataProvider.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -367,14 +366,7 @@
       <workItem from="1592833410553" duration="2081000" />
       <workItem from="1593089125987" duration="789000" />
       <workItem from="1593434430646" duration="1171000" />
-      <workItem from="1593703034472" duration="16478000" />
-    </task>
-    <task id="LOCAL-00110" summary="Added FlywayMigrator for integration testing with postgres">
-      <created>1585338075122</created>
-      <option name="number" value="00110" />
-      <option name="presentableId" value="LOCAL-00110" />
-      <option name="project" value="LOCAL" />
-      <updated>1585338075122</updated>
+      <workItem from="1593703034472" duration="16616000" />
     </task>
     <task id="LOCAL-00111" summary="Updated .gitignore">
       <created>1585340576428</created>
@@ -712,7 +704,14 @@
       <option name="project" value="LOCAL" />
       <updated>1594048527329</updated>
     </task>
-    <option name="localTasksCounter" value="159" />
+    <task id="LOCAL-00159" summary="Removed internal modifier for some classes">
+      <created>1594048707405</created>
+      <option name="number" value="00159" />
+      <option name="presentableId" value="LOCAL-00159" />
+      <option name="project" value="LOCAL" />
+      <updated>1594048707405</updated>
+    </task>
+    <option name="localTasksCounter" value="160" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -731,7 +730,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added configuration delegate and refactored postgres to use it" />
     <MESSAGE value="Removed debug print statement" />
     <MESSAGE value="Removed lava random thread creation" />
     <MESSAGE value="Removed connections from lava random" />
@@ -756,7 +754,8 @@
     <MESSAGE value="Refactored rsa-key module to use Hydro" />
     <MESSAGE value="Refactored jwt creation/verification modules to use Hydro" />
     <MESSAGE value="Refactored all modules to use hydro" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactored all modules to use hydro" />
+    <MESSAGE value="Removed internal modifier for some classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed internal modifier for some classes" />
   </component>
   <component name="WindowStateProjectService">
     <state x="424" y="202" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590537926236">
@@ -852,12 +851,12 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="690" y="269" key="RollbackChangesDialog/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1585333505257" />
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1594048528849">
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2" timestamp="1594048708724">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="560" y="280" key="Vcs.Push.Dialog.v2/-1080.-354.1080.1920/1920.809.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1588700676063" />
     <state x="560" y="280" key="Vcs.Push.Dialog.v2/0.0.1920.1080/-1080.-331.1080.1897/1920.832.1792.1097@0.0.1920.1080" timestamp="1588605224176" />
-    <state x="560" y="280" key="Vcs.Push.Dialog.v2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1594048528849" />
+    <state x="560" y="280" key="Vcs.Push.Dialog.v2/0.0.1920.1080/-1080.-354.1080.1920/1920.809.1792.1120@0.0.1920.1080" timestamp="1594048708724" />
     <state x="560" y="280" key="Vcs.Push.Dialog.v2/1920.809.1792.1120/0.0.1920.1080/-1080.-354.1080.1920@0.0.1920.1080" timestamp="1589460866021" />
     <state x="209" y="71" width="1285" height="938" key="com.intellij.ide.util.TipDialog" timestamp="1588687394372">
       <screen x="0" y="0" width="1920" height="1080" />

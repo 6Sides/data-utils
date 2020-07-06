@@ -14,12 +14,12 @@ import javax.xml.bind.DatatypeConverter
 /**
  * Service for handling google authenticator 2FA for Dashflight
  */
-internal class DashflightMfaDataProvider @Inject constructor(
+class DashflightMfaDataProvider @Inject constructor(
         private val random: Random
 ) : MfaDataProvider {
 
     private val ISSUER: String by hydrate("issuer")
-    
+
     private val base32 = Base32()
 
     /**
