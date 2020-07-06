@@ -11,7 +11,7 @@ import java.util.*
 /**
  * Used to generate jwts for authentication with dashflight
  */
-internal class DashflightCreateJwtRequestProvider @Inject constructor(
+class DashflightCreateJwtRequestProvider @Inject constructor(
     private val keyManager: RSAKeyPairProvider
 ) : CreateJwtRequestProvider {
 
