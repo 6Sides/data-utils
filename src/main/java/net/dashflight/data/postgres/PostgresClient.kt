@@ -59,6 +59,7 @@ class PostgresClient @Inject internal constructor(optionProvider: PostgresConnec
         config.addDataSourceProperty("prepStmtCacheSize", "250")
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048")
         config.addDataSourceProperty("ApplicationName", options.applicationName)
+        config.isAutoCommit = false
 
         connectionPool = HikariDataSource(config)
 
